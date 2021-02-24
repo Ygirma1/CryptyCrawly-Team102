@@ -24,7 +24,7 @@ git clone https://github.gatech.edu/cdong49/CS2340-Team102-Dungeon-Crawler
 
 - Go to **File/Open** on IntelliJ and choose the folder.
 
-### Add Rub/Debug Config
+### Add Run/Debug Config
 
 - If you see this after cloning, click on **Add configuration**.
 ![alt text](/setup_resources/addConfig.png)
