@@ -34,7 +34,7 @@ git clone https://github.gatech.edu/cdong49/CS2340-Team102-Dungeon-Crawler
 - Go to the **Modules** section from Project Structure.
 - Check this box for the newly added library.
 
-![alt text](setup_resources\addLib.png)
+![alt text](/setup_resources/addLib.png)
 
 - Apply and close
 
@@ -52,6 +52,6 @@ git clone https://github.gatech.edu/cdong49/CS2340-Team102-Dungeon-Crawler
 
 - It should now look something like this, and you can just apply and close. 
 
-![alt text](setup_resources\Config.png)
+![alt text](/setup_resources/Config.png)
 
 - Test run the Controller file to make sure it works.
