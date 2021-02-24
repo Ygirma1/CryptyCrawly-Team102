@@ -53,7 +53,7 @@ git clone https://github.gatech.edu/cdong49/CS2340-Team102-Dungeon-Crawler
 ### Add VM
 
 - Go to **Run/Edit Configurations**
-- In **Aplication/Controller**, select your current Java JDK under **Build and Run**.
+- In **Application/Controller**, select your current Java JDK under **Build and Run**.
 - Click on **Modify options/Add VM option**
 - Paste this into the VM option with the correct JavaFX SDK lib path.
 
