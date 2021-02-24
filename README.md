@@ -24,6 +24,18 @@ git clone https://github.gatech.edu/cdong49/CS2340-Team102-Dungeon-Crawler
 
 - Go to **File/Open** on IntelliJ and choose the folder.
 
+### Add Rub/Debug Config
+
+- If you see this after cloning, click on **Add configuration**.
+![alt text](/setup_resources/addConfig.png)
+
+- Click on the **+** sign on the top left corner and add **Application**
+- Change the name to **Controller**
+- For **Main class**, put in **DungeonCrawler.Controller**
+
+![alt text](/setup_resources/addConfig2.png)
+
+
 ### Add JavaFX Library
 
 - Go to **File/Project Structure**
