@@ -27,10 +27,11 @@ public class Controller extends Application {
         ConfigScreen configScreen = new ConfigScreen(width, height);
         Button proceedButton = configScreen.getProceedButton();
         proceedButton.setOnAction(e -> {
-            if (configScreen.getNameField().getText().length() == 0) {
+            this.characterName = configScreen.getNameField().getText();
+            if (this.characterName == null || this.characterName.length() == 0 || this.characterName.strip().length() == 0) {
                 return;
             }
-            this.characterName = configScreen.getNameField().getText();
+
             if (configScreen.getDifficultyDropdown().getValue() == null) {
                 return;
             }
