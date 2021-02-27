@@ -14,8 +14,8 @@ public class ConfigScreen {
     private int width;
     private int height;
     private TextField nameField;
-    private ComboBox difficultyDropdown;
-    private ComboBox weaponDropdown;
+    private ComboBox<String> difficultyDropdown;
+    private ComboBox<String> weaponDropdown;
     private Button proceedButton;
     // NOTE: A button to proceed to initial game screen?
 
@@ -37,16 +37,16 @@ public class ConfigScreen {
 
         // Difficulty dropdown init
         // To read the selected value, do this.difficultyDropdown.getValue()
-        this.difficultyDropdown = new ComboBox();
+        this.difficultyDropdown = new ComboBox<>();
         this.difficultyDropdown.getItems().add("Easy");
         this.difficultyDropdown.getItems().add("Medium");
         this.difficultyDropdown.getItems().add("Hard");
 
         // Weapon dropdown init
-        this.weaponDropdown = new ComboBox();
-        this.weaponDropdown.getItems().add("Weapon 1"); // TODO: Change this
-        this.weaponDropdown.getItems().add("Weapon 2");
-        this.weaponDropdown.getItems().add("Weapon 3");
+        this.weaponDropdown = new ComboBox<>();
+        this.weaponDropdown.getItems().add("Shortsword"); // TODO: Change this
+        this.weaponDropdown.getItems().add("Bludgeon");
+        this.weaponDropdown.getItems().add("Greatsword");
 
         // Proceed button init
         this.proceedButton = new Button("Proceed to next screen"); // TODO: add lambda to proceed here
@@ -89,7 +89,7 @@ public class ConfigScreen {
 
     /**
      * Width setter
-     * @param width
+     * @param width Width of the game window.
      */
     public void setWidth(int width) {
         this.width = width;
@@ -97,7 +97,7 @@ public class ConfigScreen {
 
     /**
      * Height setter
-     * @param height
+     * @param height Height of the game window.
      */
     public void setHeight(int height) {
         this.height = height;
@@ -105,7 +105,7 @@ public class ConfigScreen {
 
     /**
      * Width getter
-     * @return
+     * @return The width of the game window.
      */
     public int getWidth() {
         return this.width;
@@ -113,7 +113,7 @@ public class ConfigScreen {
 
     /**
      * Height getter
-     * @return
+     * @return The height of the game window.
      */
     public int getHeight() {
         return this.height;
@@ -121,7 +121,7 @@ public class ConfigScreen {
 
     /**
      * nameField TextField object getter
-     * @return
+     * @return Text Field for player name.
      */
     public TextField getNameField() {
         return this.nameField;
@@ -129,23 +129,23 @@ public class ConfigScreen {
 
     /**
      * difficultyDropdown TextField object getter
-     * @return
+     * @return Difficulty dropdown list
      */
-    public ComboBox getDifficultyDropdown() {
+    public ComboBox<String> getDifficultyDropdown() {
         return this.difficultyDropdown;
     }
 
     /**
      * weaponDropdown ComboBox object getter
-     * @return
+     * @return Weapon dropdown list
      */
-    public ComboBox getWeaponDropdown() {
+    public ComboBox<String> getWeaponDropdown() {
         return this.weaponDropdown;
     }
 
     /**
      * proceedButton Button object getter
-     * @return
+     * @return Proceed button
      */
     public Button getProceedButton() {
         return this.proceedButton;
