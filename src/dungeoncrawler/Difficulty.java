@@ -1,4 +1,4 @@
-package DungeonCrawler;
+package dungeoncrawler;
 
 public enum Difficulty {
     EASY, MEDIUM, HARD

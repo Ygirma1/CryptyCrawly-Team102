@@ -1,4 +1,4 @@
-package DungeonCrawler;
+package dungeoncrawler;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,7 +22,7 @@ public class WelcomeScreen {
     private Text authorText1;
     private Text authorText2;
 
-    public WelcomeScreen(){
+    public WelcomeScreen() {
         this(500, 500);
     }
 
@@ -61,7 +61,7 @@ public class WelcomeScreen {
      * A getter method for the scene associated with the game's welcome screen.
      * @return The scene containing all nodes for the welcome screen.
      */
-    public Scene getScene(){
+    public Scene getScene() {
         //Used a HBox in case additional buttons are desired
         HBox buttonBox = new HBox(this.playButton);
         buttonBox.setSpacing(50.0);
@@ -88,7 +88,7 @@ public class WelcomeScreen {
      * Getter method for the play button on the welcome screen.
      * @return The button that switches the scene from the welcome screen to the config screen.
      */
-    public Button getPlayButton(){
+    public Button getPlayButton() {
         return this.playButton;
     }
 
@@ -96,7 +96,7 @@ public class WelcomeScreen {
      * Width getter for the welcome screen.
      * @return int value for screen width
      */
-    public int getWidth(){
+    public int getWidth() {
         return this.width;
     }
 
@@ -104,7 +104,7 @@ public class WelcomeScreen {
      * Height getter for the welcome screen.
      * @return int value for screen height
      */
-    public int getHeight(){
+    public int getHeight() {
         return this.height;
     }
 
@@ -112,7 +112,7 @@ public class WelcomeScreen {
      * Getter for the Text object associated with the game's title.
      * @return The text object representing the game title.
      */
-    public Text getGameTitle(){
+    public Text getGameTitle() {
         return this.gameTitle;
     }
 }

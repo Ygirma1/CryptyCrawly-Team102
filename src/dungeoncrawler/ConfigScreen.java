@@ -1,4 +1,4 @@
-package DungeonCrawler;
+package dungeoncrawler;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,13 +13,12 @@ import javafx.scene.layout.*;
 public class ConfigScreen {
     private int width;
     private int height;
-<<<<<<< HEAD
+
     private final TextField nameField;
-    private final ComboBox<String> difficultyDropdown;
+    private ComboBox<String> difficultyDropdown;
     private final ComboBox<String> weaponDropdown;
     private final Button proceedButton;
     // NOTE: A button to proceed to initial game screen?
-=======
     private Difficulty difficulty;
     private Text namePromptText;
     private Text difficultyPromptText;
@@ -29,14 +28,11 @@ public class ConfigScreen {
     private Color backgroundColor = Color.rgb(120, 135, 135);
     private Color nodeColor = Color.rgb(161, 171, 171);
     private Color textColor = Color.rgb(48, 54, 54);
-    private TextField nameField;
-    private ComboBox<String> weaponDropdown;
     private RadioButton easyRB;
     private RadioButton mediumRB;
     private RadioButton hardRB;
     private ToggleGroup difficultyRBGroup = new ToggleGroup();
-    private Button proceedButton;
->>>>>>> master
+
 
     /**
      * No argument constructor that initializes this config screen with given width and height.
@@ -94,9 +90,10 @@ public class ConfigScreen {
         this.weaponPromptText.setFont(textFont);
         this.weaponPromptText.setFill(textColor);
         this.weaponDropdown = new ComboBox<>();
-        this.weaponDropdown.setBackground(new Background(new BackgroundFill(nodeColor, null, null)));
+        this.weaponDropdown.setBackground(new Background(
+                new BackgroundFill(nodeColor, null, null)));
         this.weaponDropdown.setStyle("-fx-font: 14px \"High Tower Text\";");
-        this.weaponDropdown.getItems().add("Shortsword"); // TODO: Change this
+        this.weaponDropdown.getItems().add("Shortsword");
         this.weaponDropdown.getItems().add("Bludgeon");
         this.weaponDropdown.getItems().add("Greatsword");
 

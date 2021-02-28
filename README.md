@@ -31,7 +31,7 @@ git clone https://github.gatech.edu/cdong49/CS2340-Team102-Dungeon-Crawler
 
 - Click on the **+** sign on the top left corner and add **Application**
 - Change the name to **Controller**
-- For **Main class**, put in **DungeonCrawler.Controller**
+- For **Main class**, put in **dungeoncrawler.Controller**
 
 ![alt text](/setup_resources/addConfig2.png)
 

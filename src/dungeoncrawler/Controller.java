@@ -1,9 +1,6 @@
-package DungeonCrawler;
+package dungeoncrawler;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -24,7 +21,7 @@ public class Controller extends Application {
         welcomeScreen(); //Comment this out as well when testing your screen.
     }
 
-    private void welcomeScreen(){
+    private void welcomeScreen() {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
         Button play = welcomeScreen.getPlayButton();
         this.primaryStage.setScene(welcomeScreen.getScene());
@@ -41,7 +38,8 @@ public class Controller extends Application {
         proceedButton.setOnAction(e -> {
             // Checking if character name is valid
             this.characterName = configScreen.getNameField().getText();
-            if (this.characterName == null || this.characterName.length() == 0 || this.characterName.strip().length() == 0) {
+            if (this.characterName == null || this.characterName.length() == 0
+                    || this.characterName.strip().length() == 0) {
                 configScreen.getNameField().setText("Please enter a character name.");
                 return;
             }
@@ -54,7 +52,7 @@ public class Controller extends Application {
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
             }
-            this.weapon = configScreen.getWeaponDropdown().getValue().toString();
+            this.weapon = configScreen.getWeaponDropdown().getValue();
             proceedToGameScreen();
         });
         this.primaryStage.setScene(configScreen.getScene());
@@ -62,7 +60,8 @@ public class Controller extends Application {
     }
 
     private void proceedToGameScreen() {
-        // TODO: create the initial game scene class, add that scene here, setScene for the stage, call show to change screen
+        // TODO: create the initial game scene class, add that scene here,
+        //  setScene for the stage, call show to change screen
     }
 
     public static void main(String[] args) {
