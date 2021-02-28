@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CS2340-Team102-Dungeon-Crawler.iml" filepath="$PROJECT_DIR$/.idea/CS2340-Team102-Dungeon-Crawler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CS2340-Team102-Dungeon-Crawler.iml" filepath="$PROJECT_DIR$/CS2340-Team102-Dungeon-Crawler.iml" />
     </modules>
   </component>
 </project>
