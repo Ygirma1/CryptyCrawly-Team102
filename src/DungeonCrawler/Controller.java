@@ -20,7 +20,19 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        initConfigScreen(); // Comment this out when you test your screen.
+        //initConfigScreen(); // Comment this out when you test your screen.
+        welcomeScreen(); //Comment this out as well when testing your screen.
+    }
+
+    private void welcomeScreen(){
+        WelcomeScreen welcomeScreen = new WelcomeScreen();
+        Button play = welcomeScreen.getPlayButton();
+        this.primaryStage.setScene(welcomeScreen.getScene());
+        this.primaryStage.show();
+        Button startButton = welcomeScreen.getPlayButton();
+        startButton.setOnAction(e -> {
+            initConfigScreen();
+        });
     }
 
     private void initConfigScreen() {
