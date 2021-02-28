@@ -34,18 +34,20 @@ public class WelcomeScreen {
         this.width = width;
         this.height = height;
 
+        Font titleFont = new Font("High Tower Text", 60);
+        Color textColor = Color.rgb(48, 54, 54);
+        Font smallFont = new Font("High Tower Text", 24);
+
         //init title text
         this.gameTitle = new Text("Crypt of Treasure");
-        Font titleFont = new Font("High Tower Text", 60);
         this.gameTitle.setFont(titleFont);
-        Color textColor = Color.rgb(48, 54, 54);
         this.gameTitle.setFill(textColor);
 
         //init author text
         this.authorText1 = new Text("Aaron Mallory, Chuong Dong, Tristan Rogers,");
-        Font smallFont = new Font("High Tower Text", 24);
         this.authorText1.setFont(smallFont);
         this.authorText1.setFill(textColor);
+
         this.authorText2 = new Text("Nishant Baglodi, and Yafet Girma");
         this.authorText2.setFont(smallFont);
         this.authorText2.setFill(textColor);
