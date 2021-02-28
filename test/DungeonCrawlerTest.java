@@ -2,7 +2,7 @@ import dungeoncrawler.ConfigScreen;
 import dungeoncrawler.Controller;
 import javafx.stage.Stage;
 import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
@@ -30,6 +30,8 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("PROCEED");
         if (config.getNameField().getText().isEmpty()) {
             assertEquals("Please enter a character name.", config.getNameField().getText());
+        } else {
+            verifyThat("Starting Room", NodeMatchers.isNotNull());
         }
     }
 

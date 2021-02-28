@@ -11,8 +11,17 @@ import javafx.scene.text.Text;
 
 public class InitialGameScreen {
     private int gold;
+    private int width;
+    private int height;
+    private Color backgroundColor = Color.rgb(120, 135, 135);
 
-    public InitialGameScreen(String difficulty) {
+    public InitialGameScreen() {
+        this("Medium", 500, 500);
+    }
+
+    public InitialGameScreen(String difficulty, int width, int height) {
+        this.width = width;
+        this.height = height;
         if (difficulty.equals("Easy")) {
             gold = 100;
         } else if (difficulty.equals("Medium")) {
@@ -26,11 +35,15 @@ public class InitialGameScreen {
         Text roomName = new Text("Starting Room");
         Text goldAmount = new Text("" + gold);
         goldAmount.setFill(Color.DARKGOLDENROD);
+
         root.setLeft(roomName);
         root.setRight(goldAmount);
 
         Pane pane = new Pane();
+        //pane.setBackground(bg, );
+
         Button exit1 = new Button("Exit 1");
+
         Button exit2 = new Button("Exit 2");
         Button exit3 = new Button("Exit 3");
         Button exit4 = new Button("Exit 4");

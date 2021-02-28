@@ -15,23 +15,18 @@ public class ConfigScreen {
     private int height;
 
     private final TextField nameField;
-    private ComboBox<String> difficultyDropdown;
     private final ComboBox<String> weaponDropdown;
     private final Button proceedButton;
     // NOTE: A button to proceed to initial game screen?
     private Difficulty difficulty;
-    private Text namePromptText;
-    private Text difficultyPromptText;
-    private Text weaponPromptText;
-    private Font textFont = new Font("High Tower Text", 20);
-    private Font smallFont = new Font("High Tower Text", 14);
-    private Color backgroundColor = Color.rgb(120, 135, 135);
-    private Color nodeColor = Color.rgb(161, 171, 171);
-    private Color textColor = Color.rgb(48, 54, 54);
-    private RadioButton easyRB;
-    private RadioButton mediumRB;
-    private RadioButton hardRB;
-    private ToggleGroup difficultyRBGroup = new ToggleGroup();
+    private final Text namePromptText;
+    private final Text difficultyPromptText;
+    private final Text weaponPromptText;
+    private final Color backgroundColor = Color.rgb(120, 135, 135);
+    private final RadioButton easyRB;
+    private final RadioButton mediumRB;
+    private final RadioButton hardRB;
+    private final ToggleGroup difficultyRBGroup = new ToggleGroup();
 
 
     /**
@@ -50,11 +45,17 @@ public class ConfigScreen {
         this.width = width;
         this.height = height;
 
+        Font textFont = new Font("High Tower Text", 20);
+        Color textColor = Color.rgb(48, 54, 54);
+        Font smallFont = new Font("High Tower Text", 14);
+        Color nodeColor = Color.rgb(161, 171, 171);
+
         // Name field and corresponding text
         // Obtain player name with nameField.getText()
         this.namePromptText = new Text("ENTER YOUR NAME:");
         this.namePromptText.setFont(textFont);
         this.namePromptText.setFill(textColor);
+
         this.nameField = new TextField();
         this.nameField.setId("nameField");
         this.nameField.setFont(smallFont);
@@ -67,32 +68,30 @@ public class ConfigScreen {
         this.difficultyPromptText = new Text("SELECT DIFFICULTY:");
         this.difficultyPromptText.setFont(textFont);
         this.difficultyPromptText.setFill(textColor);
+
         this.easyRB = new RadioButton("Easy ");
         this.easyRB.setId("easyRB");
         this.easyRB.setFont(smallFont);
         this.easyRB.setToggleGroup(difficultyRBGroup);
-        this.easyRB.setOnAction(e -> {
-            this.difficulty = Difficulty.EASY;
-        });
+        this.easyRB.setOnAction(e -> this.difficulty = Difficulty.EASY);
+
         this.mediumRB = new RadioButton("Medium ");
         this.mediumRB.setId("mediumRB");
         this.mediumRB.setFont(smallFont);
         this.mediumRB.setToggleGroup(difficultyRBGroup);
-        this.mediumRB.setOnAction(e -> {
-            this.difficulty = Difficulty.MEDIUM;
-        });
+        this.mediumRB.setOnAction(e -> this.difficulty = Difficulty.MEDIUM);
+
         this.hardRB = new RadioButton("Hard ");
         this.hardRB.setId("hardRB");
         this.hardRB.setFont(smallFont);
         this.hardRB.setToggleGroup(difficultyRBGroup);
-        this.hardRB.setOnAction(e -> {
-            this.difficulty = Difficulty.HARD;
-        });
+        this.hardRB.setOnAction(e -> this.difficulty = Difficulty.HARD);
 
         // Weapon dropdown init
         this.weaponPromptText = new Text("SELECT YOUR WEAPON:");
         this.weaponPromptText.setFont(textFont);
         this.weaponPromptText.setFill(textColor);
+
         this.weaponDropdown = new ComboBox<>();
         this.weaponDropdown.setId("weaponDropdown");
         this.weaponDropdown.setBackground(new Background(
