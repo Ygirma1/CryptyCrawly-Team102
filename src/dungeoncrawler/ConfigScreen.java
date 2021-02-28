@@ -98,7 +98,7 @@ public class ConfigScreen {
         this.weaponDropdown.getItems().add("Greatsword");
 
         // Proceed button init
-        this.proceedButton = new Button("PROCEED"); // TODO: add lambda to proceed here
+        this.proceedButton = new Button("PROCEED");
         this.proceedButton.setFont(textFont);
         this.proceedButton.setStyle("-fx-background-color: #a1abab;");
     }
