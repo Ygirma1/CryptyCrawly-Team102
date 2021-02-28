@@ -11,9 +11,9 @@ public class Controller extends Application {
     private Stage primaryStage;
     private final int width = 500;
     private final int height = 500;
-    private String characterName = "";
-    private String difficulty = "";
-    private String weapon = "";
+    private static String characterName = "";
+    private static String difficulty = "";
+    private static String weapon = "";
 
 
     @Override
@@ -21,6 +21,7 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
         initConfigScreen(); // Comment this out when you test your screen.
+        //proceedToGameScreen();
     }
 
     private void initConfigScreen() {
@@ -50,7 +51,13 @@ public class Controller extends Application {
     }
 
     private void proceedToGameScreen() {
-        // TODO: create the initial game scene class, add that scene here, setScene for the stage, call show to change screen
+        InitialGameScreen screen = new InitialGameScreen();
+        this.primaryStage.setScene(screen.getScene());
+        this.primaryStage.show();
+    }
+
+    public static String getDifficulty() {
+        return (difficulty);
     }
 
     public static void main(String[] args) {
