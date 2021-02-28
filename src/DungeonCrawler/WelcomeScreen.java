@@ -4,31 +4,57 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public class WelcomeScreen {
     private int width;
     private int height;
+    private Font titleFont = new Font("High Tower Text", 60);
+    private Font smallFont = new Font("High Tower Text", 24);
+    private Color backgroundColor = Color.rgb(120, 135, 135);
+    private Color nodeColor = Color.rgb(161, 171, 171);
+    private Color textColor = Color.rgb(48, 54, 54);
     private Button playButton;
-    private Button settingsButton;
     private Text gameTitle;
+    private Text authorText1;
+    private Text authorText2;
 
     public WelcomeScreen(){
         this(500, 500);
     }
 
     /**
-     * The WelcomeScreen constructor
+     * The WelcomeScreen constructor.
      * @param width Determines how wide the welcome screen is
      * @param height Determines how tall the welcome screen is
      */
     public WelcomeScreen(int width, int height) {
         this.width = width;
         this.height = height;
-        this.gameTitle = new Text("Game Title");
+
+        //init title text
+        this.gameTitle = new Text("Crypt of Treasure");
+        this.gameTitle.setFont(titleFont);
+        this.gameTitle.setFill(textColor);
+
+        //init author text
+        this.authorText1 = new Text("Aaron Mallory, Peter Dong, Tristan Rogers,");
+        this.authorText1.setFont(smallFont);
+        this.authorText1.setFill(textColor);
+        this.authorText2 = new Text("Nishant Baglodi, and Yafet Girma");
+        this.authorText2.setFont(smallFont);
+        this.authorText2.setFill(textColor);
+
+
+        //init start button
         this.playButton = new Button("Start");
+        this.playButton.setFont(smallFont);
+        this.playButton.setStyle("-fx-background-color: #a1abab;");
+        this.playButton.setPrefWidth(100.0);
+        this.playButton.setPrefHeight(50.0);
     }
 
     /**
@@ -36,19 +62,26 @@ public class WelcomeScreen {
      * @return The scene containing all nodes for the welcome screen.
      */
     public Scene getScene(){
-        HBox buttonBox = new HBox(this.playButton);
         //Used a HBox in case additional buttons are desired
+        HBox buttonBox = new HBox(this.playButton);
         buttonBox.setSpacing(50.0);
         buttonBox.setAlignment(Pos.CENTER);
-        this.playButton.setPrefWidth(85.0);this.playButton.setPrefHeight(35.0);
-        VBox titleVBox = new VBox(this.gameTitle, buttonBox);
+
+        //VBox to add author text
+        VBox authorVBox = new VBox(authorText1, authorText2);
+        authorVBox.setSpacing(15);
+        authorVBox.setAlignment(Pos.CENTER);
+
+        //VBox to add title and buttonBox
+        VBox titleVBox = new VBox(this.gameTitle, buttonBox, authorVBox);
         titleVBox.setSpacing(50.0);
-        this.gameTitle.setFont(Font.font("Times New Roman", 75.0));
-        this.gameTitle.setWrappingWidth(1000.0);
-        this.gameTitle.setTextAlignment(TextAlignment.CENTER);
         titleVBox.setAlignment(Pos.CENTER);
-        Scene main = new Scene(titleVBox, width, height);
-        return main;
+
+        //StackPane to add background and main vBox
+        Rectangle background = new Rectangle(this.width, this.height, this.backgroundColor);
+        StackPane sPane = new StackPane(background, titleVBox);
+
+        return new Scene(sPane, this.width, this.height);
     }
 
     /**
@@ -82,8 +115,4 @@ public class WelcomeScreen {
     public Text getGameTitle(){
         return this.gameTitle;
     }
-
-
-
 }
-
