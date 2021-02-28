@@ -20,7 +20,19 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        initConfigScreen(); // Comment this out when you test your screen.
+        //initConfigScreen(); // Comment this out when you test your screen.
+        welcomeScreen(); //Comment this out as well when testing your screen.
+    }
+
+    private void welcomeScreen(){
+        WelcomeScreen welcomeScreen = new WelcomeScreen();
+        Button play = welcomeScreen.getPlayButton();
+        this.primaryStage.setScene(welcomeScreen.getScene());
+        this.primaryStage.show();
+        Button startButton = welcomeScreen.getPlayButton();
+        startButton.setOnAction(e -> {
+            initConfigScreen();
+        });
     }
 
     private void initConfigScreen() {
@@ -30,6 +42,7 @@ public class Controller extends Application {
             // Checking if character name is valid
             this.characterName = configScreen.getNameField().getText();
             if (this.characterName == null || this.characterName.length() == 0 || this.characterName.strip().length() == 0) {
+                configScreen.getNameField().setText("Please enter a character name.");
                 return;
             }
             //Checking if selected difficulty is valid (not null)
