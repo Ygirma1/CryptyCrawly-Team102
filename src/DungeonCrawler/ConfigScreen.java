@@ -3,151 +3,212 @@ package DungeonCrawler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.*;
-
 
 public class ConfigScreen {
     private int width;
     private int height;
+    private Difficulty difficulty;
+    private Text namePromptText;
+    private Text difficultyPromptText;
+    private Text weaponPromptText;
+    private Font textFont = new Font("High Tower Text", 20);
+    private Font smallFont = new Font("High Tower Text", 14);
+    private Color backgroundColor = Color.rgb(120, 135, 135);
+    private Color nodeColor = Color.rgb(161, 171, 171);
+    private Color textColor = Color.rgb(48, 54, 54);
     private TextField nameField;
-    private ComboBox difficultyDropdown;
-    private ComboBox weaponDropdown;
+    private ComboBox<String> weaponDropdown;
+    private RadioButton easyRB;
+    private RadioButton mediumRB;
+    private RadioButton hardRB;
+    private ToggleGroup difficultyRBGroup = new ToggleGroup();
     private Button proceedButton;
-    // NOTE: A button to proceed to initial game screen?
 
+    /**
+     * No argument constructor that initializes this config screen with given width and height.
+     */
     public ConfigScreen() {
         this(500, 500);
     }
 
     /**
-     * ConfigScreen constructor
+     * ConfigScreen constructor.
      * @param width The width of the scene
      * @param height The height of the scene
      */
     public ConfigScreen(int width, int height) {
         this.width = width;
         this.height = height;
-        this.nameField = new TextField(); // hb.getChildren().addAll(label1, textField); make sure to add label
-        this.nameField.setPromptText("Enter your name");
-        this.nameField.setPrefWidth(110);
 
-        // Difficulty dropdown init
-        // To read the selected value, do this.difficultyDropdown.getValue()
-        this.difficultyDropdown = new ComboBox();
-        this.difficultyDropdown.getItems().add("Easy");
-        this.difficultyDropdown.getItems().add("Medium");
-        this.difficultyDropdown.getItems().add("Hard");
+        // Name field and corresponding text
+        // Obtain player name with nameField.getText()
+        this.namePromptText = new Text("ENTER YOUR NAME:");
+        this.namePromptText.setFont(textFont);
+        this.namePromptText.setFill(textColor);
+        this.nameField = new TextField();
+        this.nameField.setFont(smallFont);
+        this.nameField.setStyle("-fx-background-color: #a1abab;");
+        this.nameField.setAlignment(Pos.CENTER);
+        this.nameField.setMaxWidth(160);
+
+        // Difficulty RB group init
+        // Obtain selected radio button with difficultyRBGroup.getSelectedToggle()
+        this.difficultyPromptText = new Text("SELECT DIFFICULTY:");
+        this.difficultyPromptText.setFont(textFont);
+        this.difficultyPromptText.setFill(textColor);
+        this.easyRB = new RadioButton("Easy ");
+        this.easyRB.setFont(smallFont);
+        this.easyRB.setToggleGroup(difficultyRBGroup);
+        this.easyRB.setOnAction(e -> {
+            this.difficulty = Difficulty.EASY;
+        });
+        this.mediumRB = new RadioButton("Medium ");
+        this.mediumRB.setFont(smallFont);
+        this.mediumRB.setToggleGroup(difficultyRBGroup);
+        this.mediumRB.setOnAction(e -> {
+           this.difficulty = Difficulty.MEDIUM;
+        });
+        this.hardRB = new RadioButton("Hard ");
+        this.hardRB.setFont(smallFont);
+        this.hardRB.setToggleGroup(difficultyRBGroup);
+        this.hardRB.setOnAction(e -> {
+           this.difficulty = Difficulty.HARD;
+        });
 
         // Weapon dropdown init
-        this.weaponDropdown = new ComboBox();
+        this.weaponPromptText = new Text("SELECT YOUR WEAPON:");
+        this.weaponPromptText.setFont(textFont);
+        this.weaponPromptText.setFill(textColor);
+        this.weaponDropdown = new ComboBox<>();
+        this.weaponDropdown.setBackground(new Background(new BackgroundFill(nodeColor, null, null)));
+        this.weaponDropdown.setStyle("-fx-font: 14px \"High Tower Text\";");
         this.weaponDropdown.getItems().add("Weapon 1"); // TODO: Change this
         this.weaponDropdown.getItems().add("Weapon 2");
         this.weaponDropdown.getItems().add("Weapon 3");
 
         // Proceed button init
-        this.proceedButton = new Button("Proceed to next screen"); // TODO: add lambda to proceed here
+        this.proceedButton = new Button("PROCEED"); // TODO: add lambda to proceed here
+        this.proceedButton.setFont(textFont);
+        this.proceedButton.setStyle("-fx-background-color: #a1abab;");
     }
 
 
     /**
-     * Set up the scene for the config screen
+     * Set up the scene for the configuration screen.
      * @return the Scene object for the config screen
      */
     public Scene getScene() {
-        // Name Hbox
-        HBox nameHBox = new HBox(new Label("Enter Name: "), this.nameField);
-        nameHBox.setAlignment(Pos.CENTER);
-        nameHBox.setSpacing(10);
+        // Name Input
+        VBox nameVBox = new VBox();
+        nameVBox.getChildren().addAll(namePromptText, nameField);
+        nameVBox.setSpacing(10);
+        nameVBox.setAlignment(Pos.CENTER);
 
-        // Dropdown HBox
-        HBox diffDropdownHBox = new HBox(new Label("Select difficulty:"), this.difficultyDropdown);
-        diffDropdownHBox.setSpacing(10);
-        diffDropdownHBox.setAlignment(Pos.CENTER);
-        HBox weaponDropdownHBox = new HBox(new Label("Select weapon:"), this.weaponDropdown);
-        weaponDropdownHBox.setSpacing(10);
-        weaponDropdownHBox.setAlignment(Pos.CENTER);
-        HBox dropdowns = new HBox(diffDropdownHBox, weaponDropdownHBox);
-        dropdowns.setAlignment(Pos.CENTER);
-        dropdowns.setSpacing(20);
-        // proceedButton
-        VBox wrapperVBox = new VBox(nameHBox, dropdowns, this.proceedButton);
-        wrapperVBox.setSpacing(70);
+        // Difficulty Selector
+        VBox difficultyVBox = new VBox();
+        HBox rbBox = new HBox(easyRB, mediumRB, hardRB);
+        rbBox.setSpacing(10);
+        rbBox.setAlignment(Pos.CENTER);
+        difficultyVBox.getChildren().addAll(difficultyPromptText, rbBox);
+        difficultyVBox.setSpacing(10);
+        difficultyVBox.setAlignment(Pos.CENTER);
+
+        // Weapon Selector
+        VBox weaponVBox = new VBox(weaponPromptText, weaponDropdown);
+        weaponVBox.setSpacing(10);
+        weaponVBox.setAlignment(Pos.CENTER);
+
+        // All vbox together
+        VBox wrapperVBox = new VBox(nameVBox, difficultyVBox, weaponVBox);
+        wrapperVBox.getChildren().add(this.proceedButton);
         wrapperVBox.setAlignment(Pos.TOP_CENTER);
+        wrapperVBox.setSpacing(30);
 
+        // Create panes for nodes
+        BorderPane bPane = new BorderPane();
+        bPane.setCenter(wrapperVBox);
+        BorderPane.setMargin(wrapperVBox, new Insets(100, 0, 0, 0));
+        Rectangle background = new Rectangle(this.width, this.height, this.backgroundColor);
+        StackPane sPane = new StackPane(background, bPane);
 
-        BorderPane pane = new BorderPane();
-        BorderPane.setAlignment(wrapperVBox, Pos.CENTER);
-        BorderPane.setMargin(wrapperVBox, new Insets(100, 0, 0 ,0));
-
-        pane.setCenter(wrapperVBox);
-        return new Scene(pane, this.width, this.height);
+        return new Scene(sPane, this.width, this.height);
     }
 
     /**
-     * Width setter
-     * @param width
+     * Mutator method for width.
+     * @param width the width of the config screen
      */
     public void setWidth(int width) {
         this.width = width;
     }
 
     /**
-     * Height setter
-     * @param height
+     * Mutator method for height.
+     * @param height the height of the config screen
      */
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
-     * Width getter
-     * @return
+     * Accessor method for width.
+     * @return width of config screen
      */
     public int getWidth() {
         return this.width;
     }
 
     /**
-     * Height getter
-     * @return
+     * Accessor method for height.
+     * @return height of config screen
      */
     public int getHeight() {
         return this.height;
     }
 
     /**
-     * nameField TextField object getter
-     * @return
+     * Accessor method for nameField object.
+     * @return TextField object nameField
      */
     public TextField getNameField() {
         return this.nameField;
     }
 
     /**
-     * difficultyDropdown TextField object getter
-     * @return
-     */
-    public ComboBox getDifficultyDropdown() {
-        return this.difficultyDropdown;
-    }
-
-    /**
-     * weaponDropdown ComboBox object getter
-     * @return
+     * Accessor method for weaponDropDown ComboBox.
+     * @return the weaponDropDown ComboBox
      */
     public ComboBox getWeaponDropdown() {
         return this.weaponDropdown;
     }
 
     /**
-     * proceedButton Button object getter
-     * @return
+     * Accessor method for Button proceedButton.
+     * @return the Button proceedButton
      */
     public Button getProceedButton() {
         return this.proceedButton;
+    }
+
+    /**
+     * Accessor method for enum variable difficulty.
+     * @return this instance's difficulty
+     */
+    public Difficulty getDifficulty() {
+        return this.difficulty;
+    }
+
+    /**
+     * Accessor method for the difficulty radio button toggle group.
+     * @return the difficultyRBGroup
+     */
+    public ToggleGroup getDifficultyRBGroup() {
+        return this.difficultyRBGroup;
     }
 }
