@@ -16,7 +16,7 @@ public class InitialGameScreen {
     private Color backgroundColor = Color.rgb(120, 135, 135);
 
     public InitialGameScreen() {
-        this("Medium", 500,500);
+        this("Medium", 500, 500);
     }
 
     public InitialGameScreen(String difficulty, int width, int height) {
