@@ -17,8 +17,7 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        //initConfigScreen(); // Comment this out when you test your screen.
-        welcomeScreen(); //Comment this out as well when testing your screen.
+        welcomeScreen();
     }
 
     private void welcomeScreen() {
@@ -32,7 +31,7 @@ public class Controller extends Application {
         });
     }
 
-    private void initConfigScreen() {
+    public void initConfigScreen() {
         ConfigScreen configScreen = new ConfigScreen(width, height);
         Button proceedButton = configScreen.getProceedButton();
         proceedButton.setOnAction(e -> {
@@ -63,6 +62,18 @@ public class Controller extends Application {
         InitialGameScreen screen = new InitialGameScreen(difficulty, width, height);
         this.primaryStage.setScene(screen.getScene());
         this.primaryStage.show();
+    }
+
+    public String getCharacterName() {
+        return characterName;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public String getWeapon() {
+        return weapon;
     }
 
     public static void main(String[] args) {

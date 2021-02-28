@@ -4,14 +4,16 @@ import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.control.TextInputControlMatchers;
 
 import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
+    private Controller controller;
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Controller controller = new Controller();
+        controller = new Controller();
         controller.start(primaryStage);
     }
 
@@ -31,7 +33,26 @@ public class DungeonCrawlerTest extends ApplicationTest {
         } else {
             verifyThat("Starting Room", NodeMatchers.isNotNull());
         }
+    }
 
+    @Test
+    public void testConfigScreenNameField() { // test if name field works
+        clickOn("Start");
+        clickOn("#nameField").write("YEET");
+        verifyThat("#nameField", TextInputControlMatchers.hasText("YEET"));
+    }
+
+    @Test
+    public void testConfigSavedUponProceed() { // test if configs are saved upon proceed to the game
+        clickOn("Start");
+        clickOn("#nameField").write("Peter");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+        assertEquals("Peter", controller.getCharacterName());
+        assertEquals("Bludgeon", controller.getWeapon());
+        assertEquals("HARD", controller.getDifficulty());
     }
 }
 

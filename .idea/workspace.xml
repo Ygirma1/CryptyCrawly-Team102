@@ -20,11 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5a22b89-d7a4-4878-bf0e-a486878a2a10" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_testfx_testfx_junit5_4_0_16_alpha.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dungeoncrawler/ConfigScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dungeoncrawler/ConfigScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dungeoncrawler/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dungeoncrawler/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dungeoncrawler/InitialGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dungeoncrawler/InitialGameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dungeoncrawler/WelcomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dungeoncrawler/WelcomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/DungeonCrawlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/DungeonCrawlerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,13 +65,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../JavaFX/javafx-sdk-11.0.2/lib" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Controller">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -87,12 +88,66 @@
     <configuration name="Controller" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="dungeoncrawler.Controller" />
       <module name="CS2340-Team102-Dungeon-Crawler" />
-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\User\JavaFX\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DungeonCrawlerTest.testConfigSavedUponProceed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CS2340-Team102-Dungeon-Crawler" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DungeonCrawlerTest" />
+      <option name="METHOD_NAME" value="testConfigSavedUponProceed" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DungeonCrawlerTest.testConfigScreenNameField" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CS2340-Team102-Dungeon-Crawler" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DungeonCrawlerTest" />
+      <option name="METHOD_NAME" value="testConfigScreenNameField" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DungeonCrawlerTest.testEmptyName" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="CS2340-Team102-Dungeon-Crawler" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DungeonCrawlerTest" />
+      <option name="METHOD_NAME" value="testEmptyName" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DungeonCrawlerTest.testStart" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CS2340-Team102-Dungeon-Crawler" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DungeonCrawlerTest" />
+      <option name="METHOD_NAME" value="testStart" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Controller" />
+      <item itemvalue="JUnit.DungeonCrawlerTest.testEmptyName" />
+      <item itemvalue="JUnit.DungeonCrawlerTest.testStart" />
+      <item itemvalue="JUnit.DungeonCrawlerTest.testConfigSavedUponProceed" />
+      <item itemvalue="JUnit.DungeonCrawlerTest.testConfigScreenNameField" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.DungeonCrawlerTest.testConfigSavedUponProceed" />
+        <item itemvalue="JUnit.DungeonCrawlerTest.testConfigScreenNameField" />
+        <item itemvalue="JUnit.DungeonCrawlerTest.testStart" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
@@ -130,44 +185,44 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614547297021">
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614550659930">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1614547297021" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1614550659930" />
     <state x="209" y="89" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.807@0.23.1440.807" timestamp="1614541969774" />
-    <state x="473" y="153" key="FileChooserDialogImpl" timestamp="1614538675009">
+    <state x="473" y="153" key="FileChooserDialogImpl" timestamp="1614550735724">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="473" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1614538675009" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1614549727019">
+    <state x="473" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1614550735724" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1614550445414">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614549727019" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614550445414" />
     <state width="1358" height="194" key="GridCell.Tab.0.bottom/0.23.1440.807@0.23.1440.807" timestamp="1614542567600" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1614549727019">
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1614550445414">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614549727019" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614550445414" />
     <state width="1358" height="194" key="GridCell.Tab.0.center/0.23.1440.807@0.23.1440.807" timestamp="1614542567599" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1614549727018">
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1614550445413">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614549727018" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614550445413" />
     <state width="1358" height="194" key="GridCell.Tab.0.left/0.23.1440.807@0.23.1440.807" timestamp="1614542567599" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1614549727019">
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1614550445414">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614549727019" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614550445414" />
     <state width="1358" height="194" key="GridCell.Tab.0.right/0.23.1440.807@0.23.1440.807" timestamp="1614542567599" />
-    <state x="249" y="0" key="SettingsEditor" timestamp="1614547120730">
+    <state x="249" y="0" key="SettingsEditor" timestamp="1614550912304">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1614547120730" />
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1614550912303" />
     <state x="233" y="23" key="SettingsEditor/0.23.1440.807@0.23.1440.807" timestamp="1614541912323" />
-    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1614538961253">
+    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1614550904705">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1614538961253" />
+    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1614550904705" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1614543097087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
