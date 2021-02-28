@@ -28,6 +28,8 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("PROCEED");
         if (config.getNameField().getText().isEmpty()) {
             assertEquals("Please enter a character name.", config.getNameField().getText());
+        } else {
+            verifyThat("Starting Room", NodeMatchers.isNotNull());
         }
 
     }

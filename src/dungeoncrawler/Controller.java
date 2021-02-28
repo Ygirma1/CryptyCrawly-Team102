@@ -60,7 +60,7 @@ public class Controller extends Application {
     }
 
     private void proceedToGameScreen() {
-        InitialGameScreen screen = new InitialGameScreen(difficulty);
+        InitialGameScreen screen = new InitialGameScreen(difficulty, width, height);
         this.primaryStage.setScene(screen.getScene());
         this.primaryStage.show();
     }

@@ -10,18 +10,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class WelcomeScreen {
-    private int width;
-    private int height;
-    private Font titleFont = new Font("High Tower Text", 60);
-    private Font smallFont = new Font("High Tower Text", 24);
-    private Color backgroundColor = Color.rgb(120, 135, 135);
-    private Color nodeColor = Color.rgb(161, 171, 171);
-    private Color textColor = Color.rgb(48, 54, 54);
-    private Button playButton;
-    private Text gameTitle;
-    private Text authorText1;
-    private Text authorText2;
+    private final int width;
+    private final int height;
+    private final Color backgroundColor = Color.rgb(120, 135, 135);
+    private final Button playButton;
+    private final Text gameTitle;
+    private final Text authorText1;
+    private final Text authorText2;
 
+    /**
+     * No-parameter constructor for Welcome Screen.
+     */
     public WelcomeScreen() {
         this(500, 500);
     }
@@ -37,11 +36,14 @@ public class WelcomeScreen {
 
         //init title text
         this.gameTitle = new Text("Crypt of Treasure");
+        Font titleFont = new Font("High Tower Text", 60);
         this.gameTitle.setFont(titleFont);
+        Color textColor = Color.rgb(48, 54, 54);
         this.gameTitle.setFill(textColor);
 
         //init author text
         this.authorText1 = new Text("Aaron Mallory, Chuong Dong, Tristan Rogers,");
+        Font smallFont = new Font("High Tower Text", 24);
         this.authorText1.setFont(smallFont);
         this.authorText1.setFill(textColor);
         this.authorText2 = new Text("Nishant Baglodi, and Yafet Girma");
