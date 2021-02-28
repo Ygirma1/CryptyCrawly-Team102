@@ -8,21 +8,16 @@ public class Controller extends Application {
     private Stage primaryStage;
     private final int width = 500;
     private final int height = 500;
-    private static String characterName = "";
-    private static String difficulty = "";
-    private static String weapon = "";
+    private String characterName = "";
+    private String difficulty = "";
+    private String weapon = "";
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-<<<<<<< HEAD:src/DungeonCrawler/Controller.java
-        initConfigScreen(); // Comment this out when you test your screen.
-        //proceedToGameScreen();
-=======
-        //initConfigScreen(); // Comment this out when you test your screen.
-        welcomeScreen(); //Comment this out as well when testing your screen.
+        welcomeScreen();
     }
 
     private void welcomeScreen() {
@@ -34,10 +29,9 @@ public class Controller extends Application {
         startButton.setOnAction(e -> {
             initConfigScreen();
         });
->>>>>>> master:src/dungeoncrawler/Controller.java
     }
 
-    private void initConfigScreen() {
+    public void initConfigScreen() {
         ConfigScreen configScreen = new ConfigScreen(width, height);
         Button proceedButton = configScreen.getProceedButton();
         proceedButton.setOnAction(e -> {
@@ -65,19 +59,21 @@ public class Controller extends Application {
     }
 
     private void proceedToGameScreen() {
-<<<<<<< HEAD:src/DungeonCrawler/Controller.java
-        InitialGameScreen screen = new InitialGameScreen();
+        InitialGameScreen screen = new InitialGameScreen(difficulty, width, height);
         this.primaryStage.setScene(screen.getScene());
         this.primaryStage.show();
     }
 
-    public static String getDifficulty() {
-        return (difficulty);
-=======
-        InitialGameScreen screen = new InitialGameScreen(difficulty);
-        this.primaryStage.setScene(screen.getScene());
-        this.primaryStage.show();
->>>>>>> master:src/dungeoncrawler/Controller.java
+    public String getCharacterName() {
+        return characterName;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public String getWeapon() {
+        return weapon;
     }
 
     public static void main(String[] args) {

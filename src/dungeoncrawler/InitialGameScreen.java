@@ -1,24 +1,30 @@
-package DungeonCrawler;
+package dungeoncrawler;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class InitialGameScreen {
     private int gold;
+    private int width;
+    private int height;
+    private Color backgroundColor = Color.rgb(120, 135, 135);
 
     public InitialGameScreen() {
-        if (Controller.getDifficulty().equals("Easy")) {
+        this("Medium", 500,500);
+    }
+
+    public InitialGameScreen(String difficulty, int width, int height) {
+        this.width = width;
+        this.height = height;
+        if (difficulty.equals("Easy")) {
             gold = 100;
-        } else if (Controller.getDifficulty().equals("Medium")) {
+        } else if (difficulty.equals("Medium")) {
             gold = 75;
         } else {
             gold = 50;
@@ -29,11 +35,15 @@ public class InitialGameScreen {
         Text roomName = new Text("Starting Room");
         Text goldAmount = new Text("" + gold);
         goldAmount.setFill(Color.DARKGOLDENROD);
+
         root.setLeft(roomName);
         root.setRight(goldAmount);
 
         Pane pane = new Pane();
+        //pane.setBackground(bg, );
+
         Button exit1 = new Button("Exit 1");
+
         Button exit2 = new Button("Exit 2");
         Button exit3 = new Button("Exit 3");
         Button exit4 = new Button("Exit 4");
@@ -58,5 +68,4 @@ public class InitialGameScreen {
 
         return new Scene(root, 500, 500);
     }
-
 }
