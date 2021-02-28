@@ -60,8 +60,9 @@ public class Controller extends Application {
     }
 
     private void proceedToGameScreen() {
-        // TODO: create the initial game scene class, add that scene here,
-        //  setScene for the stage, call show to change screen
+        InitialGameScreen screen = new InitialGameScreen(difficulty);
+        this.primaryStage.setScene(screen.getScene());
+        this.primaryStage.show();
     }
 
     public static void main(String[] args) {
