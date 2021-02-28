@@ -72,13 +72,13 @@ public class ConfigScreen {
         this.mediumRB.setFont(smallFont);
         this.mediumRB.setToggleGroup(difficultyRBGroup);
         this.mediumRB.setOnAction(e -> {
-           this.difficulty = Difficulty.MEDIUM;
+            this.difficulty = Difficulty.MEDIUM;
         });
         this.hardRB = new RadioButton("Hard ");
         this.hardRB.setFont(smallFont);
         this.hardRB.setToggleGroup(difficultyRBGroup);
         this.hardRB.setOnAction(e -> {
-           this.difficulty = Difficulty.HARD;
+            this.difficulty = Difficulty.HARD;
         });
 
         // Weapon dropdown init
