@@ -13,10 +13,10 @@ import javafx.scene.layout.*;
 public class ConfigScreen {
     private int width;
     private int height;
-    private TextField nameField;
-    private ComboBox<String> difficultyDropdown;
-    private ComboBox<String> weaponDropdown;
-    private Button proceedButton;
+    private final TextField nameField;
+    private final ComboBox<String> difficultyDropdown;
+    private final ComboBox<String> weaponDropdown;
+    private final Button proceedButton;
     // NOTE: A button to proceed to initial game screen?
 
     public ConfigScreen() {
