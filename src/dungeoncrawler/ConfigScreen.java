@@ -56,6 +56,7 @@ public class ConfigScreen {
         this.namePromptText.setFont(textFont);
         this.namePromptText.setFill(textColor);
         this.nameField = new TextField();
+        this.nameField.setId("nameField");
         this.nameField.setFont(smallFont);
         this.nameField.setStyle("-fx-background-color: #a1abab;");
         this.nameField.setAlignment(Pos.CENTER);
@@ -67,18 +68,21 @@ public class ConfigScreen {
         this.difficultyPromptText.setFont(textFont);
         this.difficultyPromptText.setFill(textColor);
         this.easyRB = new RadioButton("Easy ");
+        this.easyRB.setId("easyRB");
         this.easyRB.setFont(smallFont);
         this.easyRB.setToggleGroup(difficultyRBGroup);
         this.easyRB.setOnAction(e -> {
             this.difficulty = Difficulty.EASY;
         });
         this.mediumRB = new RadioButton("Medium ");
+        this.mediumRB.setId("mediumRB");
         this.mediumRB.setFont(smallFont);
         this.mediumRB.setToggleGroup(difficultyRBGroup);
         this.mediumRB.setOnAction(e -> {
             this.difficulty = Difficulty.MEDIUM;
         });
         this.hardRB = new RadioButton("Hard ");
+        this.hardRB.setId("hardRB");
         this.hardRB.setFont(smallFont);
         this.hardRB.setToggleGroup(difficultyRBGroup);
         this.hardRB.setOnAction(e -> {
@@ -90,6 +94,7 @@ public class ConfigScreen {
         this.weaponPromptText.setFont(textFont);
         this.weaponPromptText.setFill(textColor);
         this.weaponDropdown = new ComboBox<>();
+        this.weaponDropdown.setId("weaponDropdown");
         this.weaponDropdown.setBackground(new Background(
                 new BackgroundFill(nodeColor, null, null)));
         this.weaponDropdown.setStyle("-fx-font: 14px \"High Tower Text\";");
