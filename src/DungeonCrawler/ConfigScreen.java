@@ -88,9 +88,9 @@ public class ConfigScreen {
         this.weaponDropdown = new ComboBox<>();
         this.weaponDropdown.setBackground(new Background(new BackgroundFill(nodeColor, null, null)));
         this.weaponDropdown.setStyle("-fx-font: 14px \"High Tower Text\";");
-        this.weaponDropdown.getItems().add("Weapon 1"); // TODO: Change this
-        this.weaponDropdown.getItems().add("Weapon 2");
-        this.weaponDropdown.getItems().add("Weapon 3");
+        this.weaponDropdown.getItems().add("Shortsword"); // TODO: Change this
+        this.weaponDropdown.getItems().add("Bludgeon");
+        this.weaponDropdown.getItems().add("Greatsword");
 
         // Proceed button init
         this.proceedButton = new Button("PROCEED"); // TODO: add lambda to proceed here

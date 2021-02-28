@@ -20,7 +20,6 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        //initConfigScreen(); // Comment this out when you test your screen.
         welcomeScreen(); //Comment this out as well when testing your screen.
     }
 
@@ -55,9 +54,9 @@ public class Controller extends Application {
                 return;
             }
             this.weapon = configScreen.getWeaponDropdown().getValue().toString();
-            System.out.println("Character name: " + this.characterName);
-            System.out.println("Difficulty: " + this.difficulty);
-            System.out.println("Weapon: " + this.weapon);
+//            System.out.println("Character name: " + this.characterName);
+//            System.out.println("Difficulty: " + this.difficulty);
+//            System.out.println("Weapon: " + this.weapon);
             proceedToGameScreen();
         });
         this.primaryStage.setScene(configScreen.getScene());

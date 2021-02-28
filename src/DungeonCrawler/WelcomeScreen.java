@@ -41,7 +41,7 @@ public class WelcomeScreen {
         this.gameTitle.setFill(textColor);
 
         //init author text
-        this.authorText1 = new Text("Aaron Mallory, Peter Dong, Tristan Rogers,");
+        this.authorText1 = new Text("Aaron Mallory, Chuong Dong, Tristan Rogers,");
         this.authorText1.setFont(smallFont);
         this.authorText1.setFill(textColor);
         this.authorText2 = new Text("Nishant Baglodi, and Yafet Girma");
