@@ -41,6 +41,7 @@ public class Controller extends Application {
         proceedButton.setOnAction(e -> {
             this.characterName = configScreen.getNameField().getText();
             if (this.characterName == null || this.characterName.length() == 0 || this.characterName.strip().length() == 0) {
+                configScreen.getNameField().setText("Please enter a character name.");
                 return;
             }
 
