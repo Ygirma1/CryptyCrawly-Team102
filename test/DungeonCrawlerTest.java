@@ -1,4 +1,5 @@
 import dungeoncrawler.Controller;
+import dungeoncrawler.Difficulty;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -49,6 +50,39 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals("Peter", controller.getCharacterName());
         assertEquals("Bludgeon", controller.getWeapon());
         assertEquals("HARD", controller.getDifficulty());
+    }
+
+    @Test
+    public void testEasyDifficulty() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getDifficulty(), Difficulty.EASY.toString());
+    }
+
+    @Test
+    public void testMediumDifficulty() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#mediumRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getDifficulty(), Difficulty.MEDIUM.toString());
+    }
+
+    @Test
+    public void testHardDifficulty() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getDifficulty(), Difficulty.HARD.toString());
     }
 }
 
