@@ -19,12 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5a22b89-d7a4-4878-bf0e-a486878a2a10" name="Default Changelist" comment="Added width/height getters and setters in gamescreen.">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/org_testfx_testfx_junit_4_0_15_alpha.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CS2340-Team102-Dungeon-Crawler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CS2340-Team102-Dungeon-Crawler.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/DungeonCrawlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/DungeonCrawlerTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="a5a22b89-d7a4-4878-bf0e-a486878a2a10" name="Default Changelist" comment="Fixed my test class good from earlier." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -180,7 +175,21 @@
       <option name="project" value="LOCAL" />
       <updated>1614556663165</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fixed my test class good from earlier.">
+      <created>1614559336672</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1614559336672</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed my test class good from earlier.">
+      <created>1614559347041</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1614559347041</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +210,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Added width/height getters and setters in gamescreen." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added width/height getters and setters in gamescreen." />
+    <MESSAGE value="Fixed my test class good from earlier." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed my test class good from earlier." />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614557981878">
