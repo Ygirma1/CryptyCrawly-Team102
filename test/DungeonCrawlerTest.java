@@ -116,5 +116,38 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("PROCEED");
         assertEquals(50, controller.getGold());
     }
+
+    @Test
+    public void testGreatSwordWeaponChoice() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getWeapon(), "Greatsword");
+    }
+
+    @Test
+    public void testBludgeonWeaponChoice() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+        assertEquals(controller.getWeapon(), "Bludgeon");
+    }
+
+    @Test
+    public void testShortswordWeaponChoice() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getWeapon(), "Shortsword");
+    }
 }
 
