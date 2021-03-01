@@ -1,8 +1,7 @@
-import dungeoncrawler.ConfigScreen;
 import dungeoncrawler.Controller;
 import javafx.stage.Stage;
 import org.junit.Test;
-import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
@@ -10,7 +9,8 @@ import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
-    private Controller controller;
+    private Controller controller = new Controller();
+    //JFXPanel testPanel = new JFXPanel();
     @Override
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
@@ -19,6 +19,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testStart() {
+        //WelcomeScreen ws = new WelcomeScreen(500,500);
         clickOn("Start");
         verifyThat("ENTER YOUR NAME:", NodeMatchers.isNotNull());
         System.out.println("start works");
@@ -26,13 +27,9 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testEmptyName() {
-        ConfigScreen config = new ConfigScreen();
+        clickOn("Start");
         clickOn("PROCEED");
-        if (config.getNameField().getText().isEmpty()) {
-            assertEquals("Please enter a character name.", config.getNameField().getText());
-        } else {
-            verifyThat("Starting Room", NodeMatchers.isNotNull());
-        }
+        verifyThat("#nameField", TextInputControlMatchers.hasText("Please enter a character name."));
     }
 
     @Test
