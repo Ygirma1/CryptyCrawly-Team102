@@ -1,9 +1,6 @@
 import dungeoncrawler.Controller;
 import dungeoncrawler.Difficulty;
-<<<<<<< HEAD
 import dungeoncrawler.InitialGameScreen;
-=======
->>>>>>> master
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
