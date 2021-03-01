@@ -11,13 +11,20 @@ import javafx.scene.text.Text;
 import org.assertj.core.internal.Diff;
 
 public class InitialGameScreen {
-    private int gold;
+    private final int gold;
     private int width;
     private int height;
     private Color backgroundColor = Color.rgb(120, 135, 135);
 
+    /**
+     * No-parameter constructor using default difficulty of medium.
+     */
     public InitialGameScreen() {
+<<<<<<< HEAD
         this(Difficulty.EASY, 500,500);
+=======
+        this("Medium", 500, 500);
+>>>>>>> master
     }
 
     public InitialGameScreen(Difficulty difficulty, int width, int height) {
@@ -41,36 +48,80 @@ public class InitialGameScreen {
         root.setRight(goldAmount);
 
         Pane pane = new Pane();
-        //pane.setBackground(bg, );
+
 
         Button exit1 = new Button("Exit 1");
+
 
         Button exit2 = new Button("Exit 2");
         Button exit3 = new Button("Exit 3");
         Button exit4 = new Button("Exit 4");
+
         exit1.setPrefSize(50, 50);
         exit2.setPrefSize(50, 50);
         exit3.setPrefSize(50, 50);
         exit4.setPrefSize(50, 50);
+
         exit1.setLayoutX(100);
         exit1.setLayoutY(100);
+
         exit2.setLayoutX(350);
         exit2.setLayoutY(100);
+
         exit3.setLayoutX(100);
         exit3.setLayoutY(350);
+
         exit4.setLayoutX(350);
         exit4.setLayoutY(350);
+
         exit1.setBackground(new Background(new BackgroundFill(Color.LIME, null, null)));
         exit2.setBackground(new Background(new BackgroundFill(Color.LIME, null, null)));
         exit3.setBackground(new Background(new BackgroundFill(Color.LIME, null, null)));
         exit4.setBackground(new Background(new BackgroundFill(Color.LIME, null, null)));
+
         pane.getChildren().addAll(exit1, exit2, exit3, exit4);
         root.getChildren().add(pane);
 
         return new Scene(root, 500, 500);
     }
 
+<<<<<<< HEAD
     public int getGold() {
         return gold;
     }
+=======
+    /**
+     * Mutator method for width.
+     * @param width the width of the initial game screen
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    /**
+     * Mutator method for height.
+     * @param height the height of the initial game screen
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    /**
+     * Width getter for the initial game screen.
+     * @return int value for screen width
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * Height getter for the initial game screen.
+     * @return int value for screen height
+     */
+    public int getHeight() {
+        return this.height;
+    }
+
+
+>>>>>>> master
 }

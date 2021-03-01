@@ -1,7 +1,9 @@
-import dungeoncrawler.ConfigScreen;
 import dungeoncrawler.Controller;
 import dungeoncrawler.Difficulty;
+<<<<<<< HEAD
 import dungeoncrawler.InitialGameScreen;
+=======
+>>>>>>> master
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -11,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
-    private Controller controller;
+    private Controller controller = new Controller();
     @Override
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
@@ -20,6 +22,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testStart() {
+        //WelcomeScreen ws = new WelcomeScreen(500,500);
         clickOn("Start");
         verifyThat("ENTER YOUR NAME:", NodeMatchers.isNotNull());
         System.out.println("start works");
@@ -73,6 +76,39 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Axe");
         clickOn("PROCEED");
         assertEquals(100, goldVerification.getGold());
+    }
+
+    @Test
+    public void testEasyDifficulty() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getDifficulty(), Difficulty.EASY.toString());
+    }
+
+    @Test
+    public void testMediumDifficulty() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#mediumRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getDifficulty(), Difficulty.MEDIUM.toString());
+    }
+
+    @Test
+    public void testHardDifficulty() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        assertEquals(controller.getDifficulty(), Difficulty.HARD.toString());
     }
 }
 

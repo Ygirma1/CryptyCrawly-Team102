@@ -1,0 +1,22 @@
+Chuong:
+     - My test testConfigScreenNameField goes to the config screen and test if the name text field works with the user input.
+     - I use clickOn to click on the text field and type in "YEET" with the write function to make sure that the text field exists.
+     - Then, to check and make sure that it has got the correct user input, I use verifyThat and TextInputControlMatchers.hasText to           check if the text in the text field is "YEET".
+
+    - My test testConfigSavedUponProceed goes to the config screen, pick the configs, and click on proceed. It tests if the configs are       saved before entering the game.
+    - I use clickOn to make all of my choices.
+    - After clicking the PROCEED button, I use assertEquals to compare my input with the system configs to make sure it's saved               properly
+        
+Aaron:
+    -Implemented "testStart" to ensure the start button on the welcome screen forwards the user to the initial configuration page using      TestFX’s verify method.  
+    -Implemented "testEmptyString" to ensure when a user leaves the name field empty and clicks proceed on the initial configuration          page, the field is populated with a message “Please enter a character name” using verifyThat. 
+    
+Tristan:
+    -I added three tests to ensure that the difficulty variables were set to the corresponding Difficulty enum. The tests run through        three setups where each difficulty radio button is selected, and the difficulty String value is compared to the correct enum value      (converted to a String). These tests were titled testEasyDifficulty(), testMediumDifficulty(), and testHardDifficulty().
+
+Yafet: 
+    -Implemented a test to make sure it is possible to navigate to the initial game screen by pressing the start button, entering a          name, selecting a difficulty, and choosing a weapon. 
+    -The other test verifies that the gold amount given to a player is correct depending on the difficulty choice selected on the            initial configuration screen. 
+
+Nishant:
+    -I implemented testEasyGoldAmount, testMediumGoldAmount, and testHardGoldAmount to input a difficulty (along with other required            inputs) and test if the gold given matches the difficulty (100 for easy, 75 for medium, 50 for hard.) 

@@ -98,8 +98,8 @@ public class ConfigScreen {
                 new BackgroundFill(nodeColor, null, null)));
         this.weaponDropdown.setStyle("-fx-font: 14px \"High Tower Text\";");
         this.weaponDropdown.getItems().add("Shortsword");
-        this.weaponDropdown.getItems().add("Axe");
-        this.weaponDropdown.getItems().add("Hammer");
+        this.weaponDropdown.getItems().add("Bludgeon");
+        this.weaponDropdown.getItems().add("Greatsword");
 
         // Proceed button init
         this.proceedButton = new Button("PROCEED");
