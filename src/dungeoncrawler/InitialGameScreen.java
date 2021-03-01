@@ -15,6 +15,9 @@ public class InitialGameScreen {
     private int height;
     private Color backgroundColor = Color.rgb(120, 135, 135);
 
+    /**
+     * No-parameter constructor using default difficulty of medium.
+     */
     public InitialGameScreen() {
         this("Medium", 500, 500);
     }
@@ -40,9 +43,11 @@ public class InitialGameScreen {
         root.setRight(goldAmount);
 
         Pane pane = new Pane();
-        //pane.setBackground(bg, );
+
 
         Button exit1 = new Button("Exit 1");
+
+
         Button exit2 = new Button("Exit 2");
         Button exit3 = new Button("Exit 3");
         Button exit4 = new Button("Exit 4");
