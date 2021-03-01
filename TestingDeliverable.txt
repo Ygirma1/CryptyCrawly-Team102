@@ -19,4 +19,4 @@ Yafet:
     -The other test verifies that the gold amount given to a player is correct depending on the difficulty choice selected on the            initial configuration screen. 
 
 Nishant:
-    -I implemented testEasyGoldAmount, testMediumGoldAmount, and testHardGoldAmount to input a difficulty (along with other required            inputs) and test if the gold given matches the difficulty (100 for easy, 75 for medium, 50 for hard.) 
+    -I implemented testEasyGoldAmount, testMediumGoldAmount, and testHardGoldAmount to input a difficulty (along with other required          inputs) and test if the gold given matches the difficulty (100 for easy, 75 for medium, 50 for hard.) I implemented a getGold            method in both InitialGameScreen and Controller, and sent the gold amount in Controller (which is taken from InitialGameScreen) to      the test method, using assertEquals to ensure that it matched with the corresponding difficulty.
