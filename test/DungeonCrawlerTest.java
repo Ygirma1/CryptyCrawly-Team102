@@ -10,7 +10,6 @@ import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
     private Controller controller = new Controller();
-    //JFXPanel testPanel = new JFXPanel();
     @Override
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
