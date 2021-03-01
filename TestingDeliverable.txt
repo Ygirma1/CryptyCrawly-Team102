@@ -8,5 +8,5 @@ Chuong:
         - After clicking the PROCEED button, I use assertEquals to compare my input with the system configs to make sure it's saved properly
         
 Aaron:
-    -Implemented test to ensure the start button on the welcome screen forwards the user to the initial configuration page using TestFX’s        verify method.  
-    -Implemented test to ensure when a user leaves the name field empty and clicks proceed on the initial configuration page, the field is      populated with a message “Please enter a character name” using verifyThat. 
+    -Implemented "testStart" to ensure the start button on the welcome screen forwards the user to the initial configuration page using         TestFX’s verify method.  
+    -Implemented "testEmptyString" to ensure when a user leaves the name field empty and clicks proceed on the initial configuration page,      the field is populated with a message “Please enter a character name” using verifyThat. 
