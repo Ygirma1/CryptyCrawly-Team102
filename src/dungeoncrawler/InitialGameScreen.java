@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.assertj.core.internal.Diff;
 
 public class InitialGameScreen {
     private int gold;
@@ -16,15 +17,15 @@ public class InitialGameScreen {
     private Color backgroundColor = Color.rgb(120, 135, 135);
 
     public InitialGameScreen() {
-        this("Medium", 500,500);
+        this(Difficulty.EASY, 500,500);
     }
 
-    public InitialGameScreen(String difficulty, int width, int height) {
+    public InitialGameScreen(Difficulty difficulty, int width, int height) {
         this.width = width;
         this.height = height;
-        if (difficulty.equals("Easy")) {
+        if (difficulty.equals(Difficulty.EASY)) {
             gold = 100;
-        } else if (difficulty.equals("Medium")) {
+        } else if (difficulty.equals(Difficulty.MEDIUM)) {
             gold = 75;
         } else {
             gold = 50;
@@ -67,5 +68,9 @@ public class InitialGameScreen {
         root.getChildren().add(pane);
 
         return new Scene(root, 500, 500);
+    }
+
+    public int getGold() {
+        return gold;
     }
 }

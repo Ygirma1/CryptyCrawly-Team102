@@ -9,7 +9,7 @@ public class Controller extends Application {
     private final int width = 500;
     private final int height = 500;
     private String characterName = "";
-    private String difficulty = "";
+    private Difficulty difficulty;
     private String weapon = "";
 
 
@@ -23,12 +23,12 @@ public class Controller extends Application {
     private void welcomeScreen() {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
         Button play = welcomeScreen.getPlayButton();
-        this.primaryStage.setScene(welcomeScreen.getScene());
-        this.primaryStage.show();
         Button startButton = welcomeScreen.getPlayButton();
         startButton.setOnAction(e -> {
             initConfigScreen();
         });
+        this.primaryStage.setScene(welcomeScreen.getScene());
+        this.primaryStage.show();
     }
 
     public void initConfigScreen() {
@@ -46,7 +46,7 @@ public class Controller extends Application {
             if (configScreen.getDifficultyRBGroup().getSelectedToggle() == null) {
                 return;
             }
-            this.difficulty = configScreen.getDifficulty().toString();
+            this.difficulty = configScreen.getDifficulty();
             //Checking if selected weapon is valid (not null)
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
@@ -68,7 +68,7 @@ public class Controller extends Application {
         return characterName;
     }
 
-    public String getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 

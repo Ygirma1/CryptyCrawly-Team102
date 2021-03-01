@@ -60,7 +60,7 @@ public class ConfigScreen {
         this.nameField.setId("nameField");
         this.nameField.setFont(smallFont);
         this.nameField.setStyle("-fx-background-color: #a1abab;");
-        this.nameField.setAlignment(Pos.CENTER);
+        this.nameField.setAlignment(Pos.CENTER_LEFT);
         this.nameField.setMaxWidth(160);
 
         // Difficulty RB group init
