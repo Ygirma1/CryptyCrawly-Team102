@@ -11,6 +11,7 @@ public class Controller extends Application {
     private String characterName = "";
     private String difficulty = "";
     private String weapon = "";
+    private int gold = 0;
 
 
     @Override
@@ -62,6 +63,7 @@ public class Controller extends Application {
         InitialGameScreen screen = new InitialGameScreen(difficulty, width, height);
         this.primaryStage.setScene(screen.getScene());
         this.primaryStage.show();
+        gold = screen.getGold();
     }
 
     public String getCharacterName() {
@@ -74,6 +76,10 @@ public class Controller extends Application {
 
     public String getWeapon() {
         return weapon;
+    }
+
+    public int getGold() {
+        return gold;
     }
 
     public static void main(String[] args) {

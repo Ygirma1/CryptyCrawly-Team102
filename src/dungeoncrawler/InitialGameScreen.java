@@ -19,15 +19,15 @@ public class InitialGameScreen {
      * No-parameter constructor using default difficulty of medium.
      */
     public InitialGameScreen() {
-        this("Medium", 500, 500);
+        this("MEDIUM", 500, 500);
     }
 
     public InitialGameScreen(String difficulty, int width, int height) {
         this.width = width;
         this.height = height;
-        if (difficulty.equals("Easy")) {
+        if (difficulty.equals("EASY")) {
             gold = 100;
-        } else if (difficulty.equals("Medium")) {
+        } else if (difficulty.equals("MEDIUM")) {
             gold = 75;
         } else {
             gold = 50;
@@ -110,6 +110,14 @@ public class InitialGameScreen {
      */
     public int getHeight() {
         return this.height;
+    }
+
+    /**
+     * Gold getter for initial game screen
+     * @return int value for gold amount
+     */
+    public int getGold() {
+        return this.gold;
     }
 
 
