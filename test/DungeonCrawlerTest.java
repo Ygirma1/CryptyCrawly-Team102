@@ -18,17 +18,16 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testStart() {
-        //WelcomeScreen ws = new WelcomeScreen(500,500);
         clickOn("Start");
         verifyThat("ENTER YOUR NAME:", NodeMatchers.isNotNull());
-        System.out.println("start works");
     }
 
     @Test
     public void testEmptyName() {
         clickOn("Start");
         clickOn("PROCEED");
-        verifyThat("#nameField", TextInputControlMatchers.hasText("Please enter a character name."));
+        verifyThat("#nameField", TextInputControlMatchers.hasText(
+                "Please enter a character name."));
     }
 
     @Test
