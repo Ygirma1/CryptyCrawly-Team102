@@ -18,7 +18,10 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        welcomeScreen();
+//        welcomeScreen();
+        Room a = new Room(500, 500, 4);
+        this.primaryStage.setScene(a.getScene());
+        this.primaryStage.show();
     }
 
     private void welcomeScreen() {
