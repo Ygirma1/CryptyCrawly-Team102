@@ -3,6 +3,7 @@ package dungeoncrawler;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import java.util.Random;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -18,10 +19,9 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-//        welcomeScreen();
-        Room a = new Room(500, 500, 4);
-        this.primaryStage.setScene(a.getScene());
-        this.primaryStage.show();
+        //welcomeScreen();
+        Room start = new Room("Start");
+        initRoom(start);
     }
 
     private void welcomeScreen() {
@@ -35,7 +35,7 @@ public class Controller extends Application {
         });
     }
 
-    public void initConfigScreen() {
+    private void initConfigScreen() {
         ConfigScreen configScreen = new ConfigScreen(width, height);
         Button proceedButton = configScreen.getProceedButton();
         proceedButton.setOnAction(e -> {
@@ -59,6 +59,36 @@ public class Controller extends Application {
             proceedToGameScreen();
         });
         this.primaryStage.setScene(configScreen.getScene());
+        this.primaryStage.show();
+    }
+
+    private void initRoom(Room room) {
+        room.generateMap(room);
+        Button right = room.getBRight();
+        right.setOnAction(e -> {
+           if (room.getRight() != null) {
+               initRoom(room.getRight());
+           }
+        });
+        Button left = room.getBLeft();
+        left.setOnAction(e -> {
+            if (room.getLeft() != null) {
+                initRoom(room.getLeft());
+            }
+        });
+        Button up = room.getBUp();
+        up.setOnAction(e -> {
+            if (room.getUp() != null) {
+                initRoom(room.getUp());
+            }
+        });
+        Button down = room.getBDown();
+        down.setOnAction(e -> {
+            if (room.getDown() != null) {
+                initRoom(room.getDown());
+            }
+        });
+        this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
     }
 

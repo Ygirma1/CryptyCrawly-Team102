@@ -2,3 +2,4 @@
 /out/
 checkstyle-*.jar
 /.idea/workspace.xml
+/.idea/libraries/lib.xml
