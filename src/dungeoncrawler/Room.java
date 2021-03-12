@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Room {
     private ArrayList<Button> exits;
-    private String roomID; // maybe we need this to keep track of the room position?
+    private int roomID; // maybe we need this to keep track of the room position?
     private int width;
     private int height;
 
