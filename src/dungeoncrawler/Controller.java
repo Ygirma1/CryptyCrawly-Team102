@@ -21,6 +21,7 @@ public class Controller extends Application {
         this.primaryStage.setTitle("Dungeon Crawler");
         //welcomeScreen();
         Room start = new Room("Start");
+        start.generateMap(start);
         initRoom(start);
     }
 
@@ -63,7 +64,6 @@ public class Controller extends Application {
     }
 
     private void initRoom(Room room) {
-        room.generateMap(room);
         Button right = room.getBRight();
         right.setOnAction(e -> {
            if (room.getRight() != null) {
