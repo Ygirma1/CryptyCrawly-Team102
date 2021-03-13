@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Room {
     private ArrayList<Button> exits;
+    private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
     private Button bLeft;
     private Button bRight;
     private Button bUp;
@@ -47,7 +48,6 @@ public class Room {
         for (Button exit : this.exits) {
             exit.setPrefSize(50, 50);
         }
-
         this.width = width;
         this.height = height;
         this.exitNum = numberOfRooms;
@@ -56,37 +56,64 @@ public class Room {
     public void generateMap(Room startingRoom) {
         Room rRoom = new Room("right");
         startingRoom.right = rRoom;
-        rRoom.setLeft(startingRoom);
+        rRoom.left = startingRoom;
+        updateAdjRooms(rRoom);
         Room lRoom = new Room("left");
         startingRoom.left = lRoom;
-        lRoom.setRight(startingRoom);
+        lRoom.right = startingRoom;
+        updateAdjRooms(lRoom);
         Room uRoom = new Room("up");
         startingRoom.up = uRoom;
-        uRoom.setDown(startingRoom);
+        uRoom.down = startingRoom;
+        updateAdjRooms(uRoom);
         Room dRoom = new Room("down");
         startingRoom.down = dRoom;
-        dRoom.setUp(startingRoom);
+        dRoom.up = startingRoom;
+        updateAdjRooms(dRoom);
+    }
+
+    private void rGenerateMap(Room current, int roomDepth) {
+        if (roomDepth >= 6) {
+            generateBossRoom(current);
+        } else {
+            //TODO generate rest of map
+        }
+    }
+
+    private void generateBossRoom(Room current) {
+        //TODO generate boss room (doge room?????)
+    }
+
+    private void updateAdjRooms(Room current) {
+        this.adjRooms[0] = this.right;
+        this.adjRooms[1] = this.left;
+        this.adjRooms[2] = this.up;
+        this.adjRooms[3] = this.down;
     }
 
     // When extends this class, override this to set your room's own scene
     public Scene getScene() {
         Pane pane = new Pane();
-        if (exits.get(0) != null) {
-            exits.get(0).setLayoutX(100);
-            exits.get(0).setLayoutY(200);
-            pane.getChildren().add(exits.get(0));
-        }
-        if (exits.get(1) != null) {
+        if (this.right != null) {
+            //right button
             exits.get(1).setLayoutX(300);
             exits.get(1).setLayoutY(200);
             pane.getChildren().add(exits.get(1));
         }
-        if (exits.get(2) != null) {
+        if (this.left != null) {
+            //left button
+            exits.get(0).setLayoutX(100);
+            exits.get(0).setLayoutY(200);
+            pane.getChildren().add(exits.get(0));
+        }
+        if (this.up != null) {
+            //up button
             exits.get(2).setLayoutX(200);
             exits.get(2).setLayoutY(100);
             pane.getChildren().add(exits.get(2));
         }
-        if (exits.get(3) != null) {
+        if (this.down != null) {
+            //down button
             exits.get(3).setLayoutX(200);
             exits.get(3).setLayoutY(400);
             pane.getChildren().add(exits.get(3));
