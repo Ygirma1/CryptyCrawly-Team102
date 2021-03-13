@@ -57,7 +57,7 @@ public class Room {
             return;
         }
         this.exits.get(index).setLayoutX(x);
-        this.exits.get(index).setLayoutX(y);
+        this.exits.get(index).setLayoutY(y);
     }
 
     public void setExitText(int index, String text) {
