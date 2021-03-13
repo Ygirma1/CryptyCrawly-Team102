@@ -20,9 +20,12 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 //        welcomeScreen();
-        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
-        this.primaryStage.setScene(a.getScene());
-        this.primaryStage.show();
+//        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
+//        this.primaryStage.setScene(a.getScene());
+//        this.primaryStage.show();
+        Room start = new Room("start");
+        start.generateMap(start);
+        initRoom(start);
     }
 
     private void welcomeScreen() {

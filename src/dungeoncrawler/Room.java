@@ -22,9 +22,12 @@ public class Room {
     private Room right;
     private Room up;
     private Room down;
-    private int roomID; // maybe we need this to keep track of the room position?
     private int width;
     private int height;
+
+    public Room(int width, int height, int numberOfRooms) {
+        this(width, height, numberOfRooms, "doge");
+    }
 
     public Room(String id) {
         this(500, 500, 4, id);
