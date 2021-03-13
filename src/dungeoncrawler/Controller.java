@@ -19,7 +19,7 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 //        welcomeScreen();
-        ChuongPuzzleRoom a = new ChuongPuzzleRoom(500, 500, 4);
+        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
         this.primaryStage.setScene(a.getScene());
         this.primaryStage.show();
     }

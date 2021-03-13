@@ -80,9 +80,11 @@ public class ChuongPuzzleRoom extends Room {
                 }
                 for (Button puzzleButton : this.puzzleButtons) {
                     puzzleButton.setDisable(true);
+                    puzzleButton.setText("");
                 }
                 this.instructionLabel.setText("YEET You can proceed now!");
                 this.instructionLabel.setLayoutX(140);
+                this.puzzleLabel.setText("");
             });
         }
     }
