@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Room {
     private ArrayList<Button> exits;
@@ -70,6 +71,10 @@ public class Room {
         startingRoom.down = dRoom;
         dRoom.up = startingRoom;
         updateAdjRooms(dRoom);
+        updateAdjRooms(startingRoom);
+        Random rand = new Random();
+        Room next = startingRoom.adjRooms[rand.nextInt(3)];
+        rGenerateMap(next, 0);
     }
 
     private void rGenerateMap(Room current, int roomDepth) {
@@ -77,6 +82,8 @@ public class Room {
             generateBossRoom(current);
         } else {
             //TODO generate rest of map
+            Room nextRoom = new Room("new"); //TODO get random room (not already in use)
+            rGenerateMap(nextRoom, roomDepth + 1);
         }
     }
 
