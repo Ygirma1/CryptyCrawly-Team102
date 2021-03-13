@@ -19,10 +19,10 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        //welcomeScreen();
-        Room start = new Room("Start");
-        start.generateMap(start);
-        initRoom(start);
+//        welcomeScreen();
+        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
+        this.primaryStage.setScene(a.getScene());
+        this.primaryStage.show();
     }
 
     private void welcomeScreen() {

@@ -22,6 +22,7 @@ public class Room {
     private Room right;
     private Room up;
     private Room down;
+    private int roomID; // maybe we need this to keep track of the room position?
     private int width;
     private int height;
 
@@ -97,7 +98,7 @@ public class Room {
             return;
         }
         this.exits.get(index).setLayoutX(x);
-        this.exits.get(index).setLayoutX(y);
+        this.exits.get(index).setLayoutY(y);
     }
 
     public void setExitText(int index, String text) {
