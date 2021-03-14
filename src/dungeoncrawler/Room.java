@@ -78,7 +78,6 @@ public class Room {
         }
         this.width = width;
         this.height = height;
-
         this.diff = diff;
         this.goldText = new Text("Gold: " + Controller.getGold());
         this.goldText.setFont(smallFont);
