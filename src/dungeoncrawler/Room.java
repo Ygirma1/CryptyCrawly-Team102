@@ -26,9 +26,6 @@ public class Room {
     private Text id; // just a label for a room, use for debugging
     private Label correctExit; //Displays proper exit in bottom right corner
     private String pathID; //Text displaying correct exit to choose
-    private String roomID; //maybe we need this to \keep track of the room position?
-    private static int roomCount;
-    private int exitNum;
     private Text goldText;
     private Room left;
     private Room right;
@@ -170,6 +167,11 @@ public class Room {
         }
     }
 
+    /**
+     * Helper method to update the current room's adjRooms[] array.
+     *
+     * @param current the room currently being updated
+     */
     private void updateRoomArray(Room current) {
         current.adjRooms[0] = current.right;
         current.adjRooms[1] = current.left;
@@ -177,15 +179,11 @@ public class Room {
         current.adjRooms[3] = current.down;
     }
 
-    //    /**
-    //     * Updates the right, left, top and bottom rooms using the adjacency array
-    //     *
-    //     * @param current Current room //*
-    //     * @param foo Temp var, to be removed when
-    //     *                method name is changed
-    //     */
-    //  private void updateAdjRooms(Room current, boolean foo) {
-
+    /**
+     * Helper method to update adjacent rooms based on adjRooms[].
+     *
+     * @param current the current room being updated
+     */
     private void updateAdjRooms(Room current) {
         current.right = current.adjRooms[0];
         current.left = current.adjRooms[1];
