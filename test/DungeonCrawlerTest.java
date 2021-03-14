@@ -1,12 +1,19 @@
 import dungeoncrawler.Controller;
 import dungeoncrawler.Difficulty;
+import dungeoncrawler.DogeRoom;
+import dungeoncrawler.Room;
 import javafx.stage.Stage;
+import org.assertj.core.internal.Diff;
 import org.junit.Test;
+import org.testfx.api.FxRobotInterface;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
+import javafx.scene.control.Label;
 
+import javafx.scene.text.Text;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
@@ -148,6 +155,41 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Shortsword");
         clickOn("PROCEED");
         assertEquals(controller.getWeapon(), "Shortsword");
+    }
+
+    @Test
+    public void testDogeRoom() {
+        Room doge = new DogeRoom(400, 400, "doge", Difficulty.EASY);
+        targetWindow(doge.getScene());
+        clickOn("Start");
+        clickOn("#nameField").write("Chuong");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+
+        while (true) {
+            Text roomID = lookup("#id").queryText();
+            Label correctExitLabel = (Label)lookup("#correctExit").queryLabeled();
+            String correctPath = correctExitLabel.getText().substring(8);
+            if (roomID.getText().equals("new5")) {
+                clickOn(correctPath);
+                break;
+            }
+            clickOn(correctPath);
+        }
+
+        // Got to doge room
+
+        verifyThat("#dogeButton", NodeMatchers.isEnabled());
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+
+        for (int i = 0 ; i < 4; i++) {
+            clickOn("#dogeButton");
+            verifyThat("#exitButton", NodeMatchers.isDisabled());
+        }
+        clickOn("#dogeButton");
+        verifyThat("#exitButton", NodeMatchers.isEnabled());
     }
 }
 

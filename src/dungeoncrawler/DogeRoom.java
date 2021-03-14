@@ -29,6 +29,7 @@ public class DogeRoom extends Room {
         this.exitButton.setLayoutY(200);
         this.exitButton.setPrefSize(50, 50);
         this.exitButton.setDisable(true);
+        this.exitButton.setId("exitButton");
 
         this.instructionLabel = new Label();
         this.instructionLabel = new Label("You have been captured by the doge!");
@@ -47,6 +48,7 @@ public class DogeRoom extends Room {
         this.dogeButton.setPrefSize(200, 200);
         this.dogeButton.setLayoutY(170);
         this.dogeButton.setLayoutX(150);
+        this.dogeButton.setId("dogeButton");
         try {
             Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\doge.png"));
             ImageView imageView = new ImageView(dogeImage);

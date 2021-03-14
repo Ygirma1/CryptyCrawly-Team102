@@ -23,12 +23,6 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
         welcomeScreen();
-//        DogeRoom a = new DogeRoom(500, 500, 4);
-//        this.primaryStage.setScene(a.getScene());
-//        this.primaryStage.show();
-//        Room start = new Room("start");
-//        start.generateMap(start);
-//        initRoom(start);
     }
 
     private void welcomeScreen() {
@@ -116,7 +110,6 @@ public class Controller extends Application {
         });
         Button help = room.getHelpButton();
         help.setOnAction(e -> {
-            
             help.setVisible(false);
         });
         this.primaryStage.setScene(room.getScene());
@@ -144,6 +137,10 @@ public class Controller extends Application {
 
     public static int getGold() {
         return gold;
+    }
+
+    public Stage getPrimaryStage() {
+        return this.primaryStage;
     }
 
     public static void main(String[] args) {

@@ -53,6 +53,7 @@ public class Room {
     }
     public Room(int width, int height, String id, Difficulty diff) {
         this.id = new Text(id);
+        this.id.setId("id");
         this.exits = new ArrayList<>();
         this.helpButton = new Button("Correct Door");
         this.bLeft = new Button("left");
@@ -185,6 +186,7 @@ public class Room {
         Pane pane = new Pane();
         String path = getPathID();
         this.correctExit = new Label(path);
+        this.correctExit.setId("correctExit");
         if (this.right != null) {
             //right button
             exits.get(1).setLayoutX(405);
