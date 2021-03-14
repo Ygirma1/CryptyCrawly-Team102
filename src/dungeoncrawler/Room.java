@@ -4,61 +4,43 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Room {
     private ArrayList<Button> exits;
-    private final Room[] adjRooms = new Room[4]; // ordered right, left, up, down
-    private final Button bLeft;
-    private final Button bRight;
-    private final Button bUp;
-    private final Button bDown;
-    private final Text id; // just a label for a room, use for debugging
-    private String roomID; // maybe we need this to keep track of the room position?
-    private static int roomCount;
-    private final int exitNum;
+    private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
+    private Button bLeft;
+    private Button bRight;
+    private Button bUp;
+    private Button bDown;
+    private Text id; // just a label for a room, use for debugging
+    private Text goldText;
     private Room left;
     private Room right;
     private Room up;
     private Room down;
+    private Difficulty diff;
+    private final Color floorColor = Color.rgb(129, 137, 147);
+    private final Color goldColor = Color.rgb(255, 215, 0);
+    private final Font smallFont = new Font("High Tower Text", 19);
     private int width;
     private int height;
-    private final Label goldLabel;
 
-    /**
-     * Chained constructor for Room object
-     *
-     * @param width The width of the window
-     * @param height The height of the window
-     * @param numberOfRooms The number of exits from the room
-     */
-    public Room(int width, int height, int numberOfRooms) {
-        this(width, height, numberOfRooms, "doge");
+    public Room(int width, int height) {
+        this(width, height, "doge", Difficulty.EASY);
     }
 
-    /**
-     * Chained constructor with hard-coded values for width, height and
-     * number of exits
-     *
-     * @param id String id for keeping track of each room in maze
-     */
-    public Room(String id) {
-        this(500, 500, 4, id);
+    public Room(String id, Difficulty diff) {
+        this(500, 500, id, diff);
     }
 
-    /**
-     * Constructor for Room object.
-     *
-     * @param width The width of the window
-     * @param height The height of the window
-     * @param numberOfRooms Number of attached rooms
-     * @param id ID for keeping track of each room
-     */
-    public Room(int width, int height, int numberOfRooms, String id) {
+    public Room(int width, int height, String id, Difficulty diff) {
         this.id = new Text(id);
         this.exits = new ArrayList<>();
         this.bLeft = new Button("left");
@@ -70,17 +52,19 @@ public class Room {
         this.bDown = new Button("down");
         this.exits.add(bDown);
         for (Button exit : this.exits) {
-            exit.setPrefSize(50, 50);
+            exit.setPrefSize(80, 30);
+            exit.setFont(smallFont);
+            exit.setStyle("-fx-background-color: #62686F;");
         }
         this.width = width;
         this.height = height;
-        this.exitNum = numberOfRooms;
 
-        this.goldLabel = new Label("Gold: " + Controller.getGold());
-
-        this.goldLabel.setLayoutX(400);
-        this.goldLabel.setLayoutY(100);
-
+        this.diff = diff;
+        this.goldText = new Text("Gold: " + Controller.getGold());
+        this.goldText.setFont(smallFont);
+        this.goldText.setFill(goldColor);
+        this.goldText.setX(420);
+        this.goldText.setY(20);
     }
 
     /**
@@ -89,23 +73,23 @@ public class Room {
      * @param startingRoom The root of the maze, or starting room.
      */
     public void generateMap(Room startingRoom) {
-        Room rRoom = new Room("right");
+        Room rRoom = new Room("right", this.diff);
         startingRoom.right = rRoom;
         rRoom.left = startingRoom;
-        updateAdjRooms(rRoom);
-        Room lRoom = new Room("left");
+        updateRoomArray(rRoom);
+        Room lRoom = new Room("left", this.diff);
         startingRoom.left = lRoom;
         lRoom.right = startingRoom;
-        updateAdjRooms(lRoom);
-        Room uRoom = new Room("up");
+        updateRoomArray(lRoom);
+        Room uRoom = new Room("up", this.diff);
         startingRoom.up = uRoom;
         uRoom.down = startingRoom;
-        updateAdjRooms(uRoom);
-        Room dRoom = new Room("down");
+        updateRoomArray(uRoom);
+        Room dRoom = new Room("down", this.diff);
         startingRoom.down = dRoom;
         dRoom.up = startingRoom;
-        updateAdjRooms(dRoom);
-        updateAdjRooms(startingRoom);
+        updateRoomArray(dRoom);
+        updateRoomArray(startingRoom);
         Random rand = new Random();
         int randRoomIndex = rand.nextInt(4);
         Room next = startingRoom.adjRooms[randRoomIndex];
@@ -113,24 +97,26 @@ public class Room {
     }
 
     /**
-     * Recursive helper method for generateRoom method
-     * @param current The current room
-     * @param roomDepth Number of rooms from the starting room
-     * @param newRoomIndex The index of the newly created room
+     * Recursive helper method to generate a random sequence of rooms.
+     * Rooms lead to boss room
+     *
+     * @param current the current room having rooms added to it
+     * @param roomDepth the distance of the rooms from the start
+     * @param newRoomIndex the index of the Room[] that will determine the direction of the new room
      */
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         if (roomDepth >= 6) {
-            Room nextRoom = new DogeRoom(500, 500, 4);
+            Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             nextRoom.down = null;
             nextRoom.up = null;
             nextRoom.left = null;
             nextRoom.right = null;
-            updateAdjRooms(current, true);
-            updateAdjRooms(nextRoom);
+            updateAdjRooms(current);
+            updateRoomArray(nextRoom);
         } else {
             Random rand = new Random();
-            Room nextRoom = new Room("new" + roomDepth);
+            Room nextRoom = new Room("new" + roomDepth, current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             int nextRoomPrevIndex = newRoomIndex;
             if (newRoomIndex % 2 == 0) {
@@ -139,8 +125,8 @@ public class Room {
                 nextRoomPrevIndex -= 1;
             }
             nextRoom.adjRooms[nextRoomPrevIndex] = current;
-            updateAdjRooms(current, true);
-            updateAdjRooms(nextRoom, true);
+            updateAdjRooms(current);
+            updateAdjRooms(nextRoom);
 
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
@@ -148,38 +134,6 @@ public class Room {
             }
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
-    }
-
-    private void generateBossRoom(Room current, int newRoomIndex) {
-        //TODO generate boss room (doge room?????)
-
-
-
-    }
-
-    /**
-     * Updates the adjacency array of rooms for current room.
-     *
-     * @param current The room currently displayed
-     */
-    private void updateAdjRooms(Room current) {
-        current.adjRooms[0] = current.right;
-        current.adjRooms[1] = current.left;
-        current.adjRooms[2] = current.up;
-        current.adjRooms[3] = current.down;
-    }
-
-    /**
-     * Updates the right, left, top and bottom rooms using the adjacency array
-     *
-     * @param current Current room
-     * @param foo
-     */
-    private void updateAdjRooms(Room current, boolean foo) {
-        current.right = current.adjRooms[0];
-        current.left = current.adjRooms[1];
-        current.up = current.adjRooms[2];
-        current.down = current.adjRooms[3];
     }
 
     // When extends this class, override this to set your room's own scene
@@ -193,32 +147,51 @@ public class Room {
         Pane pane = new Pane();
         if (this.right != null) {
             //right button
-            exits.get(1).setLayoutX(300);
-            exits.get(1).setLayoutY(200);
+            exits.get(1).setLayoutX(405);
+            exits.get(1).setLayoutY(235);
             pane.getChildren().add(exits.get(1));
         }
         if (this.left != null) {
             //left button
-            exits.get(0).setLayoutX(100);
-            exits.get(0).setLayoutY(200);
+            exits.get(0).setLayoutX(15);
+            exits.get(0).setLayoutY(235);
             pane.getChildren().add(exits.get(0));
         }
         if (this.up != null) {
             //up button
-            exits.get(2).setLayoutX(200);
-            exits.get(2).setLayoutY(100);
+            exits.get(2).setLayoutX(210);
+            exits.get(2).setLayoutY(15);
             pane.getChildren().add(exits.get(2));
         }
         if (this.down != null) {
             //down button
-            exits.get(3).setLayoutX(200);
-            exits.get(3).setLayoutY(400);
+            exits.get(3).setLayoutX(210);
+            exits.get(3).setLayoutY(445);
             pane.getChildren().add(exits.get(3));
         }
         id.setLayoutY(100);
         pane.getChildren().add(id);
-        pane.getChildren().add(this.goldLabel);
-        return new Scene(pane, this.width, this.height);
+        pane.getChildren().add(this.goldText);
+
+        Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
+        StackPane sPane = new StackPane();
+        sPane.getChildren().addAll(background, pane);
+
+        return new Scene(sPane, this.width, this.height);
+    }
+
+    private void updateRoomArray(Room current) {
+        current.adjRooms[0] = current.right;
+        current.adjRooms[1] = current.left;
+        current.adjRooms[2] = current.up;
+        current.adjRooms[3] = current.down;
+    }
+
+    private void updateAdjRooms(Room current) {
+        current.right = current.adjRooms[0];
+        current.left = current.adjRooms[1];
+        current.up = current.adjRooms[2];
+        current.down = current.adjRooms[3];
     }
 
     /**

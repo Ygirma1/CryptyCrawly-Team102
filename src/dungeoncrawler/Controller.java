@@ -3,6 +3,8 @@ package dungeoncrawler;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.assertj.core.internal.Diff;
+
 import java.util.Random;
 
 public class Controller extends Application {
@@ -12,19 +14,20 @@ public class Controller extends Application {
     private String characterName = "";
     private String difficulty = "";
     private String weapon = "";
+    private static Difficulty diff;
     private static int gold = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-//        welcomeScreen();
+        welcomeScreen();
 //        DogeRoom a = new DogeRoom(500, 500, 4);
 //        this.primaryStage.setScene(a.getScene());
 //        this.primaryStage.show();
-        Room start = new Room("start");
-        start.generateMap(start);
-        initRoom(start);
+//        Room start = new Room("start");
+//        start.generateMap(start);
+//        initRoom(start);
     }
 
     private void welcomeScreen() {
@@ -54,12 +57,16 @@ public class Controller extends Application {
                 return;
             }
             this.difficulty = configScreen.getDifficulty().toString();
+            this.diff = configScreen.getDifficulty();
+            this.gold = 100 - 25 * configScreen.getDifficulty().ordinal();
             //Checking if selected weapon is valid (not null)
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
             }
             this.weapon = configScreen.getWeaponDropdown().getValue();
-            proceedToGameScreen();
+            Room start = new Room("start", configScreen.getDifficulty());
+            start.generateMap(start);
+            initRoom(start);
         });
         this.primaryStage.setScene(configScreen.getScene());
         this.primaryStage.show();
@@ -69,7 +76,7 @@ public class Controller extends Application {
         if (room instanceof DogeRoom) {
             Button exitButton = ((DogeRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
-                Room puzzleRoom = new PuzzleRoom(500, 500, 4);
+                Room puzzleRoom = new PuzzleRoom(500, 500, Controller.diff);
                 initRoom(puzzleRoom);
             });
         }
@@ -77,7 +84,7 @@ public class Controller extends Application {
         if (room instanceof PuzzleRoom) {
             Button exitButton = ((PuzzleRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
-                Room winningRoom = new WinningRoom(500, 500, 4);
+                Room winningRoom = new WinningRoom(500, 500, Controller.diff);
                 initRoom(winningRoom);
             });
         }
