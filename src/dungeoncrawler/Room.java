@@ -32,14 +32,34 @@ public class Room {
     private int width;
     private int height;
 
+    /**
+     * Default constructor for Room class.
+     *
+     * @param width width of scene
+     * @param height height of scene
+     */
     public Room(int width, int height) {
         this(width, height, "doge", Difficulty.EASY);
     }
 
+    /**
+     * Constructor for Room class.
+     *
+     * @param id String to identify a room
+     * @param diff the difficulty of the rooms
+     */
     public Room(String id, Difficulty diff) {
         this(500, 500, id, diff);
     }
 
+    /**
+     * The main constructor of the Room class.
+     *
+     * @param width width of the scene
+     * @param height height of the scene
+     * @param id String to identify room
+     * @param diff the difficulty of the room
+     */
     public Room(int width, int height, String id, Difficulty diff) {
         this.id = new Text(id);
         this.exits = new ArrayList<>();
@@ -136,10 +156,8 @@ public class Room {
         }
     }
 
-    // When extends this class, override this to set your room's own scene
-
     /**
-     * Returns a new scene
+     * Returns a new scene based on the Room class.
      *
      * @return The newly created scene
      */
@@ -180,6 +198,11 @@ public class Room {
         return new Scene(sPane, this.width, this.height);
     }
 
+    /**
+     * Updates a room's adjRooms[] to reflect its corresponding adjacent rooms.
+     *
+     * @param current the room being modified
+     */
     private void updateRoomArray(Room current) {
         current.adjRooms[0] = current.right;
         current.adjRooms[1] = current.left;
@@ -187,6 +210,11 @@ public class Room {
         current.adjRooms[3] = current.down;
     }
 
+    /**
+     * Updates a room's adjacent rooms based on its adjRooms[].
+     *
+     * @param current the room being modified
+     */
     private void updateAdjRooms(Room current) {
         current.right = current.adjRooms[0];
         current.left = current.adjRooms[1];
@@ -304,15 +332,6 @@ public class Room {
      */
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    /**
-     * Getter for the number of exits from a room
-     *
-     * @return The number of exits
-     */
-    public int getExitNum() {
-        return this.exitNum;
     }
 
     /**
