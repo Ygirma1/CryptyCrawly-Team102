@@ -1,22 +1,17 @@
-import dungeoncrawler.Controller;
-import dungeoncrawler.Difficulty;
-<<<<<<< HEAD
-import dungeoncrawler.PuzzleRoom;
+import dungeoncrawler.*;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-=======
-import dungeoncrawler.DogeRoom;
-import dungeoncrawler.Room;
->>>>>>> origin/Chuong
+
+
 import javafx.stage.Stage;
 import org.assertj.core.internal.Diff;
 import org.junit.Test;
-<<<<<<< HEAD
 import org.testfx.api.FxRobot;
-=======
+
 import org.testfx.api.FxRobotInterface;
->>>>>>> origin/Chuong
+
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
