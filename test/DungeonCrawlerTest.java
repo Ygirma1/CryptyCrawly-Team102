@@ -186,6 +186,12 @@ public class DungeonCrawlerTest extends ApplicationTest {
         }
 
         clickOn("#exitButton");
+
+        clickOn("#goldButton");
+        clickOn("#goldButton2");
+        clickOn("#goldButton3");
+        clickOn("#exitButton");
+
         clickOn("#Correct1");
         clickOn("#Correct2");
         verifyThat("#Question3", NodeMatchers.isNotNull());
@@ -236,6 +242,11 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         clickOn("#exitButton");
 
+        clickOn("#goldButton");
+        clickOn("#goldButton2");
+        clickOn("#goldButton3");
+        clickOn("#exitButton");
+
         clickOn("#Correct1");
         verifyThat("#Question2", NodeMatchers.isNotNull());
         clickOn("#Correct2");
@@ -270,6 +281,48 @@ public class DungeonCrawlerTest extends ApplicationTest {
             verifyThat("#exitButton", NodeMatchers.isDisabled());
         }
         clickOn("#dogeButton");
+        verifyThat("#exitButton", NodeMatchers.isEnabled());
+    }
+
+    @Test
+    public void testGoldRoom() {
+        traversal();
+        // Got to doge room
+
+        for (int i = 0; i < 5; i++) {
+            clickOn("#dogeButton");
+        }
+
+        clickOn("#exitButton");
+        //Now at gold room
+
+        verifyThat("#goldButton", NodeMatchers.isEnabled());
+        verifyThat("#goldButton2", NodeMatchers.isEnabled());
+        verifyThat("#goldButton3", NodeMatchers.isEnabled());
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+    }
+
+    @Test
+    public void testGoldRoomClick() {
+        traversal();
+        // Got to doge room
+
+        for (int i = 0; i < 5; i++) {
+            clickOn("#dogeButton");
+        }
+
+        clickOn("#exitButton");
+        //Now at gold room
+
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+
+        clickOn("#goldButton");
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+
+        clickOn("#goldButton2");
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+
+        clickOn("#goldButton3");
         verifyThat("#exitButton", NodeMatchers.isEnabled());
     }
 }
