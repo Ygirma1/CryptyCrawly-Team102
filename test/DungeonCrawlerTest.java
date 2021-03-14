@@ -201,6 +201,34 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         verifyThat("#dogeButton", NodeMatchers.isEnabled());
         verifyThat("#exitButton", NodeMatchers.isDisabled());
+    }
+
+    @Test
+    public void testDogeRoomClick() {
+        Room doge = new DogeRoom(400, 400, "doge", Difficulty.EASY);
+        targetWindow(doge.getScene());
+        clickOn("Start");
+        clickOn("#nameField").write("Chuong");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+
+        while (true) {
+            Text roomID = lookup("#id").queryText();
+            Label correctExitLabel = (Label)lookup("#correctExit").queryLabeled();
+            String correctPath = correctExitLabel.getText().substring(8);
+            if (roomID.getText().equals("new5")) {
+                clickOn(correctPath);
+                break;
+            }
+            clickOn(correctPath);
+        }
+
+        // Got to doge room
+
+        verifyThat("#dogeButton", NodeMatchers.isEnabled());
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
 
         for (int i = 0 ; i < 4; i++) {
             clickOn("#dogeButton");
@@ -209,5 +237,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#dogeButton");
         verifyThat("#exitButton", NodeMatchers.isEnabled());
     }
+
 }
 
