@@ -10,29 +10,24 @@ import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-public class ChuongDogeRoom extends Room {
+public class DogeRoom extends Room {
     private Label instructionLabel;
     private Label instructionLabel2;
     private Button dogeButton;
     private int dogeCounter;
+    private Button exitButton;
 
-    public ChuongDogeRoom(int width, int height, int numberOfRooms) {
+    public DogeRoom(int width, int height, int numberOfRooms) {
 
-        super(width, height, numberOfRooms);
-        this.setExitPos(0, 225, 0);
-        this.setExitPos(1, 450, 200);
-        this.setExitPos(2, 225, 450);
-        this.setExitPos(3, 0, 200);
+        super(width, height, numberOfRooms, "Boss");
 
-        this.setExitText(0, "North");
-        this.setExitText(1, "East");
-        this.setExitText(2, "South");
-        this.setExitText(3, "West");
-
-        for (Button exit: this.getExits()) {
-            exit.setDisable(true);
-        }
+        this.exitButton = new Button("Exit");
+        this.exitButton.setLayoutX(450);
+        this.exitButton.setLayoutY(200);
+        this.exitButton.setPrefSize(50, 50);
+        this.exitButton.setDisable(true);
 
         this.instructionLabel = new Label();
         this.instructionLabel = new Label("You have been captured by the doge!");
@@ -52,8 +47,7 @@ public class ChuongDogeRoom extends Room {
         this.dogeButton.setLayoutY(170);
         this.dogeButton.setLayoutX(150);
         try {
-            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir")
-                    + "\\res\\doge.png"));
+            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\doge.png"));
             ImageView imageView = new ImageView(dogeImage);
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
@@ -71,9 +65,8 @@ public class ChuongDogeRoom extends Room {
                 this.instructionLabel.setLayoutX(100);
                 this.instructionLabel.setLayoutY(100);
 
-                for (Button exit : this.getExits()) {
-                    exit.setDisable(false);
-                }
+                this.exitButton.setDisable(false);
+
             }
         });
     }
@@ -81,9 +74,11 @@ public class ChuongDogeRoom extends Room {
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        pane.getChildren().addAll(this.getExits().get(0), this.getExits().get(1),
-                this.getExits().get(2), this.getExits().get(3), this.instructionLabel,
-                this.dogeButton, this.instructionLabel2);
+        pane.getChildren().addAll(this.instructionLabel, this.dogeButton, this.instructionLabel2, this.exitButton);
         return new Scene(pane, this.getWidth(), this.getHeight());
+    }
+
+    public Button getExitButton() {
+        return this.exitButton;
     }
 }

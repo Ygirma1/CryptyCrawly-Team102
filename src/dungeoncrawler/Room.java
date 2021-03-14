@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Room {
     private Room down;
     private int width;
     private int height;
+    private Label goldLabel;
 
     public Room(int width, int height, int numberOfRooms) {
         this(width, height, numberOfRooms, "doge");
@@ -52,6 +54,12 @@ public class Room {
         this.width = width;
         this.height = height;
         this.exitNum = numberOfRooms;
+
+        this.goldLabel = new Label("Gold: " + Controller.getGold());
+
+        this.goldLabel.setLayoutX(400);
+        this.goldLabel.setLayoutY(100);
+
     }
 
     public void generateMap(Room startingRoom) {
@@ -73,29 +81,62 @@ public class Room {
         updateAdjRooms(dRoom);
         updateAdjRooms(startingRoom);
         Random rand = new Random();
-        Room next = startingRoom.adjRooms[rand.nextInt(3)];
-        rGenerateMap(next, 0);
+        int randRoomIndex = rand.nextInt(4);
+        Room next = startingRoom.adjRooms[randRoomIndex];
+        rGenerateMap(next, 0, randRoomIndex);
     }
 
-    private void rGenerateMap(Room current, int roomDepth) {
+    private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         if (roomDepth >= 6) {
-            generateBossRoom(current);
+            Room nextRoom = new DogeRoom(500, 500, 4);
+            current.adjRooms[newRoomIndex] = nextRoom;
+            nextRoom.down = null;
+            nextRoom.up = null;
+            nextRoom.left = null;
+            nextRoom.right = null;
+            updateAdjRooms(current, true);
+            updateAdjRooms(nextRoom);
         } else {
-            //TODO generate rest of map
-            Room nextRoom = new Room("new"); //TODO get random room (not already in use)
-            rGenerateMap(nextRoom, roomDepth + 1);
+            Random rand = new Random();
+            Room nextRoom = new Room("new" + roomDepth);
+            current.adjRooms[newRoomIndex] = nextRoom;
+            int nextRoomPrevIndex = newRoomIndex;
+            if (newRoomIndex % 2 == 0) {
+                nextRoomPrevIndex += 1;
+            } else {
+                nextRoomPrevIndex -= 1;
+            }
+            nextRoom.adjRooms[nextRoomPrevIndex] = current;
+            updateAdjRooms(current, true);
+            updateAdjRooms(nextRoom, true);
+
+            int nextIndex = nextRoomPrevIndex;
+            while (nextIndex == nextRoomPrevIndex) {
+                nextIndex = rand.nextInt(4);
+            }
+            rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
     }
 
-    private void generateBossRoom(Room current) {
+    private void generateBossRoom(Room current, int newRoomIndex) {
         //TODO generate boss room (doge room?????)
+
+
+
     }
 
     private void updateAdjRooms(Room current) {
-        this.adjRooms[0] = this.right;
-        this.adjRooms[1] = this.left;
-        this.adjRooms[2] = this.up;
-        this.adjRooms[3] = this.down;
+        current.adjRooms[0] = current.right;
+        current.adjRooms[1] = current.left;
+        current.adjRooms[2] = current.up;
+        current.adjRooms[3] = current.down;
+    }
+
+    private void updateAdjRooms(Room current, boolean foo) {
+        current.right = current.adjRooms[0];
+        current.left = current.adjRooms[1];
+        current.up = current.adjRooms[2];
+        current.down = current.adjRooms[3];
     }
 
     // When extends this class, override this to set your room's own scene
@@ -127,6 +168,7 @@ public class Room {
         }
         id.setLayoutY(100);
         pane.getChildren().add(id);
+        pane.getChildren().add(this.goldLabel);
         return new Scene(pane, this.width, this.height);
     }
 

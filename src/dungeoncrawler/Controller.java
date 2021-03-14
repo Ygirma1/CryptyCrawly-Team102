@@ -12,17 +12,16 @@ public class Controller extends Application {
     private String characterName = "";
     private String difficulty = "";
     private String weapon = "";
-    private int gold = 0;
-
+    private static int gold = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-        //        welcomeScreen();
-        //        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
-        //        this.primaryStage.setScene(a.getScene());
-        //         this.primaryStage.show();
+//        welcomeScreen();
+//        DogeRoom a = new DogeRoom(500, 500, 4);
+//        this.primaryStage.setScene(a.getScene());
+//        this.primaryStage.show();
         Room start = new Room("start");
         start.generateMap(start);
         initRoom(start);
@@ -67,11 +66,27 @@ public class Controller extends Application {
     }
 
     private void initRoom(Room room) {
+        if (room instanceof DogeRoom) {
+            Button exitButton = ((DogeRoom) room).getExitButton();
+            exitButton.setOnAction(e -> {
+                Room puzzleRoom = new PuzzleRoom(500, 500, 4);
+                initRoom(puzzleRoom);
+            });
+        }
+
+        if (room instanceof PuzzleRoom) {
+            Button exitButton = ((PuzzleRoom) room).getExitButton();
+            exitButton.setOnAction(e -> {
+                Room winningRoom = new WinningRoom(500, 500, 4);
+                initRoom(winningRoom);
+            });
+        }
+
         Button right = room.getBRight();
         right.setOnAction(e -> {
-            if (room.getRight() != null) {
-                initRoom(room.getRight());
-            }
+           if (room.getRight() != null) {
+               initRoom(room.getRight());
+           }
         });
         Button left = room.getBLeft();
         left.setOnAction(e -> {
@@ -114,7 +129,7 @@ public class Controller extends Application {
         return weapon;
     }
 
-    public int getGold() {
+    public static int getGold() {
         return gold;
     }
 

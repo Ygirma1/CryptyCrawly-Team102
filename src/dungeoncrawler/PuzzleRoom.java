@@ -7,26 +7,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import java.util.ArrayList;
 
-public class ChuongPuzzleRoom extends Room {
+public class PuzzleRoom extends Room {
     private Label instructionLabel;
     private Label puzzleLabel;
     private ArrayList<Button> puzzleButtons;
+    private Button exitButton;
 
-    public ChuongPuzzleRoom(int width, int height, int numberOfRooms) {
-        super(width, height, numberOfRooms);
-        this.setExitPos(0, 225, 0);
-        this.setExitPos(1, 450, 200);
-        this.setExitPos(2, 225, 450);
-        this.setExitPos(3, 0, 200);
-
-        this.setExitText(0, "North");
-        this.setExitText(1, "East");
-        this.setExitText(2, "South");
-        this.setExitText(3, "West");
-
-        for (Button exit: this.getExits()) {
-            exit.setDisable(true);
-        }
+    public PuzzleRoom(int width, int height, int numberOfRooms) {
+        super(width, height, numberOfRooms, "Puzzle");
+        this.exitButton = new Button("Exit");
+        this.exitButton.setLayoutX(450);
+        this.exitButton.setLayoutY(200);
+        this.exitButton.setPrefSize(50, 50);
+        this.exitButton.setDisable(true);
 
         this.instructionLabel = new Label("To exit, answer these 3 questions correctly!");
         this.instructionLabel.setFont(new Font("Comic Sans MS", 20));
@@ -85,6 +78,10 @@ public class ChuongPuzzleRoom extends Room {
                 this.instructionLabel.setText("YEET You can proceed now!");
                 this.instructionLabel.setLayoutX(140);
                 this.puzzleLabel.setText("");
+
+                this.exitButton.setDisable(false);
+                // Add path to final screen here
+
             });
         }
     }
@@ -113,12 +110,13 @@ public class ChuongPuzzleRoom extends Room {
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        pane.getChildren().addAll(this.getExits().get(0), this.getExits().get(1),
-                this.getExits().get(2), this.getExits().get(3),
-                this.instructionLabel, this.puzzleLabel);
+        pane.getChildren().addAll(this.exitButton, this.instructionLabel, this.puzzleLabel);
         for (Button button : this.puzzleButtons) {
             pane.getChildren().addAll(button);
         }
         return new Scene(pane, this.getWidth(), this.getHeight());
+    }
+    public Button getExitButton() {
+        return this.exitButton;
     }
 }
