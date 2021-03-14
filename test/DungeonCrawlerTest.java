@@ -202,23 +202,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testDogeRoom() {
-        clickOn("Start");
-        clickOn("#nameField").write("Chuong");
-        clickOn("#easyRB");
-        clickOn("#weaponDropdown");
-        clickOn("Bludgeon");
-        clickOn("PROCEED");
-
-        while (true) {
-            Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
-            String correctPath = correctExitLabel.getText().substring(8);
-            if (roomID.getText().equals("new5")) {
-                clickOn(correctPath);
-                break;
-            }
-            clickOn(correctPath);
-        }
+        traversal();
 
         // Got to doge room
 
@@ -228,23 +212,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testDogeRoomClick() {
-        clickOn("Start");
-        clickOn("#nameField").write("Chuong");
-        clickOn("#easyRB");
-        clickOn("#weaponDropdown");
-        clickOn("Bludgeon");
-        clickOn("PROCEED");
-
-        while (true) {
-            Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
-            String correctPath = correctExitLabel.getText().substring(8);
-            if (roomID.getText().equals("new5")) {
-                clickOn(correctPath);
-                break;
-            }
-            clickOn(correctPath);
-        }
+        traversal();
 
         // Got to doge room
 
