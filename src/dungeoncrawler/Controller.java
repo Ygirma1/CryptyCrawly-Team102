@@ -12,7 +12,7 @@ public class Controller extends Application {
     private String characterName = "";
     private String difficulty = "";
     private String weapon = "";
-    private int gold = 0;
+    private static int gold = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -74,6 +74,14 @@ public class Controller extends Application {
             });
         }
 
+        if (room instanceof PuzzleRoom) {
+            Button exitButton = ((PuzzleRoom) room).getExitButton();
+            exitButton.setOnAction(e -> {
+                Room winningRoom = new WinningRoom(500, 500, 4);
+                initRoom(winningRoom);
+            });
+        }
+
         Button right = room.getBRight();
         right.setOnAction(e -> {
            if (room.getRight() != null) {
@@ -121,7 +129,7 @@ public class Controller extends Application {
         return weapon;
     }
 
-    public int getGold() {
+    public static int getGold() {
         return gold;
     }
 

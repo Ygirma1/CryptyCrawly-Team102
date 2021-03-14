@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Room {
     private Room down;
     private int width;
     private int height;
+    private Label goldLabel;
 
     public Room(int width, int height, int numberOfRooms) {
         this(width, height, numberOfRooms, "doge");
@@ -52,6 +54,12 @@ public class Room {
         this.width = width;
         this.height = height;
         this.exitNum = numberOfRooms;
+
+        this.goldLabel = new Label("Gold: " + Controller.getGold());
+
+        this.goldLabel.setLayoutX(400);
+        this.goldLabel.setLayoutY(100);
+
     }
 
     public void generateMap(Room startingRoom) {
@@ -160,6 +168,7 @@ public class Room {
         }
         id.setLayoutY(100);
         pane.getChildren().add(id);
+        pane.getChildren().add(this.goldLabel);
         return new Scene(pane, this.width, this.height);
     }
 

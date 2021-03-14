@@ -116,4 +116,7 @@ public class PuzzleRoom extends Room {
         }
         return new Scene(pane, this.getWidth(), this.getHeight());
     }
+    public Button getExitButton() {
+        return this.exitButton;
+    }
 }
