@@ -79,15 +79,18 @@ public class GoldRoom extends Room {
         goldButton3Text.setLayoutX(350);
 
         try {
-            Image gold25Image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\gold25.png"));
+            Image gold25Image = new Image(new FileInputStream(
+                    System.getProperty("user.dir") + "\\res\\gold25.png"));
             ImageView imageView25 = new ImageView(gold25Image);
             imageView25.setFitWidth(100);
             imageView25.setFitHeight(100);
-            Image gold50Image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\gold50.png"));
+            Image gold50Image = new Image(new FileInputStream(
+                    System.getProperty("user.dir") + "\\res\\gold50.png"));
             ImageView imageView50 = new ImageView(gold50Image);
             imageView50.setFitWidth(100);
             imageView50.setFitHeight(100);
-            Image gold75Image = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\gold75.png"));
+            Image gold75Image = new Image(new FileInputStream(
+                    System.getProperty("user.dir") + "\\res\\gold75.png"));
             ImageView imageView75 = new ImageView(gold75Image);
             imageView75.setFitWidth(100);
             imageView75.setFitHeight(100);
@@ -132,8 +135,10 @@ public class GoldRoom extends Room {
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        pane.getChildren().addAll(this.instructionLabel, this.goldButton, this.goldButton2, this.goldButton3,
-                this.exitButton, this.goldText, this.goldButtonText, this.goldButton2Text, this.goldButton3Text);
+        pane.getChildren().addAll(this.instructionLabel, this.goldButton,
+                this.goldButton2, this.goldButton3,
+                this.exitButton, this.goldText, this.goldButtonText,
+                this.goldButton2Text, this.goldButton3Text);
         return new Scene(pane, this.getWidth(), this.getHeight());
     }
 
