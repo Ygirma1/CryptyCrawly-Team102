@@ -334,6 +334,9 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("down");
         Text roomID = lookup("#id").queryText();
         assertEquals(roomID.getText(), "down");
+    }
+
+    @Test
     public void testGoldRoom() {
         traversal();
         // Got to doge room
