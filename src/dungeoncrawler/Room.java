@@ -73,17 +73,33 @@ public class Room {
         updateAdjRooms(dRoom);
         updateAdjRooms(startingRoom);
         Random rand = new Random();
-        Room next = startingRoom.adjRooms[rand.nextInt(3)];
-        rGenerateMap(next, 0);
+        int randRoomIndex = rand.nextInt(4);
+        Room next = startingRoom.adjRooms[randRoomIndex];
+        rGenerateMap(next, 0, randRoomIndex);
     }
 
-    private void rGenerateMap(Room current, int roomDepth) {
+    private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         if (roomDepth >= 6) {
             generateBossRoom(current);
         } else {
-            //TODO generate rest of map
-            Room nextRoom = new Room("new"); //TODO get random room (not already in use)
-            rGenerateMap(nextRoom, roomDepth + 1);
+            Random rand = new Random();
+            Room nextRoom = new Room("new" + roomDepth);
+            current.adjRooms[newRoomIndex] = nextRoom;
+            int nextRoomPrevIndex = newRoomIndex;
+            if (newRoomIndex % 2 == 0) {
+                nextRoomPrevIndex += 1;
+            } else {
+                nextRoomPrevIndex -= 1;
+            }
+            nextRoom.adjRooms[nextRoomPrevIndex] = current;
+            updateAdjRooms(current, true);
+            updateAdjRooms(nextRoom, true);
+
+            int nextIndex = nextRoomPrevIndex;
+            while (nextIndex == nextRoomPrevIndex) {
+                nextIndex = rand.nextInt(4);
+            }
+            rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
     }
 
@@ -92,10 +108,17 @@ public class Room {
     }
 
     private void updateAdjRooms(Room current) {
-        this.adjRooms[0] = this.right;
-        this.adjRooms[1] = this.left;
-        this.adjRooms[2] = this.up;
-        this.adjRooms[3] = this.down;
+        current.adjRooms[0] = current.right;
+        current.adjRooms[1] = current.left;
+        current.adjRooms[2] = current.up;
+        current.adjRooms[3] = current.down;
+    }
+
+    private void updateAdjRooms(Room current, boolean foo) {
+        current.right = current.adjRooms[0];
+        current.left = current.adjRooms[1];
+        current.up = current.adjRooms[2];
+        current.down = current.adjRooms[3];
     }
 
     // When extends this class, override this to set your room's own scene
