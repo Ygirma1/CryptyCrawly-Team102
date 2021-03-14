@@ -6,7 +6,9 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
-import static org.junit.Assert.assertEquals;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
@@ -148,6 +150,35 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Shortsword");
         clickOn("PROCEED");
         assertEquals(controller.getWeapon(), "Shortsword");
+    }
+
+    @Test
+    public void testHelpButtonVisibility() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+    }
+
+    @Test
+    public void testCorrectDoorShowing() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+        if (!controller.getHelpButton().isVisible()) {
+            String correctPathParse = controller.getCorrectRoomText();
+            clickOn(correctPathParse);
+            sleep(5, TimeUnit.SECONDS);
+        }
     }
 }
 

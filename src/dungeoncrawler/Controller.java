@@ -15,8 +15,10 @@ public class Controller extends Application {
     private String characterName = "";
     private String difficulty = "";
     private String weapon = "";
+    private String correctExitText = "";
     private static Difficulty diff;
     private static int gold = 0;
+    private Button helpButton;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -115,9 +117,11 @@ public class Controller extends Application {
             }
         });
         Button help = room.getHelpButton();
+        helpButton = help;
         help.setOnAction(e -> {
-            
             help.setVisible(false);
+            String exit = room.getCorrectExitRoomName();
+            correctExitText = exit;
         });
         this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
@@ -148,5 +152,13 @@ public class Controller extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Button getHelpButton() {
+        return helpButton;
+    }
+
+    public String getCorrectRoomText() {
+        return correctExitText;
     }
 }
