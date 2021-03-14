@@ -1,12 +1,18 @@
-import dungeoncrawler.Controller;
-import dungeoncrawler.Difficulty;
+import dungeoncrawler.*;
+
 import javafx.stage.Stage;
 import org.junit.Test;
+
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
+import javafx.scene.control.Label;
 
-import static org.junit.Assert.assertEquals;
+import javafx.scene.text.Text;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
@@ -15,6 +21,27 @@ public class DungeonCrawlerTest extends ApplicationTest {
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
         controller.start(primaryStage);
+    }
+
+    //Peter's code to traverse past the maze room.
+    public void traversal() {
+        clickOn("Start");
+        clickOn("#nameField").write("Chuong");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+
+        while (true) {
+            Text roomID = lookup("#id").queryText();
+            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+            String correctPath = correctExitLabel.getText().substring(8);
+            if (roomID.getText().equals("new5")) {
+                clickOn(correctPath);
+                break;
+            }
+            clickOn(correctPath);
+        }
     }
 
     @Test
@@ -148,6 +175,102 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Shortsword");
         clickOn("PROCEED");
         assertEquals(controller.getWeapon(), "Shortsword");
+    }
+
+    @Test
+    public void wrongAnswerTest() {
+        traversal();
+
+        for (int i = 0; i < 5; i++) {
+            clickOn("#dogeButton");
+        }
+
+        clickOn("#exitButton");
+        clickOn("#Correct1");
+        clickOn("#Correct2");
+        verifyThat("#Question3", NodeMatchers.isNotNull());
+        clickOn("#WrongAnswer");
+        verifyThat("#Question2", NodeMatchers.isNotNull());
+        clickOn("69");
+        verifyThat("#Question1", NodeMatchers.isNotNull());
+
+
+    }
+
+    @Test
+    public void testHelpButtonVisibility() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+    }
+
+    @Test
+    public void testCorrectDoorShowing() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+        if (!controller.getHelpButton().isVisible()) {
+            String correctPathParse = controller.getCorrectRoomText();
+            clickOn(correctPathParse);
+            sleep(5, TimeUnit.SECONDS);
+        }
+    }
+
+    @Test
+    public void testPuzzleRoom() {
+        traversal();
+
+        for (int i = 0; i < 5; i++) {
+            clickOn("#dogeButton");
+        }
+
+        clickOn("#exitButton");
+
+        clickOn("#Correct1");
+        verifyThat("#Question2", NodeMatchers.isNotNull());
+        clickOn("#Correct2");
+        verifyThat("#Question3", NodeMatchers.isNotNull());
+        clickOn("Yes!!");
+        verifyThat("#dungeonExit", NodeMatchers.isEnabled());
+        clickOn("#dungeonExit");
+        verifyThat("YOU WIN!!!", NodeMatchers.isVisible());
+    }
+
+    @Test
+    public void testDogeRoom() {
+        traversal();
+
+        // Got to doge room
+
+        verifyThat("#dogeButton", NodeMatchers.isEnabled());
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+    }
+
+    @Test
+    public void testDogeRoomClick() {
+        traversal();
+
+        // Got to doge room
+
+        verifyThat("#dogeButton", NodeMatchers.isEnabled());
+        verifyThat("#exitButton", NodeMatchers.isDisabled());
+
+        for (int i = 0; i < 4; i++) {
+            clickOn("#dogeButton");
+            verifyThat("#exitButton", NodeMatchers.isDisabled());
+        }
+        clickOn("#dogeButton");
+        verifyThat("#exitButton", NodeMatchers.isEnabled());
     }
 }
 

@@ -3,9 +3,6 @@ package dungeoncrawler;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.assertj.core.internal.Diff;
-
-import java.util.Random;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -14,20 +11,21 @@ public class Controller extends Application {
     private String characterName = "";
     private String difficulty = "";
     private String weapon = "";
+    private String correctExitText = "";
     private static Difficulty diff;
     private static int gold = 0;
+    private Button helpButton;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
+
+        Room start = new Room("start", Difficulty.EASY);
+        start.generateMap(start);
+        initRoom(start);
+
         welcomeScreen();
-//        DogeRoom a = new DogeRoom(500, 500, 4);
-//        this.primaryStage.setScene(a.getScene());
-//        this.primaryStage.show();
-//        Room start = new Room("start");
-//        start.generateMap(start);
-//        initRoom(start);
     }
 
     private void welcomeScreen() {
@@ -91,9 +89,9 @@ public class Controller extends Application {
 
         Button right = room.getBRight();
         right.setOnAction(e -> {
-           if (room.getRight() != null) {
-               initRoom(room.getRight());
-           }
+            if (room.getRight() != null) {
+                initRoom(room.getRight());
+            }
         });
         Button left = room.getBLeft();
         left.setOnAction(e -> {
@@ -112,6 +110,13 @@ public class Controller extends Application {
             if (room.getDown() != null) {
                 initRoom(room.getDown());
             }
+        });
+        Button help = room.getHelpButton();
+        helpButton = help;
+        help.setOnAction(e -> {
+            help.setVisible(false);
+            String exit = room.getCorrectExitRoomName();
+            correctExitText = exit;
         });
         this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
@@ -140,7 +145,19 @@ public class Controller extends Application {
         return gold;
     }
 
+    public Stage getPrimaryStage() {
+        return this.primaryStage;
+    }
+
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Button getHelpButton() {
+        return helpButton;
+    }
+
+    public String getCorrectRoomText() {
+        return correctExitText;
     }
 }

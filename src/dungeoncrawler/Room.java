@@ -3,23 +3,32 @@ package dungeoncrawler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Room {
     private ArrayList<Button> exits;
     private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
+    private Button helpButton;
     private Button bLeft;
     private Button bRight;
     private Button bUp;
     private Button bDown;
     private Text id; // just a label for a room, use for debugging
+    private Label correctExit; //Displays proper exit in bottom right corner
+    private String pathID; //Text displaying correct exit to choose
+    private String roomID; //maybe we need this to \keep track of the room position?
+    private static int roomCount;
+    private int exitNum;
     private Text goldText;
     private Room left;
     private Room right;
@@ -62,7 +71,9 @@ public class Room {
      */
     public Room(int width, int height, String id, Difficulty diff) {
         this.id = new Text(id);
+        this.id.setId("id");
         this.exits = new ArrayList<>();
+        this.helpButton = new Button("Correct Door");
         this.bLeft = new Button("left");
         this.exits.add(bLeft);
         this.bRight = new Button("right");
@@ -71,6 +82,7 @@ public class Room {
         this.exits.add(bUp);
         this.bDown = new Button("down");
         this.exits.add(bDown);
+        this.pathID = "";
         for (Button exit : this.exits) {
             exit.setPrefSize(80, 30);
             exit.setFont(smallFont);
@@ -113,17 +125,20 @@ public class Room {
         int randRoomIndex = rand.nextInt(4);
         Room next = startingRoom.adjRooms[randRoomIndex];
         rGenerateMap(next, 0, randRoomIndex);
+        startingRoom.setPathID(pathReveal(randRoomIndex));
     }
 
     /**
-     * Recursive helper method to generate a random sequence of rooms.
-     * Rooms lead to boss room
+     * Recursive helper method to generate a random sequence of rooms. Rooms lead to
+     * boss room
      *
-     * @param current the current room having rooms added to it
-     * @param roomDepth the distance of the rooms from the start
-     * @param newRoomIndex the index of the Room[] that will determine the direction of the new room
+     * @param current      the current room having rooms added to it
+     * @param roomDepth    the distance of the rooms from the start
+     * @param newRoomIndex the index of the Room[] that will determine the direction
+     *                     of the new room
      */
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
+        current.setPathID(pathReveal(newRoomIndex));
         if (roomDepth >= 6) {
             Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
@@ -146,14 +161,51 @@ public class Room {
             nextRoom.adjRooms[nextRoomPrevIndex] = current;
             updateAdjRooms(current);
             updateAdjRooms(nextRoom);
-
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
+
             }
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
     }
+
+    private void updateRoomArray(Room current) {
+        current.adjRooms[0] = current.right;
+        current.adjRooms[1] = current.left;
+        current.adjRooms[2] = current.up;
+        current.adjRooms[3] = current.down;
+    }
+
+    //    /**
+    //     * Updates the right, left, top and bottom rooms using the adjacency array
+    //     *
+    //     * @param current Current room //*
+    //     * @param foo Temp var, to be removed when
+    //     *                method name is changed
+    //     */
+    //  private void updateAdjRooms(Room current, boolean foo) {
+
+    private void updateAdjRooms(Room current) {
+        current.right = current.adjRooms[0];
+        current.left = current.adjRooms[1];
+        current.up = current.adjRooms[2];
+        current.down = current.adjRooms[3];
+    }
+
+    private String pathReveal(int nextIndex) {
+        if (nextIndex == 0) {
+            this.setPathID("Choose: right");
+        } else if (nextIndex == 1) {
+            this.setPathID("Choose: left");
+        } else if (nextIndex == 2) {
+            this.setPathID("Choose: up");
+        } else if (nextIndex == 3) {
+            this.setPathID("Choose: down");
+        }
+        return getPathID();
+    }
+    // When extends this class, override this to set your room's own scene
 
     /**
      * Returns a new scene based on the Room class.
@@ -162,33 +214,49 @@ public class Room {
      */
     public Scene getScene() {
         Pane pane = new Pane();
+        String path = getPathID();
+        this.correctExit = new Label(path);
+        this.correctExit.setId("correctExit");
         if (this.right != null) {
-            //right button
+            // right button
             exits.get(1).setLayoutX(405);
             exits.get(1).setLayoutY(235);
             pane.getChildren().add(exits.get(1));
         }
         if (this.left != null) {
-            //left button
+            // left button
             exits.get(0).setLayoutX(15);
             exits.get(0).setLayoutY(235);
             pane.getChildren().add(exits.get(0));
         }
         if (this.up != null) {
-            //up button
+            // up button
             exits.get(2).setLayoutX(210);
             exits.get(2).setLayoutY(15);
             pane.getChildren().add(exits.get(2));
         }
         if (this.down != null) {
-            //down button
+            // down button
             exits.get(3).setLayoutX(210);
             exits.get(3).setLayoutY(445);
             pane.getChildren().add(exits.get(3));
         }
+        Group helpGroup = new Group();
+        helpButton.setPrefHeight(50);
+        helpButton.setPrefWidth(125);
+        helpButton.setLayoutX(375);
+        helpButton.setLayoutY(450);
+        helpButton.setFont(new Font("High Tower Text", 15));
+        helpButton.setStyle("-fx-background-color: #62686F;");
+        helpButton.setVisible(true); // Set to false to get rid of button
+        correctExit.setPrefSize(100, helpButton.getPrefHeight());
+        correctExit.setLayoutX(400);
+        correctExit.setLayoutY(450);
+        correctExit.setFont(new Font("High Tower Text", 15));
+        helpGroup.getChildren().addAll(helpButton, correctExit);
+        helpGroup.getChildren().set(0, helpButton).toFront();
         id.setLayoutY(100);
-        pane.getChildren().add(id);
-        pane.getChildren().add(this.goldText);
+        pane.getChildren().addAll(id, this.goldText, helpGroup);
 
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
@@ -198,35 +266,11 @@ public class Room {
     }
 
     /**
-     * Updates a room's adjRooms[] to reflect its corresponding adjacent rooms.
-     *
-     * @param current the room being modified
-     */
-    private void updateRoomArray(Room current) {
-        current.adjRooms[0] = current.right;
-        current.adjRooms[1] = current.left;
-        current.adjRooms[2] = current.up;
-        current.adjRooms[3] = current.down;
-    }
-
-    /**
-     * Updates a room's adjacent rooms based on its adjRooms[].
-     *
-     * @param current the room being modified
-     */
-    private void updateAdjRooms(Room current) {
-        current.right = current.adjRooms[0];
-        current.left = current.adjRooms[1];
-        current.up = current.adjRooms[2];
-        current.down = current.adjRooms[3];
-    }
-
-    /**
      * Sets the position of each exit in the window.
      *
      * @param index Index of the exits in the array of exits
-     * @param x The x coordinate
-     * @param y The y coordinate
+     * @param x     The x coordinate
+     * @param y     The y coordinate
      */
     public void setExitPos(int index, int x, int y) {
         if (index < 0 || index >= this.exits.size()) {
@@ -240,7 +284,7 @@ public class Room {
      * Setter for the text of an exit button
      *
      * @param index Index of the exit in the array of exits
-     * @param text The text to display on the exit button
+     * @param text  The text to display on the exit button
      */
     public void setExitText(int index, String text) {
         if (index < 0 || index >= this.exits.size()) {
@@ -253,8 +297,8 @@ public class Room {
     /**
      * Setter for the size of an exit button
      *
-     * @param index Index of the exit in the array of exits
-     * @param width Width of the exit button
+     * @param index  Index of the exit in the array of exits
+     * @param width  Width of the exit button
      * @param height Height of the exit button
      */
     public void setExitSize(int index, int width, int height) {
@@ -268,7 +312,7 @@ public class Room {
     /**
      * Setter for the event handler for an exit button
      *
-     * @param index Index of the exit in the array of exits
+     * @param index        Index of the exit in the array of exits
      * @param eventHandler The event handler for an exit button
      */
     public void setExitEventHandler(int index, EventHandler<ActionEvent> eventHandler) {
@@ -439,5 +483,33 @@ public class Room {
      */
     public Button getBDown() {
         return this.bDown;
+    }
+
+    public void setPathID(String path) {
+        pathID = path;
+    }
+
+    public String getPathID() {
+        return pathID;
+    }
+
+    public void setID(String newID) {
+        id = new Text(newID);
+    }
+
+    public Text getID() {
+        return this.id;
+    }
+
+    public Button getHelpButton() {
+        return this.helpButton;
+    }
+
+    public Label getCorrectExit() {
+        return this.correctExit;
+    }
+
+    public String getCorrectExitRoomName() {
+        return getCorrectExit().getText().substring(8);
     }
 }
