@@ -7,11 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import org.assertj.core.internal.Diff;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class DogeRoom extends Room {
     private Label instructionLabel;
@@ -29,6 +27,7 @@ public class DogeRoom extends Room {
         this.exitButton.setLayoutY(200);
         this.exitButton.setPrefSize(50, 50);
         this.exitButton.setDisable(true);
+        this.exitButton.setId("exitButton");
 
         this.instructionLabel = new Label();
         this.instructionLabel = new Label("You have been captured by the doge!");
@@ -47,8 +46,10 @@ public class DogeRoom extends Room {
         this.dogeButton.setPrefSize(200, 200);
         this.dogeButton.setLayoutY(170);
         this.dogeButton.setLayoutX(150);
+        this.dogeButton.setId("dogeButton");
         try {
-            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\doge.png"));
+            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir")
+                    + "\\res\\doge.png"));
             ImageView imageView = new ImageView(dogeImage);
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
@@ -75,7 +76,8 @@ public class DogeRoom extends Room {
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        pane.getChildren().addAll(this.instructionLabel, this.dogeButton, this.instructionLabel2, this.exitButton);
+        pane.getChildren().addAll(this.instructionLabel, this.dogeButton,
+                this.instructionLabel2, this.exitButton);
         return new Scene(pane, this.getWidth(), this.getHeight());
     }
 

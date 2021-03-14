@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import org.assertj.core.internal.Diff;
+
 
 import java.util.ArrayList;
 
@@ -18,6 +18,7 @@ public class PuzzleRoom extends Room {
     public PuzzleRoom(int width, int height, Difficulty diff) {
         super(width, height, "Puzzle", diff);
         this.exitButton = new Button("Exit");
+        this.exitButton.setId("dungeonExit");
         this.exitButton.setLayoutX(450);
         this.exitButton.setLayoutY(200);
         this.exitButton.setPrefSize(50, 50);
@@ -45,12 +46,13 @@ public class PuzzleRoom extends Room {
 
     private void questionOneSetUp() {
         this.puzzleLabel.setText("What is 1 + 1?");
-
+        this.puzzleLabel.setId("Question1");
         this.puzzleLabel.setLayoutX(175);
         this.puzzleLabel.setFont(new Font("Comic Sans MS", 20));
 
         this.puzzleButtons.get(0).setText("1");
         this.puzzleButtons.get(1).setText("2 ... duh");
+        this.puzzleButtons.get(1).setId("Correct1");
         this.puzzleButtons.get(2).setText("idk");
 
         this.puzzleButtons.get(1).setOnAction(e -> {
@@ -67,6 +69,7 @@ public class PuzzleRoom extends Room {
 
     private void questionThreeSetUp() {
         this.puzzleLabel.setText("Should we have a week of spring break?");
+        this.puzzleLabel.setId("Question3");
         this.puzzleLabel.setLayoutX(100);
         this.puzzleLabel.setFont(new Font("Comic Sans MS", 17));
 
@@ -85,6 +88,7 @@ public class PuzzleRoom extends Room {
                     puzzleButton.setText("");
                 }
                 this.instructionLabel.setText("YEET You can proceed now!");
+                this.instructionLabel.setId("Winner!");
                 this.instructionLabel.setLayoutX(140);
                 this.puzzleLabel.setText("");
 
@@ -95,17 +99,19 @@ public class PuzzleRoom extends Room {
 
     private void questionTwoSetUp() {
         this.puzzleLabel.setText("What is the sum of all positive number");
+        this.puzzleLabel.setId("Question2");
         this.puzzleLabel.setLayoutX(100);
         this.puzzleLabel.setFont(new Font("Comic Sans MS", 17));
 
         this.puzzleButtons.get(0).setText("-1/12");
         this.puzzleButtons.get(1).setText("Infinity");
+        this.puzzleButtons.get(1).setId("Correct2");
         this.puzzleButtons.get(2).setText("69");
 
-        this.puzzleButtons.get(0).setOnAction(e -> {
+        this.puzzleButtons.get(1).setOnAction(e -> {
             questionThreeSetUp();
         });
-        this.puzzleButtons.get(1).setOnAction(e -> {
+        this.puzzleButtons.get(0).setOnAction(e -> {
             questionOneSetUp();
         });
 

@@ -2,18 +2,15 @@ package dungeoncrawler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,8 +48,10 @@ public class Room {
     public Room(String id, Difficulty diff) {
         this(500, 500, id, diff);
     }
+
     public Room(int width, int height, String id, Difficulty diff) {
         this.id = new Text(id);
+        this.id.setId("id");
         this.exits = new ArrayList<>();
         this.helpButton = new Button("Correct Door");
         this.bLeft = new Button("left");
@@ -110,12 +109,13 @@ public class Room {
     }
 
     /**
-     * Recursive helper method to generate a random sequence of rooms.
-     * Rooms lead to boss room
+     * Recursive helper method to generate a random sequence of rooms. Rooms lead to
+     * boss room
      *
-     * @param current the current room having rooms added to it
-     * @param roomDepth the distance of the rooms from the start
-     * @param newRoomIndex the index of the Room[] that will determine the direction of the new room
+     * @param current      the current room having rooms added to it
+     * @param roomDepth    the distance of the rooms from the start
+     * @param newRoomIndex the index of the Room[] that will determine the direction
+     *                     of the new room
      */
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         current.setPathID(pathReveal(newRoomIndex));
@@ -144,16 +144,27 @@ public class Room {
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
+
             }
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
     }
+
     private void updateRoomArray(Room current) {
         current.adjRooms[0] = current.right;
         current.adjRooms[1] = current.left;
         current.adjRooms[2] = current.up;
         current.adjRooms[3] = current.down;
     }
+
+    //    /**
+    //     * Updates the right, left, top and bottom rooms using the adjacency array
+    //     *
+    //     * @param current Current room //*
+    //     * @param foo Temp var, to be removed when
+    //     *                method name is changed
+    //     */
+    //  private void updateAdjRooms(Room current, boolean foo) {
 
     private void updateAdjRooms(Room current) {
         current.right = current.adjRooms[0];
@@ -185,26 +196,27 @@ public class Room {
         Pane pane = new Pane();
         String path = getPathID();
         this.correctExit = new Label(path);
+        this.correctExit.setId("correctExit");
         if (this.right != null) {
-            //right button
+            // right button
             exits.get(1).setLayoutX(405);
             exits.get(1).setLayoutY(235);
             pane.getChildren().add(exits.get(1));
         }
         if (this.left != null) {
-            //left button
+            // left button
             exits.get(0).setLayoutX(15);
             exits.get(0).setLayoutY(235);
             pane.getChildren().add(exits.get(0));
         }
         if (this.up != null) {
-            //up button
+            // up button
             exits.get(2).setLayoutX(210);
             exits.get(2).setLayoutY(15);
             pane.getChildren().add(exits.get(2));
         }
         if (this.down != null) {
-            //down button
+            // down button
             exits.get(3).setLayoutX(210);
             exits.get(3).setLayoutY(445);
             pane.getChildren().add(exits.get(3));
@@ -216,7 +228,7 @@ public class Room {
         helpButton.setLayoutY(450);
         helpButton.setFont(new Font("High Tower Text", 15));
         helpButton.setStyle("-fx-background-color: #62686F;");
-        helpButton.setVisible(true); //Set to false to get rid of button
+        helpButton.setVisible(true); // Set to false to get rid of button
         correctExit.setPrefSize(100, helpButton.getPrefHeight());
         correctExit.setLayoutX(400);
         correctExit.setLayoutY(450);
@@ -237,8 +249,8 @@ public class Room {
      * Sets the position of each exit in the window.
      *
      * @param index Index of the exits in the array of exits
-     * @param x The x coordinate
-     * @param y The y coordinate
+     * @param x     The x coordinate
+     * @param y     The y coordinate
      */
     public void setExitPos(int index, int x, int y) {
         if (index < 0 || index >= this.exits.size()) {
@@ -252,7 +264,7 @@ public class Room {
      * Setter for the text of an exit button
      *
      * @param index Index of the exit in the array of exits
-     * @param text The text to display on the exit button
+     * @param text  The text to display on the exit button
      */
     public void setExitText(int index, String text) {
         if (index < 0 || index >= this.exits.size()) {
@@ -265,8 +277,8 @@ public class Room {
     /**
      * Setter for the size of an exit button
      *
-     * @param index Index of the exit in the array of exits
-     * @param width Width of the exit button
+     * @param index  Index of the exit in the array of exits
+     * @param width  Width of the exit button
      * @param height Height of the exit button
      */
     public void setExitSize(int index, int width, int height) {
@@ -280,7 +292,7 @@ public class Room {
     /**
      * Setter for the event handler for an exit button
      *
-     * @param index Index of the exit in the array of exits
+     * @param index        Index of the exit in the array of exits
      * @param eventHandler The event handler for an exit button
      */
     public void setExitEventHandler(int index, EventHandler<ActionEvent> eventHandler) {
