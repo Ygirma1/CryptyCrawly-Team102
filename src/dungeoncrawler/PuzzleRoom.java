@@ -19,7 +19,7 @@ public class PuzzleRoom extends Room {
     public PuzzleRoom(int width, int height, Difficulty diff) {
         super(width, height, "Puzzle", diff);
         this.exitButton = new Button("Exit");
-        this.exitButton.setId("exit");
+        this.exitButton.setId("dungeonExit");
         this.exitButton.setLayoutX(450);
         this.exitButton.setLayoutY(200);
         this.exitButton.setPrefSize(50, 50);
@@ -109,10 +109,10 @@ public class PuzzleRoom extends Room {
         this.puzzleButtons.get(1).setId("Correct2");
         this.puzzleButtons.get(2).setText("69");
 
-        this.puzzleButtons.get(0).setOnAction(e -> {
+        this.puzzleButtons.get(1).setOnAction(e -> {
             questionThreeSetUp();
         });
-        this.puzzleButtons.get(1).setOnAction(e -> {
+        this.puzzleButtons.get(0).setOnAction(e -> {
             questionOneSetUp();
         });
 

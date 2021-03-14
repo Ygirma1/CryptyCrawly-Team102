@@ -18,6 +18,8 @@ import org.testfx.matcher.control.TextInputControlMatchers;
 import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
+import org.testfx.matcher.control.TextMatchers;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -28,6 +30,27 @@ public class DungeonCrawlerTest extends ApplicationTest {
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
         controller.start(primaryStage);
+    }
+
+    //Peter's code to traverse past the maze room.
+    public void traversal() {
+        clickOn("Start");
+        clickOn("#nameField").write("Chuong");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+
+        while (true) {
+            Text roomID = lookup("#id").queryText();
+            Label correctExitLabel = (Label)lookup("#correctExit").queryLabeled();
+            String correctPath = correctExitLabel.getText().substring(8);
+            if (roomID.getText().equals("new5")) {
+                clickOn(correctPath);
+                break;
+            }
+            clickOn(correctPath);
+        }
     }
 
     @Test
@@ -164,18 +187,28 @@ public class DungeonCrawlerTest extends ApplicationTest {
     }
 
     @Test
-    public void testPuzzleRoom() throws Exception {
-        PuzzleRoom testPuzzle = new PuzzleRoom(500, 500, Difficulty.EASY);
-        Stage primary = new Stage();
-        primary.setScene(testPuzzle.getScene());
-        start(primary);
+    public void testPuzzleRoom(){
+        traversal();
+
+        for (int i = 0; i < 5; i++) {
+            clickOn("#dogeButton");
+        }
+
+        clickOn("#exitButton");
+
         clickOn("#Correct1");
         verifyThat("#Question2", NodeMatchers.isNotNull());
         clickOn("#Correct2");
         verifyThat("#Question3", NodeMatchers.isNotNull());
         clickOn("Yes!!");
-        verifyThat("#exit", NodeMatchers.isEnabled());
+        verifyThat("#dungeonExit", NodeMatchers.isEnabled());
+        clickOn("#dungeonExit");
+        verifyThat("YOU WIN!!!", NodeMatchers.isVisible());
     }
+
+
+
+
 
     @Test
     public void testDogeRoom() {
