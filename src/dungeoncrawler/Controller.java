@@ -19,10 +19,10 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-//        welcomeScreen();
-//        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
-//        this.primaryStage.setScene(a.getScene());
-//        this.primaryStage.show();
+        //        welcomeScreen();
+        //        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
+        //        this.primaryStage.setScene(a.getScene());
+        //         this.primaryStage.show();
         Room start = new Room("start");
         start.generateMap(start);
         initRoom(start);
@@ -69,9 +69,9 @@ public class Controller extends Application {
     private void initRoom(Room room) {
         Button right = room.getBRight();
         right.setOnAction(e -> {
-           if (room.getRight() != null) {
-               initRoom(room.getRight());
-           }
+            if (room.getRight() != null) {
+                initRoom(room.getRight());
+            }
         });
         Button left = room.getBLeft();
         left.setOnAction(e -> {

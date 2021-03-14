@@ -113,7 +113,9 @@ public class ChuongPuzzleRoom extends Room {
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        pane.getChildren().addAll(this.getExits().get(0), this.getExits().get(1), this.getExits().get(2), this.getExits().get(3), this.instructionLabel, this.puzzleLabel);
+        pane.getChildren().addAll(this.getExits().get(0), this.getExits().get(1),
+                this.getExits().get(2), this.getExits().get(3),
+                this.instructionLabel, this.puzzleLabel);
         for (Button button : this.puzzleButtons) {
             pane.getChildren().addAll(button);
         }
