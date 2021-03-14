@@ -74,6 +74,14 @@ public class Controller extends Application {
         if (room instanceof DogeRoom) {
             Button exitButton = ((DogeRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
+                Room goldRoom = new GoldRoom(500, 500, "gold", Controller.diff);
+                initRoom(goldRoom);
+            });
+        }
+
+        if (room instanceof GoldRoom) {
+            Button exitButton = ((GoldRoom) room).getExitButton();
+            exitButton.setOnAction(e -> {
                 Room puzzleRoom = new PuzzleRoom(500, 500, Controller.diff);
                 initRoom(puzzleRoom);
             });
@@ -143,6 +151,10 @@ public class Controller extends Application {
 
     public static int getGold() {
         return gold;
+    }
+
+    public static void setGold(int newGold) {
+        gold = newGold;
     }
 
     public Stage getPrimaryStage() {
