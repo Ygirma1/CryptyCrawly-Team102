@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import org.assertj.core.internal.Diff;
+
 import java.util.ArrayList;
 
 public class PuzzleRoom extends Room {
@@ -13,8 +15,8 @@ public class PuzzleRoom extends Room {
     private ArrayList<Button> puzzleButtons;
     private Button exitButton;
 
-    public PuzzleRoom(int width, int height, int numberOfRooms) {
-        super(width, height, numberOfRooms, "Puzzle");
+    public PuzzleRoom(int width, int height, Difficulty diff) {
+        super(width, height, "Puzzle", diff);
         this.exitButton = new Button("Exit");
         this.exitButton.setLayoutX(450);
         this.exitButton.setLayoutY(200);

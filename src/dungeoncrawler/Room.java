@@ -4,8 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,26 +20,27 @@ public class Room {
     private Button bUp;
     private Button bDown;
     private Text id; // just a label for a room, use for debugging
-    private String roomID; // maybe we need this to keep track of the room position?
-    private static int roomCount;
-    private int exitNum;
+    private Text goldText;
     private Room left;
     private Room right;
     private Room up;
     private Room down;
+    private Difficulty diff;
+    private final Color floorColor = Color.rgb(129, 137, 147);
+    private final Color goldColor = Color.rgb(255, 215, 0);
+    private final Font smallFont = new Font("High Tower Text", 19);
     private int width;
     private int height;
-    private Label goldLabel;
 
-    public Room(int width, int height, int numberOfRooms) {
-        this(width, height, numberOfRooms, "doge");
+    public Room(int width, int height) {
+        this(width, height, "doge", Difficulty.EASY);
     }
 
-    public Room(String id) {
-        this(500, 500, 4, id);
+    public Room(String id, Difficulty diff) {
+        this(500, 500, id, diff);
     }
 
-    public Room(int width, int height, int numberOfRooms, String id) {
+    public Room(int width, int height, String id, Difficulty diff) {
         this.id = new Text(id);
         this.exits = new ArrayList<>();
         this.bLeft = new Button("left");
@@ -49,56 +52,66 @@ public class Room {
         this.bDown = new Button("down");
         this.exits.add(bDown);
         for (Button exit : this.exits) {
-            exit.setPrefSize(50, 50);
+            exit.setPrefSize(80, 30);
+            exit.setFont(smallFont);
+            exit.setStyle("-fx-background-color: #62686F;");
         }
         this.width = width;
         this.height = height;
-        this.exitNum = numberOfRooms;
 
-        this.goldLabel = new Label("Gold: " + Controller.getGold());
-
-        this.goldLabel.setLayoutX(400);
-        this.goldLabel.setLayoutY(100);
-
+        this.diff = diff;
+        this.goldText = new Text("Gold: " + Controller.getGold());
+        this.goldText.setFont(smallFont);
+        this.goldText.setFill(goldColor);
+        this.goldText.setX(420);
+        this.goldText.setY(20);
     }
 
     public void generateMap(Room startingRoom) {
-        Room rRoom = new Room("right");
+        Room rRoom = new Room("right", this.diff);
         startingRoom.right = rRoom;
         rRoom.left = startingRoom;
-        updateAdjRooms(rRoom);
-        Room lRoom = new Room("left");
+        updateRoomArray(rRoom);
+        Room lRoom = new Room("left", this.diff);
         startingRoom.left = lRoom;
         lRoom.right = startingRoom;
-        updateAdjRooms(lRoom);
-        Room uRoom = new Room("up");
+        updateRoomArray(lRoom);
+        Room uRoom = new Room("up", this.diff);
         startingRoom.up = uRoom;
         uRoom.down = startingRoom;
-        updateAdjRooms(uRoom);
-        Room dRoom = new Room("down");
+        updateRoomArray(uRoom);
+        Room dRoom = new Room("down", this.diff);
         startingRoom.down = dRoom;
         dRoom.up = startingRoom;
-        updateAdjRooms(dRoom);
-        updateAdjRooms(startingRoom);
+        updateRoomArray(dRoom);
+        updateRoomArray(startingRoom);
         Random rand = new Random();
         int randRoomIndex = rand.nextInt(4);
         Room next = startingRoom.adjRooms[randRoomIndex];
         rGenerateMap(next, 0, randRoomIndex);
     }
 
+    /**
+     * Recursive helper method to generate a random sequence of rooms.
+     * Rooms lead to boss room
+     *
+     * @param current the current room having rooms added to it
+     * @param roomDepth the distance of the rooms from the start
+     * @param newRoomIndex the index of the Room[] that will determine the direction of the new room
+     */
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         if (roomDepth >= 6) {
-            Room nextRoom = new DogeRoom(500, 500, 4);
+            Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             nextRoom.down = null;
             nextRoom.up = null;
             nextRoom.left = null;
             nextRoom.right = null;
-            updateAdjRooms(current, true);
-            updateAdjRooms(nextRoom);
+            updateAdjRooms(current);
+            updateRoomArray(nextRoom);
         } else {
             Random rand = new Random();
-            Room nextRoom = new Room("new" + roomDepth);
+            Room nextRoom = new Room("new" + roomDepth, current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             int nextRoomPrevIndex = newRoomIndex;
             if (newRoomIndex % 2 == 0) {
@@ -107,8 +120,8 @@ public class Room {
                 nextRoomPrevIndex -= 1;
             }
             nextRoom.adjRooms[nextRoomPrevIndex] = current;
-            updateAdjRooms(current, true);
-            updateAdjRooms(nextRoom, true);
+            updateAdjRooms(current);
+            updateAdjRooms(nextRoom);
 
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
@@ -118,58 +131,56 @@ public class Room {
         }
     }
 
-    private void generateBossRoom(Room current, int newRoomIndex) {
-        //TODO generate boss room (doge room?????)
+    // When extends this class, override this to set your room's own scene
+    public Scene getScene() {
+        Pane pane = new Pane();
+        if (this.right != null) {
+            //right button
+            exits.get(1).setLayoutX(405);
+            exits.get(1).setLayoutY(235);
+            pane.getChildren().add(exits.get(1));
+        }
+        if (this.left != null) {
+            //left button
+            exits.get(0).setLayoutX(15);
+            exits.get(0).setLayoutY(235);
+            pane.getChildren().add(exits.get(0));
+        }
+        if (this.up != null) {
+            //up button
+            exits.get(2).setLayoutX(210);
+            exits.get(2).setLayoutY(15);
+            pane.getChildren().add(exits.get(2));
+        }
+        if (this.down != null) {
+            //down button
+            exits.get(3).setLayoutX(210);
+            exits.get(3).setLayoutY(445);
+            pane.getChildren().add(exits.get(3));
+        }
+        id.setLayoutY(100);
+        pane.getChildren().add(id);
+        pane.getChildren().add(this.goldText);
 
+        Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
+        StackPane sPane = new StackPane();
+        sPane.getChildren().addAll(background, pane);
 
-
+        return new Scene(sPane, this.width, this.height);
     }
 
-    private void updateAdjRooms(Room current) {
+    private void updateRoomArray(Room current) {
         current.adjRooms[0] = current.right;
         current.adjRooms[1] = current.left;
         current.adjRooms[2] = current.up;
         current.adjRooms[3] = current.down;
     }
 
-    private void updateAdjRooms(Room current, boolean foo) {
+    private void updateAdjRooms(Room current) {
         current.right = current.adjRooms[0];
         current.left = current.adjRooms[1];
         current.up = current.adjRooms[2];
         current.down = current.adjRooms[3];
-    }
-
-    // When extends this class, override this to set your room's own scene
-    public Scene getScene() {
-        Pane pane = new Pane();
-        if (this.right != null) {
-            //right button
-            exits.get(1).setLayoutX(300);
-            exits.get(1).setLayoutY(200);
-            pane.getChildren().add(exits.get(1));
-        }
-        if (this.left != null) {
-            //left button
-            exits.get(0).setLayoutX(100);
-            exits.get(0).setLayoutY(200);
-            pane.getChildren().add(exits.get(0));
-        }
-        if (this.up != null) {
-            //up button
-            exits.get(2).setLayoutX(200);
-            exits.get(2).setLayoutY(100);
-            pane.getChildren().add(exits.get(2));
-        }
-        if (this.down != null) {
-            //down button
-            exits.get(3).setLayoutX(200);
-            exits.get(3).setLayoutY(400);
-            pane.getChildren().add(exits.get(3));
-        }
-        id.setLayoutY(100);
-        pane.getChildren().add(id);
-        pane.getChildren().add(this.goldLabel);
-        return new Scene(pane, this.width, this.height);
     }
 
     public void setExitPos(int index, int x, int y) {
@@ -226,10 +237,6 @@ public class Room {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public int getExitNum() {
-        return this.exitNum;
     }
 
     public void setRight(Room room) {
