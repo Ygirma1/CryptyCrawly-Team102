@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.assertj.core.internal.Diff;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,9 +20,9 @@ public class DogeRoom extends Room {
     private int dogeCounter;
     private Button exitButton;
 
-    public DogeRoom(int width, int height, int numberOfRooms) {
+    public DogeRoom(int width, int height, String id, Difficulty diff) {
 
-        super(width, height, numberOfRooms, "Boss");
+        super(width, height, id, diff);
 
         this.exitButton = new Button("Exit");
         this.exitButton.setLayoutX(450);

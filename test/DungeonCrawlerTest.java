@@ -157,7 +157,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testPuzzleRoom() {
-        PuzzleRoom testPuzzle = new PuzzleRoom(500, 500, 0);
+        PuzzleRoom testPuzzle = new PuzzleRoom(500, 500, Difficulty.EASY);
 
         clickOn("#Correct1");
         verifyThat("#Question2", NodeMatchers.isNotNull());

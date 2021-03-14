@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import org.assertj.core.internal.Diff;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,8 +16,8 @@ public class PuzzleRoom extends Room {
     private ArrayList<Button> puzzleButtons;
     private Button exitButton;
 
-    public PuzzleRoom(int width, int height, int numberOfRooms) {
-        super(width, height, numberOfRooms, "Puzzle");
+    public PuzzleRoom(int width, int height, Difficulty diff) {
+        super(width, height, "Puzzle", diff);
         this.exitButton = new Button("Exit");
         this.exitButton.setId("exit");
         this.exitButton.setLayoutX(450);
@@ -57,6 +59,13 @@ public class PuzzleRoom extends Room {
         this.puzzleButtons.get(1).setOnAction(e -> {
             questionTwoSetUp();
         });
+
+        this.puzzleButtons.get(0).setOnAction(e -> {
+            // do nothing
+        });
+        this.puzzleButtons.get(2).setOnAction(e -> {
+            // do nothing
+        });
     }
 
     private void questionThreeSetUp() {
@@ -85,8 +94,6 @@ public class PuzzleRoom extends Room {
                 this.puzzleLabel.setText("");
 
                 this.exitButton.setDisable(false);
-                // Add path to final screen here
-
             });
         }
     }
