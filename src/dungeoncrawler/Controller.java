@@ -2,6 +2,7 @@ package dungeoncrawler;
 
 import javafx.application.Application;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.Random;
 
@@ -105,6 +106,11 @@ public class Controller extends Application {
             if (room.getDown() != null) {
                 initRoom(room.getDown());
             }
+        });
+        Button help = room.getHelpButton();
+        help.setOnAction(e -> {
+            
+            help.setVisible(false);
         });
         this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
