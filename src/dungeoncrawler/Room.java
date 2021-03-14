@@ -80,7 +80,14 @@ public class Room {
 
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         if (roomDepth >= 6) {
-            generateBossRoom(current);
+            Room nextRoom = new DogeRoom(500, 500, 4);
+            current.adjRooms[newRoomIndex] = nextRoom;
+            nextRoom.down = null;
+            nextRoom.up = null;
+            nextRoom.left = null;
+            nextRoom.right = null;
+            updateAdjRooms(current, true);
+            updateAdjRooms(nextRoom);
         } else {
             Random rand = new Random();
             Room nextRoom = new Room("new" + roomDepth);
@@ -103,8 +110,11 @@ public class Room {
         }
     }
 
-    private void generateBossRoom(Room current) {
+    private void generateBossRoom(Room current, int newRoomIndex) {
         //TODO generate boss room (doge room?????)
+
+
+
     }
 
     private void updateAdjRooms(Room current) {

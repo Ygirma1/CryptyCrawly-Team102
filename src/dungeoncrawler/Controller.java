@@ -14,13 +14,12 @@ public class Controller extends Application {
     private String weapon = "";
     private int gold = 0;
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 //        welcomeScreen();
-//        ChuongDogeRoom a = new ChuongDogeRoom(500, 500, 4);
+//        DogeRoom a = new DogeRoom(500, 500, 4);
 //        this.primaryStage.setScene(a.getScene());
 //        this.primaryStage.show();
         Room start = new Room("start");
@@ -67,6 +66,14 @@ public class Controller extends Application {
     }
 
     private void initRoom(Room room) {
+        if (room instanceof DogeRoom) {
+            Button exitButton = ((DogeRoom) room).getExitButton();
+            exitButton.setOnAction(e -> {
+                Room puzzleRoom = new PuzzleRoom(500, 500, 4);
+                initRoom(puzzleRoom);
+            });
+        }
+
         Button right = room.getBRight();
         right.setOnAction(e -> {
            if (room.getRight() != null) {
