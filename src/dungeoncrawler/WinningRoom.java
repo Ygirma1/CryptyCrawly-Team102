@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 public class WinningRoom extends Room {
-    private Label winningMessageLabel;
+    private final Label winningMessageLabel;
 
     public WinningRoom(int width, int height, int numberOfRooms) {
         super(width, height, numberOfRooms, "Winning");

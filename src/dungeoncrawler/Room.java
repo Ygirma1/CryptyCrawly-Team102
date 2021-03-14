@@ -12,31 +12,52 @@ import java.util.Random;
 
 public class Room {
     private ArrayList<Button> exits;
-    private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
-    private Button bLeft;
-    private Button bRight;
-    private Button bUp;
-    private Button bDown;
-    private Text id; // just a label for a room, use for debugging
+    private final Room[] adjRooms = new Room[4]; // ordered right, left, up, down
+    private final Button bLeft;
+    private final Button bRight;
+    private final Button bUp;
+    private final Button bDown;
+    private final Text id; // just a label for a room, use for debugging
     private String roomID; // maybe we need this to keep track of the room position?
     private static int roomCount;
-    private int exitNum;
+    private final int exitNum;
     private Room left;
     private Room right;
     private Room up;
     private Room down;
     private int width;
     private int height;
-    private Label goldLabel;
+    private final Label goldLabel;
 
+    /**
+     * Chained constructor for Room object
+     *
+     * @param width The width of the window
+     * @param height The height of the window
+     * @param numberOfRooms The number of exits from the room
+     */
     public Room(int width, int height, int numberOfRooms) {
         this(width, height, numberOfRooms, "doge");
     }
 
+    /**
+     * Chained constructor with hard-coded values for width, height and
+     * number of exits
+     *
+     * @param id String id for keeping track of each room in maze
+     */
     public Room(String id) {
         this(500, 500, 4, id);
     }
 
+    /**
+     * Constructor for Room object.
+     *
+     * @param width The width of the window
+     * @param height The height of the window
+     * @param numberOfRooms Number of attached rooms
+     * @param id ID for keeping track of each room
+     */
     public Room(int width, int height, int numberOfRooms, String id) {
         this.id = new Text(id);
         this.exits = new ArrayList<>();
@@ -62,6 +83,11 @@ public class Room {
 
     }
 
+    /**
+     * Recursive method to generate the maze of rooms.
+     *
+     * @param startingRoom The root of the maze, or starting room.
+     */
     public void generateMap(Room startingRoom) {
         Room rRoom = new Room("right");
         startingRoom.right = rRoom;
@@ -86,6 +112,12 @@ public class Room {
         rGenerateMap(next, 0, randRoomIndex);
     }
 
+    /**
+     * Recursive helper method for generateRoom method
+     * @param current The current room
+     * @param roomDepth Number of rooms from the starting room
+     * @param newRoomIndex The index of the newly created room
+     */
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         if (roomDepth >= 6) {
             Room nextRoom = new DogeRoom(500, 500, 4);
@@ -125,6 +157,11 @@ public class Room {
 
     }
 
+    /**
+     * Updates the adjacency array of rooms for current room.
+     *
+     * @param current The room currently displayed
+     */
     private void updateAdjRooms(Room current) {
         current.adjRooms[0] = current.right;
         current.adjRooms[1] = current.left;
@@ -132,6 +169,12 @@ public class Room {
         current.adjRooms[3] = current.down;
     }
 
+    /**
+     * Updates the right, left, top and bottom rooms using the adjacency array
+     *
+     * @param current Current room
+     * @param foo
+     */
     private void updateAdjRooms(Room current, boolean foo) {
         current.right = current.adjRooms[0];
         current.left = current.adjRooms[1];
@@ -140,6 +183,12 @@ public class Room {
     }
 
     // When extends this class, override this to set your room's own scene
+
+    /**
+     * Returns a new scene
+     *
+     * @return The newly created scene
+     */
     public Scene getScene() {
         Pane pane = new Pane();
         if (this.right != null) {
@@ -172,6 +221,13 @@ public class Room {
         return new Scene(pane, this.width, this.height);
     }
 
+    /**
+     * Sets the position of each exit in the window.
+     *
+     * @param index Index of the exits in the array of exits
+     * @param x The x coordinate
+     * @param y The y coordinate
+     */
     public void setExitPos(int index, int x, int y) {
         if (index < 0 || index >= this.exits.size()) {
             return;
@@ -180,6 +236,12 @@ public class Room {
         this.exits.get(index).setLayoutY(y);
     }
 
+    /**
+     * Setter for the text of an exit button
+     *
+     * @param index Index of the exit in the array of exits
+     * @param text The text to display on the exit button
+     */
     public void setExitText(int index, String text) {
         if (index < 0 || index >= this.exits.size()) {
             return;
@@ -188,6 +250,13 @@ public class Room {
         this.exits.get(index).setText(text);
     }
 
+    /**
+     * Setter for the size of an exit button
+     *
+     * @param index Index of the exit in the array of exits
+     * @param width Width of the exit button
+     * @param height Height of the exit button
+     */
     public void setExitSize(int index, int width, int height) {
         if (index < 0 || index >= this.exits.size()) {
             return;
@@ -196,6 +265,12 @@ public class Room {
         this.exits.get(index).setPrefSize(width, height);
     }
 
+    /**
+     * Setter for the event handler for an exit button
+     *
+     * @param index Index of the exit in the array of exits
+     * @param eventHandler The event handler for an exit button
+     */
     public void setExitEventHandler(int index, EventHandler<ActionEvent> eventHandler) {
         if (index < 0 || index >= this.exits.size()) {
             return;
@@ -204,78 +279,173 @@ public class Room {
         this.exits.get(index).setOnAction(eventHandler);
     }
 
+    /**
+     * Getter for the array of exit buttons.
+     *
+     * @return The array of exit buttons
+     */
     public ArrayList<Button> getExits() {
         return exits;
     }
 
+    /**
+     * Setter for the exits from a room.
+     *
+     * @param exits The array of exits
+     */
     public void setExits(ArrayList<Button> exits) {
         this.exits = exits;
     }
 
+    /**
+     * Getter for the width of the room
+     *
+     * @return The width of the room
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Setter for the width of the room
+     *
+     * @param width The desired width of the room
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * Getter for the height of the room
+     *
+     * @return The height of the room
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Setter for the height of the room
+     *
+     * @param height The desired width of the room
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * Getter for the number of exits from a room
+     *
+     * @return The number of exits
+     */
     public int getExitNum() {
         return this.exitNum;
     }
 
+    /**
+     * Setter for the right exit from a room
+     *
+     * @param room The room associated with the exit
+     */
     public void setRight(Room room) {
         this.right = room;
     }
 
+    /**
+     * Getter for the room associated with the right exit
+     *
+     * @return The room to the right of the current room
+     */
     public Room getRight() {
         return this.right;
     }
 
+    /**
+     * Getter for the room associated with the left exit
+     *
+     * @return The room to the left of the current room
+     */
     public Room getLeft() {
         return this.left;
     }
 
+    /**
+     * Getter for the room associated with the top exit
+     *
+     * @return The room to the top of the current room
+     */
     public Room getUp() {
         return this.up;
     }
 
+    /**
+     * Getter for the room associated with the bottom exit
+     *
+     * @return The room to the bottom of the current room
+     */
     public Room getDown() {
         return this.down;
     }
 
+    /**
+     * Setter for the left exit from a room
+     *
+     * @param room The room associated with the exit
+     */
     public void setLeft(Room room) {
         this.left = room;
     }
 
+    /**
+     * Setter for the top exit from a room
+     *
+     * @param room The room associated with the exit
+     */
     public void setUp(Room room) {
         this.up = room;
     }
 
+    /**
+     * Setter for the bottom exit from a room
+     *
+     * @param room The room associated with the exit
+     */
     public void setDown(Room room) {
         this.down = room;
     }
 
+    /**
+     * Getter for the button for the right exit
+     *
+     * @return The exit button
+     */
     public Button getBRight() {
         return this.bRight;
     }
 
+    /**
+     * Getter for the button for the left exit
+     *
+     * @return The exit button
+     */
     public Button getBLeft() {
         return this.bLeft;
     }
 
+    /**
+     * Getter for the button for the top exit
+     *
+     * @return The exit button
+     */
     public Button getBUp() {
         return this.bUp;
     }
 
+    /**
+     * Getter for the button for the bottom exit
+     *
+     * @return The exit button
+     */
     public Button getBDown() {
         return this.bDown;
     }
