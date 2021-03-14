@@ -177,8 +177,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testDogeRoom() {
-        Room doge = new DogeRoom(400, 400, "doge", Difficulty.EASY);
-        targetWindow(doge.getScene());
         clickOn("Start");
         clickOn("#nameField").write("Chuong");
         clickOn("#easyRB");
@@ -205,8 +203,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testDogeRoomClick() {
-        Room doge = new DogeRoom(400, 400, "doge", Difficulty.EASY);
-        targetWindow(doge.getScene());
         clickOn("Start");
         clickOn("#nameField").write("Chuong");
         clickOn("#easyRB");
