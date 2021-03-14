@@ -18,6 +18,7 @@ public class DogeRoom extends Room {
     private int dogeCounter;
     private Button exitButton;
 
+
     public DogeRoom(int width, int height, String id, Difficulty diff) {
 
         super(width, height, id, diff);

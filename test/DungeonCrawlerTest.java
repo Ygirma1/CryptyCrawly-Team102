@@ -33,7 +33,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         while (true) {
             Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label)lookup("#correctExit").queryLabeled();
+            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
             String correctPath = correctExitLabel.getText().substring(8);
             if (roomID.getText().equals("new5")) {
                 clickOn(correctPath);
@@ -177,7 +177,27 @@ public class DungeonCrawlerTest extends ApplicationTest {
     }
 
     @Test
-    public void testPuzzleRoom(){
+    public void wrongAnswerTest() {
+        traversal();
+
+        for (int i = 0; i < 5; i++) {
+            clickOn("#dogeButton");
+        }
+
+        clickOn("#exitButton");
+        clickOn("#Correct1");
+        clickOn("#Correct2");
+        verifyThat("#Question3",NodeMatchers.isNotNull());
+        clickOn("#WrongAnswer");
+        verifyThat("#Question2", NodeMatchers.isNotNull());
+        clickOn("69");
+        verifyThat("#Question1", NodeMatchers.isNotNull());
+
+
+    }
+
+    @Test
+    public void testPuzzleRoom() {
         traversal();
 
         for (int i = 0; i < 5; i++) {
@@ -195,10 +215,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#dungeonExit");
         verifyThat("YOU WIN!!!", NodeMatchers.isVisible());
     }
-
-
-
-
 
     @Test
     public void testDogeRoom() {

@@ -73,11 +73,49 @@ public class PuzzleRoom extends Room {
         this.puzzleLabel.setLayoutX(100);
         this.puzzleLabel.setFont(new Font("Comic Sans MS", 17));
 
-        this.puzzleButtons.get(0).setText("Yes");
+        this.puzzleButtons.get(0).setText("No Way!");
+        this.puzzleButtons.get(0).setId("WrongAnswer");
         this.puzzleButtons.get(1).setText("Yes!!");
         this.puzzleButtons.get(2).setPrefSize(140, 30);
         this.puzzleButtons.get(2).setText("Yes please I'm dying");
 
+        this.puzzleButtons.get(0).setOnAction(e -> {
+            questionTwoSetUp();
+        });
+
+        this.puzzleButtons.get(1).setOnAction(e -> {
+            for (Button exit : this.getExits()) {
+                exit.setDisable(false);
+            }
+            for (Button puzzleButton : this.puzzleButtons) {
+                puzzleButton.setDisable(true);
+                puzzleButton.setText("");
+            }
+            this.instructionLabel.setText("YEET You can proceed now!");
+            this.instructionLabel.setId("Winner!");
+            this.instructionLabel.setLayoutX(140);
+            this.puzzleLabel.setText("");
+
+            this.exitButton.setDisable(false);
+        });
+
+        this.puzzleButtons.get(2).setOnAction(e -> {
+            for (Button exit : this.getExits()) {
+                exit.setDisable(false);
+            }
+            for (Button puzzleButton : this.puzzleButtons) {
+                puzzleButton.setDisable(true);
+                puzzleButton.setText("");
+            }
+            this.instructionLabel.setText("YEET You can proceed now!");
+            this.instructionLabel.setId("Winner!");
+            this.instructionLabel.setLayoutX(140);
+            this.puzzleLabel.setText("");
+
+            this.exitButton.setDisable(false);
+        });
+
+        /*
         for (Button button : this.puzzleButtons) {
             button.setOnAction(e -> {
                 for (Button exit : this.getExits()) {
@@ -95,6 +133,8 @@ public class PuzzleRoom extends Room {
                 this.exitButton.setDisable(false);
             });
         }
+
+         */
     }
 
     private void questionTwoSetUp() {
