@@ -156,14 +156,16 @@ public class DungeonCrawlerTest extends ApplicationTest {
     }
 
     @Test
-    public void testPuzzleRoom() {
+    public void testPuzzleRoom() throws Exception {
         PuzzleRoom testPuzzle = new PuzzleRoom(500, 500, Difficulty.EASY);
-
+        Stage primary = new Stage();
+        primary.setScene(testPuzzle.getScene());
+        start(primary);
         clickOn("#Correct1");
         verifyThat("#Question2", NodeMatchers.isNotNull());
         clickOn("#Correct2");
         verifyThat("#Question3", NodeMatchers.isNotNull());
-        clickOn("Yes!");
+        clickOn("Yes!!");
         verifyThat("#exit", NodeMatchers.isEnabled());
     }
 }
