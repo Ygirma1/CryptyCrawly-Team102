@@ -11,7 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import org.testfx.matcher.control.TextMatchers;
 
-import static org.junit.Assert.assertEquals;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
@@ -197,7 +199,36 @@ public class DungeonCrawlerTest extends ApplicationTest {
     }
 
     @Test
-    public void testPuzzleRoom() {
+    public void testHelpButtonVisibility() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+    }
+
+    @Test
+    public void testCorrectDoorShowing() {
+        clickOn("Start");
+        clickOn("#nameField").write("Yafet");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+        if (!controller.getHelpButton().isVisible()) {
+            String correctPathParse = controller.getCorrectRoomText();
+            clickOn(correctPathParse);
+            sleep(5, TimeUnit.SECONDS);
+        }
+    }
+
+    @Test
+    public void testPuzzleRoom(){
         traversal();
 
         for (int i = 0; i < 5; i++) {
@@ -218,23 +249,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testDogeRoom() {
-        clickOn("Start");
-        clickOn("#nameField").write("Chuong");
-        clickOn("#easyRB");
-        clickOn("#weaponDropdown");
-        clickOn("Bludgeon");
-        clickOn("PROCEED");
-
-        while (true) {
-            Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
-            String correctPath = correctExitLabel.getText().substring(8);
-            if (roomID.getText().equals("new5")) {
-                clickOn(correctPath);
-                break;
-            }
-            clickOn(correctPath);
-        }
+        traversal();
 
         // Got to doge room
 
@@ -244,23 +259,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testDogeRoomClick() {
-        clickOn("Start");
-        clickOn("#nameField").write("Chuong");
-        clickOn("#easyRB");
-        clickOn("#weaponDropdown");
-        clickOn("Bludgeon");
-        clickOn("PROCEED");
-
-        while (true) {
-            Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
-            String correctPath = correctExitLabel.getText().substring(8);
-            if (roomID.getText().equals("new5")) {
-                clickOn(correctPath);
-                break;
-            }
-            clickOn(correctPath);
-        }
+        traversal();
 
         // Got to doge room
 
@@ -274,6 +273,5 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#dogeButton");
         verifyThat("#exitButton", NodeMatchers.isEnabled());
     }
-
 }
 

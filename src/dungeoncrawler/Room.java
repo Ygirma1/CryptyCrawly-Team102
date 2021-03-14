@@ -24,9 +24,9 @@ public class Room {
     private Button bUp;
     private Button bDown;
     private Text id; // just a label for a room, use for debugging
-    private Label correctExit; // Displays proper exit in bottom right
-    private String pathID; // Text displaying correct exit to choose
-    private String roomID; // maybe we need this to \keep track of the room position?
+    private Label correctExit; //Displays proper exit in bottom right corner
+    private String pathID; //Text displaying correct exit to choose
+    private String roomID; //maybe we need this to \keep track of the room position?
     private static int roomCount;
     private int exitNum;
     private Text goldText;
@@ -496,5 +496,9 @@ public class Room {
 
     public Label getCorrectExit() {
         return this.correctExit;
+    }
+
+    public String getCorrectExitRoomName() {
+        return getCorrectExit().getText().substring(8);
     }
 }
