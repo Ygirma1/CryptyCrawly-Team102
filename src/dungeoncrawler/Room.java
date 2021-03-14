@@ -2,18 +2,15 @@ package dungeoncrawler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -160,13 +157,14 @@ public class Room {
         current.adjRooms[3] = current.down;
     }
 
-    /**
-     * Updates the right, left, top and bottom rooms using the adjacency array
-     *
-     * @param current Current room //* @param foo Temp var, to be removed when
-     *                method name is changed
-     */
-    // private void updateAdjRooms(Room current, boolean foo) {
+    //    /**
+    //     * Updates the right, left, top and bottom rooms using the adjacency array
+    //     *
+    //     * @param current Current room //*
+    //     * @param foo Temp var, to be removed when
+    //     *                method name is changed
+    //     */
+    //  private void updateAdjRooms(Room current, boolean foo) {
 
     private void updateAdjRooms(Room current) {
         current.right = current.adjRooms[0];
