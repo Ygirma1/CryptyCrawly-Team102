@@ -56,6 +56,13 @@ public class PuzzleRoom extends Room {
         this.puzzleButtons.get(1).setOnAction(e -> {
             questionTwoSetUp();
         });
+
+        this.puzzleButtons.get(0).setOnAction(e -> {
+            // do nothing
+        });
+        this.puzzleButtons.get(2).setOnAction(e -> {
+            // do nothing
+        });
     }
 
     private void questionThreeSetUp() {
@@ -82,8 +89,6 @@ public class PuzzleRoom extends Room {
                 this.puzzleLabel.setText("");
 
                 this.exitButton.setDisable(false);
-                // Add path to final screen here
-
             });
         }
     }
