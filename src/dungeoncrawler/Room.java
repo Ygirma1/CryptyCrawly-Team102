@@ -6,11 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-<<<<<<< HEAD
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-=======
->>>>>>> master
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -30,15 +27,12 @@ public class Room {
     private Button bUp;
     private Button bDown;
     private Text id; // just a label for a room, use for debugging
-<<<<<<< HEAD
     private Label correctExit; //Displays proper exit in bottom right
     private String pathID; //Text displaying correct exit to choose
     private String roomID; //maybe we need this to \keep track of the room position?
     private static int roomCount;
     private int exitNum;
-=======
     private Text goldText;
->>>>>>> master
     private Room left;
     private Room right;
     private Room up;
@@ -57,13 +51,7 @@ public class Room {
     public Room(String id, Difficulty diff) {
         this(500, 500, id, diff);
     }
-
-<<<<<<< HEAD
-    public Room(int width, int height, int numberOfRooms, String id) {
-        this.correctExit = new Label("");
-=======
     public Room(int width, int height, String id, Difficulty diff) {
->>>>>>> master
         this.id = new Text(id);
         this.exits = new ArrayList<>();
         this.helpButton = new Button("Correct Door");
@@ -83,22 +71,12 @@ public class Room {
         }
         this.width = width;
         this.height = height;
-<<<<<<< HEAD
-        this.exitNum = numberOfRooms;
-
-        this.goldLabel = new Label("Gold: " + Controller.getGold());
-
-        this.goldLabel.setLayoutX(400);
-        this.goldLabel.setLayoutY(100);
-=======
-
         this.diff = diff;
         this.goldText = new Text("Gold: " + Controller.getGold());
         this.goldText.setFont(smallFont);
         this.goldText.setFill(goldColor);
         this.goldText.setX(420);
         this.goldText.setY(20);
->>>>>>> master
     }
 
     /**
@@ -152,30 +130,17 @@ public class Room {
             updateRoomArray(nextRoom);
         } else {
             Random rand = new Random();
-<<<<<<< HEAD
-            Room nextRoom = new Room("new" + roomDepth);
-            current.adjRooms[newRoomIndex] = nextRoom; //First new room has the exit across from it everytime, r -> r
-            int nextRoomPrevIndex = newRoomIndex; // r (0) = 0
-            if (newRoomIndex % 2 == 0) { //true, nextRoomPrevIndex = 1
-=======
             Room nextRoom = new Room("new" + roomDepth, current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             int nextRoomPrevIndex = newRoomIndex;
             if (newRoomIndex % 2 == 0) {
->>>>>>> master
                 nextRoomPrevIndex += 1;
             } else {
                 nextRoomPrevIndex -= 1;
             }
             nextRoom.adjRooms[nextRoomPrevIndex] = current;
-<<<<<<< HEAD
-            updateAdjRooms(current, true);
-            updateAdjRooms(nextRoom, true);
-=======
             updateAdjRooms(current);
             updateAdjRooms(nextRoom);
-
->>>>>>> master
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
@@ -183,20 +148,14 @@ public class Room {
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
     }
-
-<<<<<<< HEAD
-    private void generateBossRoom(Room current, int newRoomIndex) {
-        //TODO generate boss room (doge room?????)
-    }
-
-    private void updateAdjRooms(Room current) {
+    private void updateRoomArray(Room current) {
         current.adjRooms[0] = current.right;
         current.adjRooms[1] = current.left;
         current.adjRooms[2] = current.up;
         current.adjRooms[3] = current.down;
     }
 
-    private void updateAdjRooms(Room current, boolean foo) {
+    private void updateAdjRooms(Room current) {
         current.right = current.adjRooms[0];
         current.left = current.adjRooms[1];
         current.up = current.adjRooms[2];
@@ -215,9 +174,6 @@ public class Room {
         }
         return getPathID();
     }
-
-=======
->>>>>>> master
     // When extends this class, override this to set your room's own scene
 
     /**
@@ -266,33 +222,13 @@ public class Room {
         helpGroup.getChildren().addAll(helpButton, correctExit);
         helpGroup.getChildren().set(0, helpButton).toFront();
         id.setLayoutY(100);
-<<<<<<< HEAD
-        pane.getChildren().addAll(id, this.goldLabel, helpGroup);
-        return new Scene(pane, this.width, this.height);
-=======
-        pane.getChildren().add(id);
-        pane.getChildren().add(this.goldText);
+        pane.getChildren().addAll(id, this.goldText, helpGroup);
 
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
         sPane.getChildren().addAll(background, pane);
 
         return new Scene(sPane, this.width, this.height);
-    }
-
-    private void updateRoomArray(Room current) {
-        current.adjRooms[0] = current.right;
-        current.adjRooms[1] = current.left;
-        current.adjRooms[2] = current.up;
-        current.adjRooms[3] = current.down;
-    }
-
-    private void updateAdjRooms(Room current) {
-        current.right = current.adjRooms[0];
-        current.left = current.adjRooms[1];
-        current.up = current.adjRooms[2];
-        current.down = current.adjRooms[3];
->>>>>>> master
     }
 
     /**
