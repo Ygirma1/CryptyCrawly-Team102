@@ -9,7 +9,6 @@ import org.testfx.matcher.control.TextInputControlMatchers;
 import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
-import org.testfx.matcher.control.TextMatchers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -189,7 +188,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#exitButton");
         clickOn("#Correct1");
         clickOn("#Correct2");
-        verifyThat("#Question3",NodeMatchers.isNotNull());
+        verifyThat("#Question3", NodeMatchers.isNotNull());
         clickOn("#WrongAnswer");
         verifyThat("#Question2", NodeMatchers.isNotNull());
         clickOn("69");
@@ -228,7 +227,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
     }
 
     @Test
-    public void testPuzzleRoom(){
+    public void testPuzzleRoom() {
         traversal();
 
         for (int i = 0; i < 5; i++) {
