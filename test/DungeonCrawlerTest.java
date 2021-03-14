@@ -285,6 +285,58 @@ public class DungeonCrawlerTest extends ApplicationTest {
     }
 
     @Test
+    public void testStartingLeftRoom() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("left");
+        Text roomID = lookup("#id").queryText();
+        assertEquals(roomID.getText(), "left");
+    }
+
+    @Test
+    public void testStartingRightRoom() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("right");
+        Text roomID = lookup("#id").queryText();
+        assertEquals(roomID.getText(), "right");
+    }
+
+    @Test
+    public void testStartingUpRoom() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("up");
+        Text roomID = lookup("#id").queryText();
+        assertEquals(roomID.getText(), "up");
+    }
+
+    @Test
+    public void testStartingDownRoom() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+        clickOn("down");
+        Text roomID = lookup("#id").queryText();
+        assertEquals(roomID.getText(), "down");
+    }
+
+    @Test
     public void testGoldRoom() {
         traversal();
         // Got to doge room
