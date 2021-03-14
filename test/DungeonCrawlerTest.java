@@ -1,7 +1,12 @@
 import dungeoncrawler.Controller;
 import dungeoncrawler.Difficulty;
+import dungeoncrawler.PuzzleRoom;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.Test;
+import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
@@ -148,6 +153,18 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Shortsword");
         clickOn("PROCEED");
         assertEquals(controller.getWeapon(), "Shortsword");
+    }
+
+    @Test
+    public void testPuzzleRoom() {
+        PuzzleRoom testPuzzle = new PuzzleRoom(500, 500, 0);
+
+        clickOn("#Correct1");
+        verifyThat("#Question2", NodeMatchers.isNotNull());
+        clickOn("#Correct2");
+        verifyThat("#Question3", NodeMatchers.isNotNull());
+        clickOn("Yes!");
+        verifyThat("#exit", NodeMatchers.isEnabled());
     }
 }
 

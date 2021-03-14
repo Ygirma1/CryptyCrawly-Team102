@@ -145,6 +145,7 @@ public class Room {
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
+
             }
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
@@ -173,7 +174,7 @@ public class Room {
      * Updates the right, left, top and bottom rooms using the adjacency array
      *
      * @param current Current room
-     * @param foo
+     * @param foo Temp var, to be removed when method name is changed
      */
     private void updateAdjRooms(Room current, boolean foo) {
         current.right = current.adjRooms[0];

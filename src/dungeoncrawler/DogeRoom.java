@@ -47,7 +47,8 @@ public class DogeRoom extends Room {
         this.dogeButton.setLayoutY(170);
         this.dogeButton.setLayoutX(150);
         try {
-            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir") + "\\res\\doge.png"));
+            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir")
+                    + "\\res\\doge.png"));
             ImageView imageView = new ImageView(dogeImage);
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
@@ -74,7 +75,8 @@ public class DogeRoom extends Room {
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        pane.getChildren().addAll(this.instructionLabel, this.dogeButton, this.instructionLabel2, this.exitButton);
+        pane.getChildren().addAll(this.instructionLabel, this.dogeButton,
+                this.instructionLabel2, this.exitButton);
         return new Scene(pane, this.getWidth(), this.getHeight());
     }
 
