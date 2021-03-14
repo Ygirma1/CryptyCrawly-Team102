@@ -2,11 +2,7 @@ package dungeoncrawler;
 
 import javafx.application.Application;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.assertj.core.internal.Diff;
-
-import java.util.Random;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -23,10 +19,6 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 
-        //welcomeScreen();
-        //DogeRoom a = new DogeRoom(500, 500, 4);
-        //this.primaryStage.setScene(a.getScene());
-        //this.primaryStage.show();
         Room start = new Room("start", Difficulty.EASY);
         start.generateMap(start);
         initRoom(start);

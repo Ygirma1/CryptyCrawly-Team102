@@ -1,16 +1,7 @@
 import dungeoncrawler.*;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-
-
 import javafx.stage.Stage;
-import org.assertj.core.internal.Diff;
 import org.junit.Test;
-import org.testfx.api.FxRobot;
-
-import org.testfx.api.FxRobotInterface;
 
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -21,7 +12,6 @@ import javafx.scene.text.Text;
 import org.testfx.matcher.control.TextMatchers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
@@ -221,7 +211,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         while (true) {
             Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label)lookup("#correctExit").queryLabeled();
+            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
             String correctPath = correctExitLabel.getText().substring(8);
             if (roomID.getText().equals("new5")) {
                 clickOn(correctPath);
@@ -247,7 +237,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         while (true) {
             Text roomID = lookup("#id").queryText();
-            Label correctExitLabel = (Label)lookup("#correctExit").queryLabeled();
+            Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
             String correctPath = correctExitLabel.getText().substring(8);
             if (roomID.getText().equals("new5")) {
                 clickOn(correctPath);
@@ -261,7 +251,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         verifyThat("#dogeButton", NodeMatchers.isEnabled());
         verifyThat("#exitButton", NodeMatchers.isDisabled());
 
-        for (int i = 0 ; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             clickOn("#dogeButton");
             verifyThat("#exitButton", NodeMatchers.isDisabled());
         }
