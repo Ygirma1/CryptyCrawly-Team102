@@ -211,14 +211,16 @@ public class Room {
         }
         Group helpGroup = new Group();
         helpButton.setPrefHeight(50);
-        helpButton.setPrefWidth(100);
-        helpButton.setLayoutX(350);
-        helpButton.setLayoutY(400);
-        correctExit.setPrefSize(100, 50);
-        correctExit.setLayoutX(350);
-        correctExit.setLayoutY(400);
-        correctExit.setAlignment(Pos.CENTER);
-        correctExit.setStyle("-fx-border-color: black;");
+        helpButton.setPrefWidth(125);
+        helpButton.setLayoutX(375);
+        helpButton.setLayoutY(450);
+        helpButton.setFont(new Font("High Tower Text", 15));
+        helpButton.setStyle("-fx-background-color: #62686F;");
+        helpButton.setVisible(true); //Set to false to get rid of button
+        correctExit.setPrefSize(100, helpButton.getPrefHeight());
+        correctExit.setLayoutX(400);
+        correctExit.setLayoutY(450);
+        correctExit.setFont(new Font("High Tower Text", 15));
         helpGroup.getChildren().addAll(helpButton, correctExit);
         helpGroup.getChildren().set(0, helpButton).toFront();
         id.setLayoutY(100);
