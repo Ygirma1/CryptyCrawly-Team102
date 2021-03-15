@@ -74,6 +74,7 @@ public class PuzzleRoom extends Room {
         this.puzzleLabel.setFont(new Font("Comic Sans MS", 17));
 
         this.puzzleButtons.get(0).setText("No Way!");
+        this.puzzleButtons.get(0).setPrefSize(70, 30);
         this.puzzleButtons.get(0).setId("WrongAnswer");
         this.puzzleButtons.get(1).setText("Yes!!");
         this.puzzleButtons.get(2).setPrefSize(140, 30);
