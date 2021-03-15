@@ -21,7 +21,7 @@ public class GoldRoom extends Room {
     private Button exitButton;
     private Text goldText;
     private Text goldButtonText;
-    private Text goldButton2Text;
+    private final Text goldButton2Text;
     private Text goldButton3Text;
     private final Color goldColor = Color.rgb(255, 215, 0);
     private int goldIncAmount;
