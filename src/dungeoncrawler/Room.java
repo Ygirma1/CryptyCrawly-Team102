@@ -18,6 +18,7 @@ import java.util.Random;
 public class Room {
     private ArrayList<Button> exits;
     private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
+    private Button listener;
     private Button helpButton;
     private Button bLeft;
     private Button bRight;
@@ -32,6 +33,7 @@ public class Room {
     private Room up;
     private Room down;
     private Difficulty diff;
+    private Player player;
     private final Color floorColor = Color.rgb(129, 137, 147);
     private final Color goldColor = Color.rgb(255, 215, 0);
     private final Font smallFont = new Font("High Tower Text", 19);
@@ -71,6 +73,7 @@ public class Room {
         this.id.setId("id");
         this.exits = new ArrayList<>();
         this.helpButton = new Button("Correct Door");
+        this.listener = new Button();
         this.bLeft = new Button("left");
         this.exits.add(bLeft);
         this.bRight = new Button("right");
@@ -239,6 +242,8 @@ public class Room {
             exits.get(3).setLayoutY(445);
             pane.getChildren().add(exits.get(3));
         }
+
+        listener.setVisible(true);
         Group helpGroup = new Group();
         helpButton.setPrefHeight(50);
         helpButton.setPrefWidth(125);
@@ -254,7 +259,9 @@ public class Room {
         helpGroup.getChildren().addAll(helpButton, correctExit);
         helpGroup.getChildren().set(0, helpButton).toFront();
         id.setLayoutY(100);
-        pane.getChildren().addAll(id, this.goldText, helpGroup);
+        pane.getChildren().addAll(listener, id, this.goldText, helpGroup);
+
+        pane.getChildren().add(player);
 
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
@@ -319,6 +326,10 @@ public class Room {
         }
 
         this.exits.get(index).setOnAction(eventHandler);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     /**
@@ -481,6 +492,10 @@ public class Room {
      */
     public Button getBDown() {
         return this.bDown;
+    }
+
+    public Button getListener() {
+        return this.listener;
     }
 
     public void setPathID(String path) {

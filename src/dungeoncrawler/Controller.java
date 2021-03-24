@@ -1,8 +1,17 @@
 package dungeoncrawler;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
+import java.awt.event.KeyListener;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -95,6 +104,9 @@ public class Controller extends Application {
             });
         }
 
+        Player player = new Player(100, 100, 50, 50);
+        room.setPlayer(player);
+
         Button right = room.getBRight();
         right.setOnAction(e -> {
             if (room.getRight() != null) {
@@ -127,6 +139,20 @@ public class Controller extends Application {
             correctExitText = exit;
         });
         this.primaryStage.setScene(room.getScene());
+        primaryStage.getScene().setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.W)) {
+                player.move(0, -4);
+            }
+            if (e.getCode().equals(KeyCode.A)) {
+                player.move(-4, 0);
+            }
+            if (e.getCode().equals(KeyCode.S)) {
+                player.move(0, 4);
+            }
+            if (e.getCode().equals(KeyCode.D)) {
+                player.move(4, 0);
+            }
+        });
         this.primaryStage.show();
     }
 
