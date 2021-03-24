@@ -13,6 +13,7 @@ public abstract class Sprite extends Rectangle {
     double y;
     int width;
     int height;
+    boolean isMoving;
     Image image;
     ImageView imageView;
 
@@ -35,9 +36,23 @@ public abstract class Sprite extends Rectangle {
         this.imageView.setFitHeight(height);
     }
 
+    public void move(double dx, double dy, boolean isMoving) {
+        this.isMoving = isMoving;
+        move(dx, dy);
+    }
     public void move(double dx, double dy) {
-        this.setX(this.x += dx);
-        this.setY(this.y += dy);
-        this.setVisible(true);
+        while (this.isMoving) {
+            this.setX(this.x += dx);
+            this.setY(this.y += dy);
+        }
+    }
+
+    public void stopMoving() {
+        System.out.println("STOPPED MOVING METHOD");
+        this.isMoving = false;
+    }
+
+    public void setIsMoving(boolean isMoving) {
+        this.isMoving = isMoving;
     }
 }

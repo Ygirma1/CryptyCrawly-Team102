@@ -5,13 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
-
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.awt.event.KeyListener;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -141,16 +139,27 @@ public class Controller extends Application {
         this.primaryStage.setScene(room.getScene());
         primaryStage.getScene().setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.W)) {
-                player.move(0, -4);
+                player.move(0, -4, true);
+                System.out.println("w");
             }
             if (e.getCode().equals(KeyCode.A)) {
-                player.move(-4, 0);
+                player.move(-4, 0, true);
+                System.out.println("a");
             }
             if (e.getCode().equals(KeyCode.S)) {
-                player.move(0, 4);
+                player.move(0, 4, true);
+                System.out.println("s");
             }
             if (e.getCode().equals(KeyCode.D)) {
-                player.move(4, 0);
+                player.move(4, 0, true);
+                System.out.println("d");
+            }
+        });
+        primaryStage.getScene().setOnKeyReleased(e -> {
+            if (e.getCode().equals(KeyCode.W) || e.getCode().equals(KeyCode.A) ||
+                e.getCode().equals(KeyCode.S) || e.getCode().equals(KeyCode.D)) {
+                player.move(0, 0, false);
+                System.out.println("stopped press");
             }
         });
         this.primaryStage.show();

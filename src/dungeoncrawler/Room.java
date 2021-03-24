@@ -18,7 +18,6 @@ import java.util.Random;
 public class Room {
     private ArrayList<Button> exits;
     private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
-    private Button listener;
     private Button helpButton;
     private Button bLeft;
     private Button bRight;
@@ -73,7 +72,6 @@ public class Room {
         this.id.setId("id");
         this.exits = new ArrayList<>();
         this.helpButton = new Button("Correct Door");
-        this.listener = new Button();
         this.bLeft = new Button("left");
         this.exits.add(bLeft);
         this.bRight = new Button("right");
@@ -243,7 +241,6 @@ public class Room {
             pane.getChildren().add(exits.get(3));
         }
 
-        listener.setVisible(true);
         Group helpGroup = new Group();
         helpButton.setPrefHeight(50);
         helpButton.setPrefWidth(125);
@@ -259,7 +256,7 @@ public class Room {
         helpGroup.getChildren().addAll(helpButton, correctExit);
         helpGroup.getChildren().set(0, helpButton).toFront();
         id.setLayoutY(100);
-        pane.getChildren().addAll(listener, id, this.goldText, helpGroup);
+        pane.getChildren().addAll(id, this.goldText, helpGroup);
 
         pane.getChildren().add(player);
 
@@ -492,10 +489,6 @@ public class Room {
      */
     public Button getBDown() {
         return this.bDown;
-    }
-
-    public Button getListener() {
-        return this.listener;
     }
 
     public void setPathID(String path) {

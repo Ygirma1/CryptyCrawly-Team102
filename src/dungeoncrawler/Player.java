@@ -17,7 +17,11 @@ public class Player extends Sprite {
         pane.getChildren().add(player);
     }
 
-    public void move(double dx, double dy) {
-        super.move(dx, dy);
+    public void move(double dx, double dy, boolean isMoving) {
+        super.move(dx, dy, isMoving);
+    }
+
+    public void stopMoving() {
+        super.stopMoving();
     }
 }
