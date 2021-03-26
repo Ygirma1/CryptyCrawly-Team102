@@ -156,6 +156,12 @@ public class Room {
             updateRoomArray(nextRoom);
         } else {
             Random rand = new Random();
+            int monsterSpawn = Math.abs(rand.nextInt() % 3);
+            switch (monsterSpawn) {
+                case 0: this.monster = new GreenMonster(10); break;
+                case 1: this.monster = new GreenMonster(20); break;
+                case 2: this.monster = new GreenMonster(30); break;
+            }
             Room nextRoom = new Room("new" + roomDepth, current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             int nextRoomPrevIndex = newRoomIndex;
@@ -534,6 +540,4 @@ public class Room {
     public Monster getMonster() {
         return monster;
     }
-
-
 }

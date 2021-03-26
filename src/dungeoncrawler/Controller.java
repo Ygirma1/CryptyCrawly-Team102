@@ -110,8 +110,9 @@ public class Controller extends Application {
         }
 
         Player player = new Player(100, 100, 50, 50);
-        Monster monster = new Monster(10, Color.RED);
-        room.setMonster(monster);
+        //Monster monster = new Monster(10, Color.RED);
+        //room.setMonster(monster);
+        Monster monster = room.getMonster();
         room.setPlayer(player);
 
         Button right = room.getBRight();
@@ -146,13 +147,8 @@ public class Controller extends Application {
             correctExitText = exit;
         });
 
-
-
         this.primaryStage.setScene(room.getScene());
-
-
         this.primaryStage.show();
-
 
         monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
 //        Bounds bounds = this.primaryStage.getScene().getRoot().getBoundsInLocal();
@@ -162,37 +158,30 @@ public class Controller extends Application {
 //        timeline.play();
 
         primaryStage.getScene().setOnKeyPressed(e -> {
-            if (e.getCode().equals(KeyCode.W)) {
-                System.out.println("w");
-                player.move(0, -4, true);
-                System.out.println("w");
+            switch (e.getText()) {
+                case "w": player.setGoNorth(true); break;
+                case "a": player.setGoWest(true); break;
+                case "s": player.setGoSouth(true); break;
+                case "d": player.setGoEast(true); break;
             }
-            if (e.getCode().equals(KeyCode.A)) {
-                player.move(-4, 0, true);
-                System.out.println("a");
-            }
-            if (e.getCode().equals(KeyCode.S)) {
-                player.move(0, 4, true);
-                System.out.println("s");
-            }
-            if (e.getCode().equals(KeyCode.D)) {
-                player.move(4, 0, true);
-                System.out.println("d");
-            }
+            player.move();
         });
         primaryStage.getScene().setOnKeyReleased(e -> {
-            if (e.getCode().equals(KeyCode.W) || e.getCode().equals(KeyCode.A) ||
-                e.getCode().equals(KeyCode.S) || e.getCode().equals(KeyCode.D)) {
-                player.move(0, 0, false);
-                System.out.println("stopped press");
+            switch (e.getText()) {
+                case "w": player.setGoNorth(false); break;
+                case "a": player.setGoWest(false); break;
+                case "s": player.setGoSouth(false); break;
+                case "d": player.setGoEast(false); break;
+            }
+        });
+        monster.setOnMouseClicked(e -> {
+            monster.damage(player.getDamage());
+            if (monster.getHealth() < 1) {
+                monster.setVisible(false);
             }
         });
 
         room.getMonster().relocate(0, 10);
-
-
-
-
     }
 
     private void proceedToGameScreen() {

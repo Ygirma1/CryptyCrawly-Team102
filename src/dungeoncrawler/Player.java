@@ -1,27 +1,48 @@
 package dungeoncrawler;
 
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class Player extends Sprite {
+public class Player extends Rectangle {
     static int health = 5;
     static int damage = 1;
-    //static Image image = new Image("https://crhscountyline.com/wp-content/uploads/2020/03/Capture.png");
+    boolean goNorth, goSouth, goEast, goWest;
 
     public Player(double x, double y, int width, int height) {
         super(x, y, width, height);
+        this.setVisible(true);
+        this.setFill(Color.RED);
     }
 
-    public void addPlayer(Pane pane, Player player) {
-        pane.getChildren().add(player);
+    public void move() {
+        int dx = 0;
+        int dy = 0;
+        if (goNorth) { dy = -3; }
+        if (goWest) { dx = -3; }
+        if (goSouth) { dy = 3; }
+        if (goEast) { dx = 3; }
+
+        this.setX(this.getX() + dx);
+        this.setY(this.getY() + dy);
     }
 
-    public void move(double dx, double dy, boolean isMoving) {
-        super.move(dx, dy, isMoving);
+    public void setGoNorth(boolean goNorth) {
+        this.goNorth = goNorth;
     }
 
-    public void stopMoving() {
-        super.stopMoving();
+    public void setGoSouth(boolean goSouth) {
+        this.goSouth = goSouth;
+    }
+
+    public void setGoEast(boolean goEast) {
+        this.goEast = goEast;
+    }
+
+    public void setGoWest(boolean goWest) {
+        this.goWest = goWest;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

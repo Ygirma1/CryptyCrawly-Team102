@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 // In case where you wanna create your own monster, just extends this class and implement startMoving
 public class Monster extends Circle {
-
+    int health;
     public Monster(int radius, Color color) {
         super(radius, color);
     }
@@ -30,5 +30,13 @@ public class Monster extends Circle {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(this.layoutXProperty(), bounds.getMaxX()-this.getRadius())));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
+
+    public void damage(int damageCount) {
+        this.health -= damageCount;
+    }
+
+    public int getHealth() {
+        return this.health;
     }
 }
