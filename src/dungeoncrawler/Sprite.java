@@ -41,10 +41,10 @@ public abstract class Sprite extends Rectangle {
         move(dx, dy);
     }
     public void move(double dx, double dy) {
-        while (this.isMoving) {
+        //while (this.isMoving) {
             this.setX(this.x += dx);
             this.setY(this.y += dy);
-        }
+        //}
     }
 
     public void stopMoving() {

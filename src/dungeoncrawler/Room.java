@@ -1,7 +1,11 @@
 package dungeoncrawler;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -11,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +43,7 @@ public class Room {
     private final Font smallFont = new Font("High Tower Text", 19);
     private int width;
     private int height;
+    private Monster monster;
 
     /**
      * Default constructor for Room class.
@@ -58,6 +64,8 @@ public class Room {
     public Room(String id, Difficulty diff) {
         this(500, 500, id, diff);
     }
+
+
 
     /**
      * The main constructor of the Room class.
@@ -259,7 +267,7 @@ public class Room {
         pane.getChildren().addAll(id, this.goldText, helpGroup);
 
         pane.getChildren().add(player);
-
+        pane.getChildren().add(monster);
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
         sPane.getChildren().addAll(background, pane);
@@ -327,6 +335,10 @@ public class Room {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void setMonster(Monster monster) {
+        this.monster = monster;
     }
 
     /**
@@ -518,4 +530,10 @@ public class Room {
     public String getCorrectExitRoomName() {
         return getCorrectExit().getText().substring(8);
     }
+
+    public Monster getMonster() {
+        return monster;
+    }
+
+
 }

@@ -1,7 +1,11 @@
 package dungeoncrawler;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -9,7 +13,10 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
+import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import java.sql.Time;
+import javafx.scene.layout.Pane;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -103,6 +110,8 @@ public class Controller extends Application {
         }
 
         Player player = new Player(100, 100, 50, 50);
+        Monster monster = new Monster(10, Color.RED);
+        room.setMonster(monster);
         room.setPlayer(player);
 
         Button right = room.getBRight();
@@ -136,9 +145,25 @@ public class Controller extends Application {
             String exit = room.getCorrectExitRoomName();
             correctExitText = exit;
         });
+
+
+
         this.primaryStage.setScene(room.getScene());
+
+
+        this.primaryStage.show();
+
+
+        monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
+//        Bounds bounds = this.primaryStage.getScene().getRoot().getBoundsInLocal();
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3),
+//                new KeyValue(monster.layoutXProperty(), bounds.getMaxX()-monster.getRadius())));
+//        timeline.setCycleCount(Timeline.INDEFINITE);
+//        timeline.play();
+
         primaryStage.getScene().setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.W)) {
+                System.out.println("w");
                 player.move(0, -4, true);
                 System.out.println("w");
             }
@@ -162,7 +187,12 @@ public class Controller extends Application {
                 System.out.println("stopped press");
             }
         });
-        this.primaryStage.show();
+
+        room.getMonster().relocate(0, 10);
+
+
+
+
     }
 
     private void proceedToGameScreen() {
