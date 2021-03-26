@@ -128,6 +128,10 @@ public class Room {
         updateRoomArray(dRoom);
         updateRoomArray(startingRoom);
         Random rand = new Random();
+        addMonster(startingRoom);
+        for (Room room: startingRoom.adjRooms) {
+            addMonster(room);
+        }
         int randRoomIndex = rand.nextInt(4);
         Room next = startingRoom.adjRooms[randRoomIndex];
         rGenerateMap(next, 0, randRoomIndex);
@@ -156,12 +160,7 @@ public class Room {
             updateRoomArray(nextRoom);
         } else {
             Random rand = new Random();
-            int monsterSpawn = Math.abs(rand.nextInt() % 3);
-            switch (monsterSpawn) {
-                case 0: this.monster = new GreenMonster(10); break;
-                case 1: this.monster = new GreenMonster(20); break;
-                case 2: this.monster = new GreenMonster(30); break;
-            }
+            addMonster(current);
             Room nextRoom = new Room("new" + roomDepth, current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             int nextRoomPrevIndex = newRoomIndex;
@@ -204,6 +203,16 @@ public class Room {
         current.left = current.adjRooms[1];
         current.up = current.adjRooms[2];
         current.down = current.adjRooms[3];
+    }
+
+    private void addMonster(Room current) {
+        Random rand = new Random();
+        int monsterSpawn = Math.abs(rand.nextInt() % 3);
+        switch (monsterSpawn) {
+            case 0: current.monster = new GreenMonster(20); break;
+            case 1: current.monster = new GreenMonster(40); break;
+            case 2: current.monster = new GreenMonster(60); break;
+        }
     }
 
     private String pathReveal(int nextIndex) {
