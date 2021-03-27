@@ -39,7 +39,7 @@ public class WelcomeScreen {
         Font smallFont = new Font("High Tower Text", 24);
 
         //init title text
-        this.gameTitle = new Text("Crypt of Treasure");
+        this.gameTitle = new Text("Dungeon Crawl 2: \n" + " Dungeon Crawlier");
         this.gameTitle.setFont(titleFont);
         this.gameTitle.setFill(textColor);
 
