@@ -33,6 +33,8 @@ public class Room {
     private Label correctExit; //Displays proper exit in bottom right corner
     private String pathID; //Text displaying correct exit to choose
     private Text goldText;
+    private Text healthText;
+    private static Rectangle healthRect;
     private Room left;
     private Room right;
     private Room up;
@@ -103,6 +105,10 @@ public class Room {
         this.goldText.setFill(goldColor);
         this.goldText.setX(420);
         this.goldText.setY(20);
+        this.healthText = new Text("HP");
+        this.healthText.setFill(Color.RED);
+        this.healthText.setFont(smallFont);
+        healthRect = new Rectangle(50, 15, Color.RED);
     }
 
     /**
@@ -281,7 +287,13 @@ public class Room {
         helpGroup.getChildren().addAll(helpButton, correctExit);
         helpGroup.getChildren().set(0, helpButton).toFront();
         id.setLayoutY(100);
-        pane.getChildren().addAll(id, this.goldText, helpGroup);
+
+        Group healthGroup = new Group();
+        healthGroup.getChildren().addAll(healthText, healthRect);
+        this.healthText.relocate(5, 5);
+        healthRect.relocate(35, 6);
+
+        pane.getChildren().addAll(id, this.goldText, healthGroup, helpGroup);
 
         pane.getChildren().add(player);
         if (this.monster != null) {
@@ -292,6 +304,10 @@ public class Room {
         sPane.getChildren().addAll(background, pane);
 
         return new Scene(sPane, this.width, this.height);
+    }
+
+    public void updateHealthBar(Player player) {
+        healthRect.setWidth(player.getHealth() * 10);
     }
 
     /**

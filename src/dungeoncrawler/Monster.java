@@ -5,11 +5,9 @@ import javafx.animation.Timeline;
 import javafx.animation.Animation;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
-
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.security.Key;
 import java.util.Random;
 
@@ -48,7 +46,6 @@ public class Monster extends Rectangle {
             timeline.setCycleCount(1);
             timeline.play();
             timeline.setOnFinished(e -> {
-                System.out.println(true);
                 move(pane);
             });
         }
