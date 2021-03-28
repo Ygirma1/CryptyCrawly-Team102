@@ -158,7 +158,7 @@ public class Controller extends Application {
             }
         }
         if (monster != null) {
-            monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot(), player);
+            monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
             Timer timer = new Timer();
             TimerTask task = new Helper();
             timer.schedule(task, 1000, 1000);

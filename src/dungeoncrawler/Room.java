@@ -128,7 +128,7 @@ public class Room {
         updateRoomArray(dRoom);
         updateRoomArray(startingRoom);
         Random rand = new Random();
-        addMonster(startingRoom);
+        //addMonster(startingRoom);
         for (Room room: startingRoom.adjRooms) {
             addMonster(room);
         }

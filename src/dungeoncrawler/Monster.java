@@ -25,13 +25,10 @@ public class Monster extends Rectangle {
      * @param y y start position
      * @param pane The current pane monster is in. Should be this.primaryStage.getScene().getRoot()
      */
-    public void startMoving(int x, int y, Pane pane, Player player) {
+    public void startMoving(int x, int y, Pane pane) {
         this.relocate(x, y);
         Bounds bounds = pane.getBoundsInLocal();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(this.layoutXProperty(), bounds.getMaxX()-this.getWidth())),
-                new KeyFrame(Duration.millis(30), actionEvent -> {
-                    attackPlayer(player);
-                }));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(this.layoutXProperty(), bounds.getMaxX()-this.getWidth())));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
