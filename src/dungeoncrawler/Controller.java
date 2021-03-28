@@ -112,8 +112,6 @@ public class Controller extends Application {
         }
 
         Player player = new Player(100, 100, 50, 50);
-        //Monster monster = new Monster(10, Color.RED);
-        //room.setMonster(monster);
         Monster monster = room.getMonster();
         room.setPlayer(player);
 
@@ -162,7 +160,7 @@ public class Controller extends Application {
         }
 
         if (monster != null) {
-            monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
+            monster.move((Pane)this.primaryStage.getScene().getRoot());
             Timer timer = new Timer();
             TimerTask task = new Helper();
             timer.schedule(task, 0, 500);
@@ -189,7 +187,7 @@ public class Controller extends Application {
             monster.setOnMouseClicked(e -> {
                 monster.takeDamage(player.getDamage());
             });
-            room.getMonster().relocate(0, 10);
+            //room.getMonster().relocate(2, 10);
         }
     }
 
