@@ -210,9 +210,9 @@ public class Room {
         Random rand = new Random();
         int monsterSpawn = Math.abs(rand.nextInt() % 3);
         switch (monsterSpawn) {
-            case 0: current.monster = new GreenMonster(60,60); break;
-            case 1: current.monster = new GreenMonster(70, 70); break;
-            case 2: current.monster = new GreenMonster(80, 80); break;
+            case 0: current.monster = new GreenMonster(60,60, 3); break;
+            case 1: current.monster = new PinkMonster(70, 70, 4); break;
+            case 2: current.monster = new YellowMonster(80, 80, 5); break;
         }
 
     }

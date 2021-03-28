@@ -2,6 +2,7 @@ package dungeoncrawler;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.Animation;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 
@@ -9,31 +10,51 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.security.Key;
+import java.util.Random;
+
 // In case where you wanna create your own monster, just extends this class and implement startMoving
 public class Monster extends Rectangle {
     int health;
+    int damage = 1;
     boolean alive = true;
-    public Monster(int width, int height, Color color) {
+    public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
+        this.health = health;
     }
 
     /**
-     * Start moving the monster's animation
-     * Change the KeyValue parameters to change the behavior of the monster
-     * See this for example: https://mkyong.com/javafx/javafx-animated-ball-example/
-     * @param x x start position
-     * @param y y start position
-     * @param pane The current pane monster is in. Should be this.primaryStage.getScene().getRoot()
+     * Continuous function for animating the movement of the monster class.
+     *
+     * @param pane the pane the monster is in
      */
-    public void startMoving(int x, int y, Pane pane) {
-        this.relocate(x, y);
-        Bounds bounds = pane.getBoundsInLocal();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(this.layoutXProperty(), bounds.getMaxX()-this.getWidth())));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+    public void move(Pane pane) {
+        if (this.alive) {
+            Random rand = new Random();
+            int maxValue = (int) Math.abs(pane.getWidth() - this.getWidth());
+            int endX = rand.nextInt(maxValue);
+            int endY = rand.nextInt(maxValue);
+            double duration = 2.5;
+            int maxDistance = (int) Math.max(Math.abs(endX - this.getX()), Math.abs(endY- this.getY()));
+            if (maxDistance <= 150) {
+                duration = .8;
+            } else if (maxDistance <= 275) {
+                duration = 1.5;
+            }
+            KeyValue x = new KeyValue(this.layoutXProperty(), endX);
+            KeyValue y = new KeyValue(this.layoutYProperty(), endY);
+            KeyFrame frame = new KeyFrame(Duration.seconds(rand.nextDouble() + duration), x, y);
+            Timeline timeline = new Timeline(frame);
+            timeline.setCycleCount(1);
+            timeline.play();
+            timeline.setOnFinished(e -> {
+                System.out.println(true);
+                move(pane);
+            });
+        }
     }
 
-    public void damage(int damageCount) {
+    public void takeDamage(int damageCount) {
         this.health -= damageCount;
         System.out.println(this.health);
         if (this.health <= 0) {
@@ -42,28 +63,14 @@ public class Monster extends Rectangle {
         }
     }
 
+    public void attackPlayer(Player player) {
+        if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
+            player.takeDamage(this.damage);
+            System.out.println(player.getHealth());
+        }
+    }
+
     public int getHealth() {
         return this.health;
-    }
-
-    public void attackPlayer(Player player) {
-//        System.out.println(("ATTACKINGPLAYER"));
-        if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
-            System.out.println("INTERSECTING");
-        }
-        //if (this.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
-        //    System.out.println("INTERSECTING");
-        //}
-    }
-
-    public void attackPlayer(Player player, boolean foo) {
-        double pX = player.getX();
-        double pY = player.getY();
-        double pW = player.getWidth();
-        double pH = player.getHeight();
-
-        if (pX - this.getX() >= 0 && pX - this.getX() <= this.getWidth()) {
-            System.out.println("IN X");
-        }
     }
 }

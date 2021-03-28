@@ -17,15 +17,19 @@ public class Player extends Rectangle {
     public void move() {
         int dx = 0;
         int dy = 0;
-        if (goNorth) { dy = -3; }
-        if (goWest) { dx = -3; }
-        if (goSouth) { dy = 3; }
-        if (goEast) { dx = 3; }
+        if (goNorth) { dy = -5; }
+        if (goWest) { dx = -5; }
+        if (goSouth) { dy = 5; }
+        if (goEast) { dx = 5; }
 
         this.setX(this.getX() + dx);
         this.setY(this.getY() + dy);
 
 
+    }
+
+    public void takeDamage(int damageCount) {
+        health -= damageCount;
     }
 
     public void setGoNorth(boolean goNorth) {
@@ -47,4 +51,6 @@ public class Player extends Rectangle {
     public int getDamage() {
         return damage;
     }
+
+    public int getHealth() { return health; }
 }
