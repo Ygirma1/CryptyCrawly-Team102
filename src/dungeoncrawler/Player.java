@@ -4,9 +4,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Player extends Rectangle {
-    static int health = 5;
-    static int damage = 1;
-    boolean goNorth, goSouth, goEast, goWest;
+
+    private static int health = 5;
+    private static int damage = 1;
+    private boolean goNorth, goSouth, goEast, goWest;
+    private static boolean alive = true;
 
     public Player(double x, double y, int width, int height) {
         super(x, y, width, height);
@@ -28,6 +30,21 @@ public class Player extends Rectangle {
 
     public void takeDamage(int damageCount) {
         health -= damageCount;
+        if (health <= 0) {
+            alive = false;
+        }
+    }
+
+    public static boolean isAlive() {
+        return alive;
+    }
+
+    public static void setHealth(int newHealth) {
+        health = newHealth;
+    }
+
+    public static void setIsAlive(boolean isAlive) {
+        alive = isAlive;
     }
 
     public void setGoNorth(boolean goNorth) {
@@ -50,5 +67,5 @@ public class Player extends Rectangle {
         return damage;
     }
 
-    public int getHealth() { return health; }
+    public static int getHealth() { return health; }
 }
