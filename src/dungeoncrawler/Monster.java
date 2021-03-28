@@ -3,17 +3,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 // In case where you wanna create your own monster, just extends this class and implement startMoving
-public class Monster extends Circle {
+public class Monster extends Rectangle {
     int health;
-    public Monster(int radius, Color color) {
-        super(radius, color);
+    public Monster(int width, int height, Color color) {
+        super(width, height, color);
     }
 
     /**
@@ -27,7 +27,7 @@ public class Monster extends Circle {
     public void startMoving(int x, int y, Pane pane) {
         this.relocate(x, y);
         Bounds bounds = pane.getBoundsInLocal();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(this.layoutXProperty(), bounds.getMaxX()-this.getRadius())));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), new KeyValue(this.layoutXProperty(), bounds.getMaxX()-this.getWidth())));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
