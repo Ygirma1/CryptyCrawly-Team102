@@ -150,12 +150,10 @@ public class Controller extends Application {
         this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
 
-        monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
-//        Bounds bounds = this.primaryStage.getScene().getRoot().getBoundsInLocal();
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3),
-//                new KeyValue(monster.layoutXProperty(), bounds.getMaxX()-monster.getRadius())));
-//        timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.play();
+        if (monster != null) {
+            monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
+        }
+
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
@@ -174,14 +172,15 @@ public class Controller extends Application {
                 case "d": player.setGoEast(false); break;
             }
         });
-        monster.setOnMouseClicked(e -> {
-            monster.damage(player.getDamage());
-            if (monster.getHealth() < 1) {
-                monster.setVisible(false);
-            }
-        });
-
-        room.getMonster().relocate(0, 10);
+        if (monster != null) {
+            monster.setOnMouseClicked(e -> {
+                monster.damage(player.getDamage());
+                if (monster.getHealth() < 1) {
+                    monster.setVisible(false);
+                }
+            });
+            room.getMonster().relocate(0, 10);
+        }
     }
 
     private void proceedToGameScreen() {

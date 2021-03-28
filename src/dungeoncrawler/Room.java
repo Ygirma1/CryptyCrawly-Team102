@@ -52,7 +52,7 @@ public class Room {
      * @param height height of scene
      */
     public Room(int width, int height) {
-        this(width, height, "doge", Difficulty.EASY);
+        this(width, height, "", Difficulty.EASY);
     }
 
     /**
@@ -152,6 +152,7 @@ public class Room {
         if (roomDepth >= 6) {
             Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
+            addMonster(current);
             nextRoom.down = null;
             nextRoom.up = null;
             nextRoom.left = null;
@@ -175,7 +176,6 @@ public class Room {
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
-
             }
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
@@ -543,7 +543,7 @@ public class Room {
     }
 
     public String getCorrectExitRoomName() {
-        return getCorrectExit().getText().substring(8);
+        return getCorrectExit().getText().length() == 0 ? "" : getCorrectExit().getText().substring(8);
     }
 
     public Monster getMonster() {
