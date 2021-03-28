@@ -14,7 +14,6 @@ public class Player extends Rectangle {
     private boolean goWest;
     private static boolean alive = true;
     private boolean isAggressive;
-
     public Player(double x, double y, int width, int height) {
         super(x, y, width, height);
         this.setVisible(true);

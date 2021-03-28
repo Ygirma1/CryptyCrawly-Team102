@@ -69,11 +69,9 @@ public class Monster extends Rectangle {
                 System.out.println("Attacking monster");
                 this.takeDamage(player.getDamage());
             } else {
-                System.out.println("Monster attacking");
+                System.out.println("monster attack");
                 player.takeDamage(this.damage);
             }
-            player.takeDamage(this.damage);
-            System.out.println(player.getHealth());
         }
     }
 
