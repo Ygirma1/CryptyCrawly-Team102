@@ -86,10 +86,6 @@ public class Monster extends Rectangle {
         this.damage = damage;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
-
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
