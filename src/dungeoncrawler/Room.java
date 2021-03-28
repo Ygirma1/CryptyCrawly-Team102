@@ -128,7 +128,7 @@ public class Room {
         updateRoomArray(dRoom);
         updateRoomArray(startingRoom);
         Random rand = new Random();
-        addMonster(startingRoom);
+        //addMonster(startingRoom);
         for (Room room: startingRoom.adjRooms) {
             addMonster(room);
         }
@@ -282,7 +282,9 @@ public class Room {
         pane.getChildren().addAll(id, this.goldText, helpGroup);
 
         pane.getChildren().add(player);
-        pane.getChildren().add(monster);
+        if (this.monster != null) {
+            pane.getChildren().add(monster);
+        }
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
         sPane.getChildren().addAll(background, pane);

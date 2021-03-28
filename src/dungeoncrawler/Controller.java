@@ -17,6 +17,8 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import java.sql.Time;
 import javafx.scene.layout.Pane;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -150,10 +152,17 @@ public class Controller extends Application {
         this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
 
+        class Helper extends TimerTask {
+            public void run() {
+                monster.attackPlayer(player);
+            }
+        }
         if (monster != null) {
             monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
+            Timer timer = new Timer();
+            TimerTask task = new Helper();
+            timer.schedule(task, 1000, 1000);
         }
-
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
