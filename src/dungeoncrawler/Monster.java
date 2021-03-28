@@ -12,6 +12,7 @@ import javafx.util.Duration;
 // In case where you wanna create your own monster, just extends this class and implement startMoving
 public class Monster extends Rectangle {
     int health;
+    int damage = 1;
     boolean alive = true;
     public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
@@ -34,7 +35,7 @@ public class Monster extends Rectangle {
         timeline.play();
     }
 
-    public void damage(int damageCount) {
+    public void takeDamage(int damageCount) {
         this.health -= damageCount;
         System.out.println(this.health);
         if (this.health <= 0) {
@@ -43,28 +44,14 @@ public class Monster extends Rectangle {
         }
     }
 
+    public void attackPlayer(Player player) {
+        if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
+            player.takeDamage(this.damage);
+            System.out.println(player.getHealth());
+        }
+    }
+
     public int getHealth() {
         return this.health;
-    }
-
-    public void attackPlayer(Player player) {
-        System.out.println(("ATTACKINGPLAYER"));
-        if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
-            System.out.println("INTERSECTING");
-        }
-        //if (this.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
-        //    System.out.println("INTERSECTING");
-        //}
-    }
-
-    public void attackPlayer(Player player, boolean foo) {
-        double pX = player.getX();
-        double pY = player.getY();
-        double pW = player.getWidth();
-        double pH = player.getHeight();
-
-        if (pX - this.getX() >= 0 && pX - this.getX() <= this.getWidth()) {
-            System.out.println("IN X");
-        }
     }
 }

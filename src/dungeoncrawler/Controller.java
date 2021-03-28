@@ -187,7 +187,7 @@ public class Controller extends Application {
         });
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
-                monster.damage(player.getDamage());
+                monster.takeDamage(player.getDamage());
             });
             room.getMonster().relocate(0, 10);
         }
