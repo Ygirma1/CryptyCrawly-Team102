@@ -24,6 +24,8 @@ public class Player extends Rectangle {
 
         this.setX(this.getX() + dx);
         this.setY(this.getY() + dy);
+
+
     }
 
     public void setGoNorth(boolean goNorth) {

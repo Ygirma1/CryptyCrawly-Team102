@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -213,6 +214,7 @@ public class Room {
             case 1: current.monster = new GreenMonster(40); break;
             case 2: current.monster = new GreenMonster(60); break;
         }
+
     }
 
     private String pathReveal(int nextIndex) {
@@ -304,6 +306,8 @@ public class Room {
         this.exits.get(index).setLayoutX(x);
         this.exits.get(index).setLayoutY(y);
     }
+
+
 
     /**
      * Setter for the text of an exit button
