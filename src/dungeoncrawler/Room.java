@@ -53,7 +53,7 @@ public class Room {
      * @param height height of scene
      */
     public Room(int width, int height) {
-        this(width, height, "doge", Difficulty.EASY);
+        this(width, height, "", Difficulty.EASY);
     }
 
     /**
@@ -129,7 +129,7 @@ public class Room {
         updateRoomArray(dRoom);
         updateRoomArray(startingRoom);
         Random rand = new Random();
-        addMonster(startingRoom);
+        //addMonster(startingRoom);
         for (Room room: startingRoom.adjRooms) {
             addMonster(room);
         }
@@ -153,6 +153,7 @@ public class Room {
         if (roomDepth >= 6) {
             Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
+            addMonster(current);
             nextRoom.down = null;
             nextRoom.up = null;
             nextRoom.left = null;
@@ -176,7 +177,6 @@ public class Room {
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
-
             }
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
@@ -210,9 +210,9 @@ public class Room {
         Random rand = new Random();
         int monsterSpawn = Math.abs(rand.nextInt() % 3);
         switch (monsterSpawn) {
-            case 0: current.monster = new GreenMonster(20); break;
-            case 1: current.monster = new GreenMonster(40); break;
-            case 2: current.monster = new GreenMonster(60); break;
+            case 0: current.monster = new GreenMonster(60,60); break;
+            case 1: current.monster = new GreenMonster(70, 70); break;
+            case 2: current.monster = new GreenMonster(80, 80); break;
         }
 
     }
@@ -284,7 +284,9 @@ public class Room {
         pane.getChildren().addAll(id, this.goldText, helpGroup);
 
         pane.getChildren().add(player);
-        pane.getChildren().add(monster);
+        if (this.monster != null) {
+            pane.getChildren().add(monster);
+        }
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
         sPane.getChildren().addAll(background, pane);
@@ -547,7 +549,7 @@ public class Room {
     }
 
     public String getCorrectExitRoomName() {
-        return getCorrectExit().getText().substring(8);
+        return getCorrectExit().getText().length() == 0 ? "" : getCorrectExit().getText().substring(8);
     }
 
     public Monster getMonster() {
