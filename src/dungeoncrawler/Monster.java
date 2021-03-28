@@ -2,16 +2,18 @@ package dungeoncrawler;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.Animation;
-import javafx.geometry.Bounds;
+//import javafx.animation.Animation;
+//import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import java.security.Key;
+//import java.security.Key;
+
 import java.util.Random;
 
-// In case where you wanna create your own monster, just extends this class and implement startMoving
+// In case where you wanna create your own monster,
+// just extends this class and implement startMoving
 public class Monster extends Rectangle {
     private int health;
     private int damage = 1;
@@ -33,7 +35,8 @@ public class Monster extends Rectangle {
             int endX = rand.nextInt(maxValue);
             int endY = rand.nextInt(maxValue);
             double duration = 2.5;
-            int maxDistance = (int) Math.max(Math.abs(endX - this.getX()), Math.abs(endY- this.getY()));
+            int maxDistance = (int) Math.max(Math.abs(endX - this.getX()),
+                    Math.abs(endY - this.getY()));
             if (maxDistance <= 150) {
                 duration = .8;
             } else if (maxDistance <= 275) {
@@ -68,7 +71,27 @@ public class Monster extends Rectangle {
     }
 
     public int getHealth() {
-        return this.health;
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     public boolean isAlive() {

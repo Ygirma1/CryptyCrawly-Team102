@@ -1,21 +1,21 @@
 package dungeoncrawler;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+//import javafx.animation.KeyFrame;
+//import javafx.animation.KeyValue;
+//import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
-import javafx.scene.Scene;
+//import javafx.event.EventHandler;
+//import javafx.geometry.Bounds;
+//import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+//import javafx.scene.input.KeyCode;
+//import javafx.scene.input.KeyCodeCombination;
+//import javafx.scene.input.KeyCombination;
+//import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.paint.Color;
-import java.sql.Time;
+//import javafx.util.Duration;
+//import javafx.scene.paint.Color;
+//import java.sql.Time;
 import javafx.scene.layout.Pane;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -148,6 +148,7 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
+
                 room.updateHealthBar(player);
                 if (!monster.isAlive() || !Player.isAlive()) {
                     cancel();
@@ -164,19 +165,31 @@ public class Controller extends Application {
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
-                case "w": player.setGoNorth(true); break;
-                case "a": player.setGoWest(true); break;
-                case "s": player.setGoSouth(true); break;
-                case "d": player.setGoEast(true); break;
+            case "w": player.setGoNorth(true);
+                break;
+            case "a": player.setGoWest(true);
+                break;
+            case "s": player.setGoSouth(true);
+                break;
+            case "d": player.setGoEast(true);
+                break;
+            default:
+                break;
             }
             player.move();
         });
         primaryStage.getScene().setOnKeyReleased(e -> {
             switch (e.getText()) {
-                case "w": player.setGoNorth(false); break;
-                case "a": player.setGoWest(false); break;
-                case "s": player.setGoSouth(false); break;
-                case "d": player.setGoEast(false); break;
+            case "w": player.setGoNorth(false);
+                break;
+            case "a": player.setGoWest(false);
+                break;
+            case "s": player.setGoSouth(false);
+                break;
+            case "d": player.setGoEast(false);
+                break;
+            default:
+                break;
             }
         });
         primaryStage.getScene().setOnMouseMoved(e -> {

@@ -1,20 +1,20 @@
 package dungeoncrawler;
 
-import javafx.scene.layout.Pane;
-import javafx.scene.Node;
+//import javafx.scene.layout.Pane;
+//import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Shape;
+//import javafx.scene.shape.Shape;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 
 public abstract class Sprite extends Rectangle {
-    double x;
-    double y;
-    int width;
-    int height;
-    Image image;
-    ImageView imageView;
+    private double x;
+    private double y;
+    private int width;
+    private int height;
+    private Image image;
+    private ImageView imageView;
 
     public Sprite(double x, double y, int width, int height) {
         super(x, y, width, height);
@@ -24,6 +24,7 @@ public abstract class Sprite extends Rectangle {
 
     public Sprite(double x, double y, Image image, int width, int height) {
         this.x = x;
+        //setSpriteX(x);
         this.y = y;
         this.image = image;
         this.width = width;
@@ -36,7 +37,41 @@ public abstract class Sprite extends Rectangle {
     }
 
     public void move(double dx, double dy) {
-        this.setX(this.x += dx);
-        this.setY(this.y += dy);
+        //double newX = this.x + dx;
+        //double newY = this.y + dy;
+        this.setX(this.x + dx);
+        this.setY(this.y + dy);
     }
+
+    public double getSpriteX() {
+        return x;
+    }
+
+    public void setSpriteX(double x) {
+        this.x = x;
+    }
+    public double getSpriteY() {
+        return y;
+    }
+
+    public void setSpriteY(double y) {
+        this.y = y;
+    }
+
+    public int getSpriteWidth() {
+        return width;
+    }
+
+    public void setSpriteWidth(int width) {
+        this.width = width;
+    }
+    public int getSpriteHeight() {
+        return height;
+    }
+
+    public void setSpriteHeight(int height) {
+        this.height = height;
+    }
+
+
 }
