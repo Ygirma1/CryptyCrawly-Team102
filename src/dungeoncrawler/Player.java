@@ -12,6 +12,7 @@ public class Player extends Rectangle {
     private boolean goSouth;
     private boolean goEast;
     private boolean goWest;
+    private static boolean alive = true;
     private boolean isAggressive;
     private static boolean alive;
     public Player(double x, double y, int width, int height) {
