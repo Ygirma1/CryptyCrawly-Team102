@@ -10,7 +10,7 @@ public class GreenMonster extends Monster {
     }
 
     public int getDamage() {
-        return this.damage;
+        return damage;
     }
 
     public void setDamage(int damage) {
