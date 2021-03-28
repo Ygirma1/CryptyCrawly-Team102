@@ -13,8 +13,9 @@ import javafx.util.Duration;
 public class Monster extends Rectangle {
     int health;
     boolean alive = true;
-    public Monster(int width, int height, Color color) {
+    public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
+        this.health = health;
     }
 
     /**
