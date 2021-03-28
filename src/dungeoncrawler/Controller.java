@@ -211,7 +211,7 @@ public class Controller extends Application {
         primaryStage.getScene().setOnMouseMoved(e -> {
             if (!Player.isAlive()) {
                 Player.setIsAlive(true);
-                Player.setHealth(5);
+                Player.setHealth(20);
                 gameOverScreen();
             }
         });

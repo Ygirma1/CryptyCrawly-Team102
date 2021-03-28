@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends Rectangle {
 
-    private static int health = 5;
+    private static int health = 20;
     private static int damage = 1;
 
     private boolean goNorth;
@@ -26,16 +26,16 @@ public class Player extends Rectangle {
         int dx = 0;
         int dy = 0;
         if (goNorth) {
-            dy = -5;
+            dy = -7;
         }
         if (goWest) {
-            dx = -5;
+            dx = -7;
         }
         if (goSouth) {
-            dy = 5;
+            dy = 7;
         }
         if (goEast) {
-            dx = 5;
+            dx = 7;
         }
 
         this.setX(this.getX() + dx);
