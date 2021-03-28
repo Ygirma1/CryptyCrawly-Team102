@@ -35,6 +35,11 @@ public class Monster extends Rectangle {
 
     public void damage(int damageCount) {
         this.health -= damageCount;
+        System.out.println(this.health);
+        if (this.health <= 0) {
+            this.setVisible(false);
+            this.alive = false;
+        }
     }
 
     public int getHealth() {

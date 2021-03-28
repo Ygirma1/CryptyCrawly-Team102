@@ -155,13 +155,17 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
+                if (!monster.alive) {
+                    cancel();
+                }
             }
         }
+
         if (monster != null) {
             monster.startMoving(0, 10, (Pane)this.primaryStage.getScene().getRoot());
             Timer timer = new Timer();
             TimerTask task = new Helper();
-            timer.schedule(task, 1000, 1000);
+            timer.schedule(task, 0, 500);
         }
 
         primaryStage.getScene().setOnKeyPressed(e -> {
@@ -184,9 +188,6 @@ public class Controller extends Application {
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
                 monster.damage(player.getDamage());
-                if (monster.getHealth() < 1) {
-                    monster.setVisible(false);
-                }
             });
             room.getMonster().relocate(0, 10);
         }
