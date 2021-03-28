@@ -9,7 +9,7 @@ import org.testfx.matcher.control.TextInputControlMatchers;
 import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
-
+import javafx.scene.layout.Pane;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -376,6 +376,22 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         clickOn("#goldButton3");
         verifyThat("#exitButton", NodeMatchers.isEnabled());
+    }
+
+    @Test
+    public void testPlayerHP() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan HP Test");
+        clickOn("#easyRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+
+        Monster instanceMonster = new GreenMonster(30, 30, 5);
+        Player player = new Player(10, 10, 10, 10);
+        assertEquals(20, Player.getHealth());
+        player.takeDamage(instanceMonster.getDamage());
+        assertEquals(19, Player.getHealth());
     }
 }
 

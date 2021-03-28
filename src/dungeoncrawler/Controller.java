@@ -149,7 +149,7 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
-                room.updateHealthBar(player);
+                room.updateHealthBar();
                 if (!monster.isAlive() || !Player.isAlive()) {
                     cancel();
                 }

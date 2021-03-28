@@ -108,7 +108,7 @@ public class Room {
         this.healthText = new Text("HP");
         this.healthText.setFill(Color.RED);
         this.healthText.setFont(smallFont);
-        healthRect = new Rectangle(50, 15, Color.RED);
+        healthRect = new Rectangle(100, 15, Color.RED);
     }
 
     /**
@@ -311,8 +311,8 @@ public class Room {
         return new Scene(sPane, this.width, this.height);
     }
 
-    public void updateHealthBar(Player player) {
-        healthRect.setWidth(player.getHealth() * 10);
+    public void updateHealthBar() {
+        healthRect.setWidth(Player.getHealth() * 5);
     }
 
     /**
