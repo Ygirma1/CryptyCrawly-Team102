@@ -1,5 +1,6 @@
 import dungeoncrawler.*;
 
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.Test;
 
@@ -17,6 +18,8 @@ import static org.testfx.api.FxAssert.verifyThat;
 
 public class DungeonCrawlerTest extends ApplicationTest {
     private Controller controller = new Controller();
+    private Player player = new Player(250, 250, 100, 100);
+    private Monster monster = new Monster(50, 50, 25, Color.RED);
     @Override
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
@@ -42,6 +45,16 @@ public class DungeonCrawlerTest extends ApplicationTest {
             }
             clickOn(correctPath);
         }
+    }
+
+    //pushes through to start room
+    public void getToStartRoom() {
+        clickOn("Start");
+        clickOn("#nameField").write("Test");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
     }
 
     @Test
@@ -377,5 +390,29 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#goldButton3");
         verifyThat("#exitButton", NodeMatchers.isEnabled());
     }
+
+    @Test
+    public void testDeath() {
+        getToStartRoom();
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        String correctPath = correctExitLabel.getText().substring(8);
+        clickOn(correctPath);
+        player.takeDamage(20);
+        assertFalse(player.isAlive());
+    }
+
+    @Test
+    public void testDamageMonster() {
+        getToStartRoom();
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        String correctPath = correctExitLabel.getText().substring(8);
+        clickOn(correctPath);
+
+        int initHealth = monster.getHealth();
+        monster.takeDamage(10);
+        assertTrue(monster.getHealth() == (initHealth - 10));
+    }
+
+
 }
 
