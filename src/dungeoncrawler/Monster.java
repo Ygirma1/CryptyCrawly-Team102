@@ -2,22 +2,23 @@ package dungeoncrawler;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.animation.Animation;
-import javafx.geometry.Bounds;
+//import javafx.animation.Animation;
+//import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.security.Key;
+//import java.security.Key;
 import java.util.Random;
 
 // In case where you wanna create your own monster, just extends this class and implement startMoving
 public class Monster extends Rectangle {
-    int health;
-    int damage = 1;
-    boolean alive = true;
+    private int health;
+    private int damage = 1;
+    private boolean alive = true;
+
     public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
         this.health = health;
@@ -73,4 +74,27 @@ public class Monster extends Rectangle {
     public int getHealth() {
         return this.health;
     }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getDamage() {
+        return this.damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+
+
 }

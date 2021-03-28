@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Player extends Rectangle {
-    static int health = 5;
-    static int damage = 1;
-    boolean goNorth, goSouth, goEast, goWest;
+    private static int health = 5;
+    private static int damage = 1;
+    private boolean goNorth, goSouth, goEast, goWest;
 
     public Player(double x, double y, int width, int height) {
         super(x, y, width, height);
