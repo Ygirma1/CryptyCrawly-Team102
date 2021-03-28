@@ -64,6 +64,13 @@ public class Monster extends Rectangle {
 
     public void attackPlayer(Player player) {
         if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
+            if (player.getIsAggressive()) {
+                System.out.println("Attacking monster");
+                this.takeDamage(player.getDamage());
+            } else {
+                System.out.println("Monster attacking");
+                player.takeDamage(this.damage);
+            }
             player.takeDamage(this.damage);
             System.out.println(player.getHealth());
         }

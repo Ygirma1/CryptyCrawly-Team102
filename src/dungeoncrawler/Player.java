@@ -7,11 +7,12 @@ public class Player extends Rectangle {
     private static int health = 5;
     private static int damage = 1;
     private boolean goNorth, goSouth, goEast, goWest;
-
+    private boolean isAggressive;
     public Player(double x, double y, int width, int height) {
         super(x, y, width, height);
         this.setVisible(true);
         this.setFill(Color.RED);
+        this.isAggressive = true;
     }
 
     public void move() {
@@ -24,8 +25,6 @@ public class Player extends Rectangle {
 
         this.setX(this.getX() + dx);
         this.setY(this.getY() + dy);
-
-
     }
 
     public void takeDamage(int damageCount) {
@@ -53,4 +52,12 @@ public class Player extends Rectangle {
     }
 
     public int getHealth() { return health; }
+
+    public void setIsAggressive(boolean isAggressive) {
+        this.isAggressive = isAggressive;
+    }
+
+    public boolean getIsAggressive() {
+        return this.isAggressive;
+    }
 }

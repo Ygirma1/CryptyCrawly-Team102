@@ -3,6 +3,7 @@ package dungeoncrawler;
 //import javafx.animation.KeyFrame;
 //import javafx.animation.KeyValue;
 //import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
 import javafx.application.Application;
 //import javafx.event.EventHandler;
 //import javafx.geometry.Bounds;
@@ -153,21 +154,35 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
-
                 room.updateHealthBar(player);
-
                 if (!monster.isAlive()) {
                     cancel();
                 }
             }
         }
 
+        class PlayerSwitchState extends TimerTask {
+            public void run() {
+                if (player.getIsAggressive()) {
+                    player.setFill(Color.RED); // red for aggressive, blue for neutral
+                    player.setIsAggressive(false);
+                } else {
+                    player.setFill(Color.BLUE);
+                    player.setIsAggressive(true);
+                }
+            }
+        }
+
+        Timer timer = new Timer();
         if (monster != null) {
             monster.move((Pane) this.primaryStage.getScene().getRoot());
-            Timer timer = new Timer();
             TimerTask task = new Helper();
             timer.schedule(task, 0, 500);
         }
+
+        TimerTask playerSwitchState = new PlayerSwitchState();
+        timer.schedule(playerSwitchState, 0, 2000);
+
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
