@@ -18,7 +18,6 @@ public class Monster extends Rectangle {
     private int health;
     private int damage = 1;
     private boolean alive = true;
-
     public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
         this.health = health;
@@ -30,7 +29,7 @@ public class Monster extends Rectangle {
      * @param pane the pane the monster is in
      */
     public void move(Pane pane) {
-        if (this.alive) {
+        if (this.alive && Player.isAlive()) {
             Random rand = new Random();
             int maxValue = (int) Math.abs(pane.getWidth() - this.getWidth());
             int endX = rand.nextInt(maxValue);
@@ -94,14 +93,11 @@ public class Monster extends Rectangle {
         this.damage = damage;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
-
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
 
-
-
+    public boolean isAlive() {
+        return this.alive;
+    }
 }

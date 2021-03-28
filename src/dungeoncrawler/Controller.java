@@ -38,16 +38,11 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 
-        Room start = new Room("start", Difficulty.EASY);
-        start.generateMap(start);
-        initRoom(start);
-
         welcomeScreen();
     }
 
     private void welcomeScreen() {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
-        Button play = welcomeScreen.getPlayButton();
         this.primaryStage.setScene(welcomeScreen.getScene());
         this.primaryStage.show();
         Button startButton = welcomeScreen.getPlayButton();
@@ -155,7 +150,7 @@ public class Controller extends Application {
             public void run() {
                 monster.attackPlayer(player);
                 room.updateHealthBar(player);
-                if (!monster.isAlive()) {
+                if (!monster.isAlive() || !Player.isAlive()) {
                     cancel();
                 }
             }
@@ -213,12 +208,30 @@ public class Controller extends Application {
                 break;
             }
         });
+        primaryStage.getScene().setOnMouseMoved(e -> {
+            if (!Player.isAlive()) {
+                Player.setIsAlive(true);
+                Player.setHealth(5);
+                gameOverScreen();
+            }
+        });
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
                 monster.takeDamage(player.getDamage());
             });
-            //room.getMonster().relocate(2, 10);
         }
+    }
+
+    private void gameOverScreen() {
+        GameOverScreen gameOverScreen = new GameOverScreen();
+        Button playButton = gameOverScreen.getPlayButton();
+        playButton.setOnAction(e -> {
+            Room start = new Room("start", diff);
+            start.generateMap(start);
+            initRoom(start);
+        });
+        this.primaryStage.setScene(gameOverScreen.getScene());
+        this.primaryStage.show();
     }
 
     private void proceedToGameScreen() {
