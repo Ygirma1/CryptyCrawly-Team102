@@ -164,10 +164,10 @@ public class Controller extends Application {
         class PlayerSwitchState extends TimerTask {
             public void run() {
                 if (player.getIsAggressive()) {
-                    player.setFill(Color.RED); // red for aggressive, blue for neutral
+                    player.setFill(Color.BLUE); // red for aggressive, blue for neutral
                     player.setIsAggressive(false);
                 } else {
-                    player.setFill(Color.BLUE);
+                    player.setFill(Color.RED);
                     player.setIsAggressive(true);
                 }
             }
