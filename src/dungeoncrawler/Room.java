@@ -1,11 +1,11 @@
 package dungeoncrawler;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+//import javafx.animation.KeyFrame;
+//import javafx.animation.KeyValue;
+//import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
+//import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -13,10 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+//import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+//import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -216,9 +216,14 @@ public class Room {
         Random rand = new Random();
         int monsterSpawn = Math.abs(rand.nextInt() % 3);
         switch (monsterSpawn) {
-            case 0: current.monster = new GreenMonster(60,60, 3); break;
-            case 1: current.monster = new PinkMonster(70, 70, 4); break;
-            case 2: current.monster = new YellowMonster(80, 80, 5); break;
+        case 0: current.monster = new GreenMonster(60, 60, 3);
+        break;
+        case 1: current.monster = new PinkMonster(70, 70, 4);
+        break;
+        case 2: current.monster = new YellowMonster(80, 80, 5);
+        break;
+        default:
+            break;
         }
 
     }
@@ -565,7 +570,8 @@ public class Room {
     }
 
     public String getCorrectExitRoomName() {
-        return getCorrectExit().getText().length() == 0 ? "" : getCorrectExit().getText().substring(8);
+        return getCorrectExit().getText().length() == 0 ? ""
+                : getCorrectExit().getText().substring(8);
     }
 
     public Monster getMonster() {

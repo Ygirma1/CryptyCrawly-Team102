@@ -37,19 +37,21 @@ public abstract class Sprite extends Rectangle {
     }
 
     public void move(double dx, double dy) {
-        this.setX(this.x += dx);
-        this.setY(this.y += dy);
+        //double newX = this.x + dx;
+        //double newY = this.y + dy;
+        this.setX(this.x + dx);
+        this.setY(this.y + dy);
     }
 
     public double getSpriteX() {
-        return this.x;
+        return x;
     }
 
     public void setSpriteX(double x) {
         this.x = x;
     }
     public double getSpriteY() {
-        return this.y;
+        return y;
     }
 
     public void setSpriteY(double y) {
@@ -57,14 +59,14 @@ public abstract class Sprite extends Rectangle {
     }
 
     public int getSpriteWidth() {
-        return this.width;
+        return width;
     }
 
     public void setSpriteWidth(int width) {
         this.width = width;
     }
     public int getSpriteHeight() {
-        return this.height;
+        return height;
     }
 
     public void setSpriteHeight(int height) {

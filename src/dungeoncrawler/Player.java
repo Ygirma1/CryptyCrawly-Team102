@@ -6,7 +6,10 @@ import javafx.scene.shape.Rectangle;
 public class Player extends Rectangle {
     private static int health = 5;
     private static int damage = 1;
-    private boolean goNorth, goSouth, goEast, goWest;
+    private boolean goNorth;
+    private boolean goSouth;
+    private boolean goEast;
+    private boolean goWest;
 
     public Player(double x, double y, int width, int height) {
         super(x, y, width, height);
@@ -17,10 +20,18 @@ public class Player extends Rectangle {
     public void move() {
         int dx = 0;
         int dy = 0;
-        if (goNorth) { dy = -5; }
-        if (goWest) { dx = -5; }
-        if (goSouth) { dy = 5; }
-        if (goEast) { dx = 5; }
+        if (goNorth) {
+            dy = -5;
+        }
+        if (goWest) {
+            dx = -5;
+        }
+        if (goSouth) {
+            dy = 5;
+        }
+        if (goEast) {
+            dx = 5;
+        }
 
         this.setX(this.getX() + dx);
         this.setY(this.getY() + dy);
@@ -52,5 +63,7 @@ public class Player extends Rectangle {
         return damage;
     }
 
-    public int getHealth() { return health; }
+    public int getHealth() {
+        return health;
+    }
 }
