@@ -393,19 +393,22 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testPlayerHP() {
-        clickOn("Start");
-        clickOn("#nameField").write("Tristan HP Test");
-        clickOn("#easyRB");
-        clickOn("#weaponDropdown");
-        clickOn("Shortsword");
-        clickOn("PROCEED");
-
         Monster instanceMonster = new GreenMonster(30, 30, 5);
-        Player player = new Player(10, 10, 10, 10);
         assertEquals(20, Player.getHealth());
         player.takeDamage(instanceMonster.getDamage());
         assertEquals(19, Player.getHealth());
     }
+
+    @Test
+    public void testRespawn() {
+        getToStartRoom();
+        player.takeDamage(20);
+        moveBy(1,1);
+        clickOn("Play again");
+        assertTrue(Player.isAlive());
+        assertEquals(20, Player.getHealth());
+    }
+
     public void testDeath() {
         getToStartRoom();
         Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
