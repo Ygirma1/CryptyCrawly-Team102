@@ -409,6 +409,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(20, Player.getHealth());
     }
 
+    @Test
     public void testDeath() {
         getToStartRoom();
         Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
@@ -429,7 +430,5 @@ public class DungeonCrawlerTest extends ApplicationTest {
         monster.takeDamage(10);
         assertTrue(monster.getHealth() == (initHealth - 10));
     }
-
-
 }
 
