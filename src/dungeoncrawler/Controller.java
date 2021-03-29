@@ -3,6 +3,7 @@ package dungeoncrawler;
 //import javafx.animation.KeyFrame;
 //import javafx.animation.KeyValue;
 //import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
 import javafx.application.Application;
 //import javafx.event.EventHandler;
 //import javafx.geometry.Bounds;
@@ -38,16 +39,11 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 
-        Room start = new Room("start", Difficulty.EASY);
-        start.generateMap(start);
-        initRoom(start);
-
         welcomeScreen();
     }
 
     private void welcomeScreen() {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
-        Button play = welcomeScreen.getPlayButton();
         this.primaryStage.setScene(welcomeScreen.getScene());
         this.primaryStage.show();
         Button startButton = welcomeScreen.getPlayButton();
@@ -154,20 +150,35 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
-                room.updateHealthBar(player);
-
-                if (!monster.isAlive()) {
+                room.updateHealthBar();
+                if (!monster.isAlive() || !Player.isAlive()) {
                     cancel();
                 }
             }
         }
 
+        class PlayerSwitchState extends TimerTask {
+            public void run() {
+                if (player.getIsAggressive()) {
+                    player.setFill(Color.BLUE); // red for aggressive, blue for neutral
+                    player.setIsAggressive(false);
+                } else {
+                    player.setFill(Color.RED);
+                    player.setIsAggressive(true);
+                }
+            }
+        }
+
+        Timer timer = new Timer();
         if (monster != null) {
             monster.move((Pane) this.primaryStage.getScene().getRoot());
-            Timer timer = new Timer();
             TimerTask task = new Helper();
             timer.schedule(task, 0, 500);
         }
+
+        TimerTask playerSwitchState = new PlayerSwitchState();
+        timer.schedule(playerSwitchState, 0, 2000);
+
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
@@ -206,6 +217,13 @@ public class Controller extends Application {
                     break;
             }
         });
+        primaryStage.getScene().setOnMouseMoved(e -> {
+            if (!Player.isAlive()) {
+                Player.setIsAlive(true);
+                Player.setHealth(20);
+                gameOverScreen();
+            }
+        });
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
                 monster.takeDamage(player.getDamage());
@@ -213,8 +231,19 @@ public class Controller extends Application {
                     room.openClosedExits(room);
                 }
             });
-            //room.getMonster().relocate(2, 10);
         }
+    }
+
+    private void gameOverScreen() {
+        GameOverScreen gameOverScreen = new GameOverScreen();
+        Button playButton = gameOverScreen.getPlayButton();
+        playButton.setOnAction(e -> {
+            Room start = new Room("start", diff);
+            start.generateMap(start);
+            initRoom(start);
+        });
+        this.primaryStage.setScene(gameOverScreen.getScene());
+        this.primaryStage.show();
     }
 
     private void proceedToGameScreen() {

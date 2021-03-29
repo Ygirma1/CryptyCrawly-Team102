@@ -1,23 +1,27 @@
 package dungeoncrawler;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+//import javafx.animation.KeyFrame;
+//import javafx.animation.KeyValue;
+//import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
+//import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+//import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+//import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -108,7 +112,7 @@ public class Room {
         this.healthText = new Text("HP");
         this.healthText.setFill(Color.RED);
         this.healthText.setFont(smallFont);
-        healthRect = new Rectangle(50, 15, Color.RED);
+        healthRect = new Rectangle(100, 15, Color.RED);
     }
 
     /**
@@ -218,9 +222,35 @@ public class Room {
         Random rand = new Random();
         int monsterSpawn = Math.abs(rand.nextInt() % 3);
         switch (monsterSpawn) {
-            case 0: current.monster = new GreenMonster(60,60, 3); break;
-            case 1: current.monster = new PinkMonster(70, 70, 4); break;
-            case 2: current.monster = new YellowMonster(80, 80, 5); break;
+            case 0:
+                try {
+                    current.monster = new GreenMonster(60,60, 3,
+                            new ImagePattern(new Image(new FileInputStream(
+                                    System.getProperty("user.dir") + "\\res\\greenMonster.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Green monster image not found " + exception);
+                }
+                break;
+            case 1:
+                try {
+                    current.monster = new PinkMonster(70, 70, 4,
+                            new ImagePattern(new Image(new FileInputStream(
+                                    System.getProperty("user.dir") + "\\res\\pinkMonster.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Pink monster image not found " + exception);
+                }
+                break;
+            case 2:
+                try {
+                    current.monster = new YellowMonster(80, 80, 5,
+                            new ImagePattern(new Image(new FileInputStream(
+                                    System.getProperty("user.dir") + "\\res\\yellowMonster.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Yellow monster image not found " + exception);
+                }
+                break;
+            default:
+                break;
         }
 
     }
@@ -309,8 +339,8 @@ public class Room {
         return new Scene(sPane, this.width, this.height);
     }
 
-    public void updateHealthBar(Player player) {
-        healthRect.setWidth(player.getHealth() * 10);
+    public void updateHealthBar() {
+        healthRect.setWidth(Player.getHealth() * 5);
     }
 
     public void updateClosedExit(int closedExit, Room current) {
@@ -589,7 +619,8 @@ public class Room {
     }
 
     public String getCorrectExitRoomName() {
-        return getCorrectExit().getText().length() == 0 ? "" : getCorrectExit().getText().substring(8);
+        return getCorrectExit().getText().length() == 0 ? ""
+                : getCorrectExit().getText().substring(8);
     }
 
     public Monster getMonster() {
