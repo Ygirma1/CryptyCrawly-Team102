@@ -1,6 +1,8 @@
 import dungeoncrawler.*;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import org.junit.Test;
 
@@ -11,6 +13,9 @@ import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
 import javafx.scene.layout.Pane;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -393,10 +398,17 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testPlayerHP() {
-        Monster instanceMonster = new GreenMonster(30, 30, 5);
-        assertEquals(20, Player.getHealth());
-        player.takeDamage(instanceMonster.getDamage());
-        assertEquals(19, Player.getHealth());
+        ImagePattern img;
+        try {
+            img = new ImagePattern(new Image(new FileInputStream(
+                System.getProperty("user.dir") + "\\res\\greenMonster.png")));
+            Monster instanceMonster = new GreenMonster(30, 30, 5, img);
+            assertEquals(20, Player.getHealth());
+            player.takeDamage(instanceMonster.getDamage());
+            assertEquals(19, Player.getHealth());
+        } catch (FileNotFoundException exception) {
+            System.out.println("The monster image file wasn't found" + exception);
+        }
     }
 
     @Test
@@ -409,6 +421,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(20, Player.getHealth());
     }
 
+    @Test
     public void testDeath() {
         getToStartRoom();
         Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
@@ -430,6 +443,61 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertTrue(monster.getHealth() == (initHealth - 10));
     }
 
+    @Test
+    public void testMonsterImage() {
+        getToStartRoom();
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        String correctPath = correctExitLabel.getText().substring(8);
+        clickOn(correctPath);
+
+        try {
+            if (monster instanceof GreenMonster) {
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\greenMonster.png")))));
+            } else if (monster instanceof PinkMonster) {
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\yellowMonster.png")))));
+            } else if (monster instanceof YellowMonster) {
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\yellowMonster.png")))));
+            }
+        } catch (FileNotFoundException exception) {
+            System.out.println("The monster image file wasn't found" + exception);
+        }
+    }
+
+    @Test
+    public void testMonsterDamageImage() {
+        getToStartRoom();
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        String correctPath = correctExitLabel.getText().substring(8);
+        clickOn(correctPath);
+
+        monster.takeDamage(1);
+        try {
+            if (monster instanceof GreenMonster) {
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\greenMonster2.png")))));
+                sleep(50);
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\greenMonster.png")))));
+            } else if (monster instanceof PinkMonster) {
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\pinkMonster2.png")))));
+                sleep(50);
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\pinkMonster.png")))));
+            } else if (monster instanceof YellowMonster) {
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\yellowMonster2.png")))));
+                sleep(50);
+                assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\yellowMonster.png")))));
+            }
+        } catch (FileNotFoundException exception) {
+            System.out.println("The monster image file wasn't found" + exception);
+        }
+    }
 
 }
 

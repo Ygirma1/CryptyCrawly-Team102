@@ -4,13 +4,18 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 //import javafx.animation.Animation;
 //import javafx.geometry.Bounds;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 //import java.security.Key;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.Timer;
 
 // In case where you wanna create your own monster,
 // just extends this class and implement startMoving
@@ -60,7 +65,48 @@ public class Monster extends Rectangle {
         if (this.health <= 0) {
             this.setVisible(false);
             this.alive = false;
+        } else {
+            if (this instanceof GreenMonster) {
+                try {
+                    this.setFill(new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\greenMonster2.png"))));
+                    this.damageAnimation(this, new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\greenMonster.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Green monster image not found " + exception);
+                }
+            } else if (this instanceof PinkMonster) {
+                try {
+                    this.setFill(new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\pinkMonster2.png"))));
+                    this.damageAnimation(this, new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\pinkMonster.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Pink monster image not found " + exception);
+                }
+            } else if (this instanceof YellowMonster) {
+                try {
+                    this.setFill(new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\yellowMonster2.png"))));
+                    this.damageAnimation(this, new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\yellowMonster.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Yellow monster image not found " + exception);
+                }
+            }
         }
+    }
+
+    public void damageAnimation(Monster monster, ImagePattern img) {
+        Timer t = new java.util.Timer();
+        t.schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        monster.setFill(img);
+                        t.cancel();
+                    }
+                }, 50);
     }
 
     public void attackPlayer(Player player) {
