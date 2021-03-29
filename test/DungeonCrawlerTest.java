@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
+import javafx.scene.input.KeyCode;
 
 public class DungeonCrawlerTest extends ApplicationTest {
     private Controller controller = new Controller();
@@ -499,5 +500,38 @@ public class DungeonCrawlerTest extends ApplicationTest {
         }
     }
 
+    @Test
+    public void testBasicMovement() {
+        getToStartRoom();
+        Player myPlayer = (Player) lookup("#player").queryAs(Player.class);
+        assertEquals(100.0, myPlayer.getX(), 0.1);
+        assertEquals(100.0, myPlayer.getY(), 0.1);
+        type(KeyCode.S, 20);
+        type(KeyCode.D, 20);
+        assertEquals(240.0, myPlayer.getX(), 0.1);
+        assertEquals(240.0, myPlayer.getY(), 0.1);
+        type(KeyCode.W, 10);
+        assertEquals(240.0, myPlayer.getX(), 0.1);
+        assertEquals(170.0, myPlayer.getY(), 0.1);
+        type(KeyCode.A, 10);
+        assertEquals(170.0, myPlayer.getX(), 0.1);
+        assertEquals(170.0, myPlayer.getY(), 0.1);
+    }
+
+    @Test
+    public void testSwitchColor() {
+        getToStartRoom();
+        Player myPlayer = (Player) lookup("#player").queryAs(Player.class);
+
+        assertEquals(Color.BLUE, myPlayer.getFill());
+        sleep(500);
+        assertEquals(Color.BLUE, myPlayer.getFill());
+        sleep(1500);
+        assertEquals(Color.RED, myPlayer.getFill());
+        sleep(500);
+        assertEquals(Color.RED, myPlayer.getFill());
+        sleep(1500);
+        assertEquals(Color.BLUE, myPlayer.getFill());
+    }
 }
 

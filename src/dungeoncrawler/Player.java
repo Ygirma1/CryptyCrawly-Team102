@@ -19,6 +19,7 @@ public class Player extends Rectangle {
         this.setVisible(true);
         this.setFill(Color.RED);
         this.isAggressive = true;
+        this.setId("player");
     }
 
     public void move() {
