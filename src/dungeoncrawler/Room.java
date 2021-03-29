@@ -222,35 +222,35 @@ public class Room {
         Random rand = new Random();
         int monsterSpawn = Math.abs(rand.nextInt() % 3);
         switch (monsterSpawn) {
-            case 0:
-                try {
-                    current.monster = new GreenMonster(60,60, 3,
-                            new ImagePattern(new Image(new FileInputStream(
-                                    System.getProperty("user.dir") + "\\res\\greenMonster.png"))));
-                } catch (FileNotFoundException exception) {
-                    System.out.println("Green monster image not found " + exception);
-                }
-                break;
-            case 1:
-                try {
-                    current.monster = new PinkMonster(70, 70, 4,
-                            new ImagePattern(new Image(new FileInputStream(
-                                    System.getProperty("user.dir") + "\\res\\pinkMonster.png"))));
-                } catch (FileNotFoundException exception) {
-                    System.out.println("Pink monster image not found " + exception);
-                }
-                break;
-            case 2:
-                try {
-                    current.monster = new YellowMonster(80, 80, 5,
-                            new ImagePattern(new Image(new FileInputStream(
-                                    System.getProperty("user.dir") + "\\res\\yellowMonster.png"))));
-                } catch (FileNotFoundException exception) {
-                    System.out.println("Yellow monster image not found " + exception);
-                }
-                break;
-            default:
-                break;
+        case 0:
+            try {
+                current.monster = new GreenMonster(60, 60, 3,
+                        new ImagePattern(new Image(new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\greenMonster.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Green monster image not found " + exception);
+            }
+            break;
+        case 1:
+            try {
+                current.monster = new PinkMonster(70, 70, 4,
+                        new ImagePattern(new Image(new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\pinkMonster.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Pink monster image not found " + exception);
+            }
+            break;
+        case 2:
+            try {
+                current.monster = new YellowMonster(80, 80, 5,
+                        new ImagePattern(new Image(new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\yellowMonster.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Yellow monster image not found " + exception);
+            }
+            break;
+        default:
+            break;
         }
 
     }
