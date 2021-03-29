@@ -216,6 +216,9 @@ public class Controller extends Application {
                 default:
                     break;
             }
+            if (monster != null && !monster.isAlive()) {
+                room.openClosedExits(room);
+            }
         });
         primaryStage.getScene().setOnMouseMoved(e -> {
             if (!Player.isAlive()) {
