@@ -178,12 +178,14 @@ public class Room {
                 nextRoomPrevIndex -= 1;
             }
             nextRoom.adjRooms[nextRoomPrevIndex] = current;
+
             updateAdjRooms(current);
             updateAdjRooms(nextRoom);
             int nextIndex = nextRoomPrevIndex;
             while (nextIndex == nextRoomPrevIndex) {
                 nextIndex = rand.nextInt(4);
             }
+            updateClosedExit(newRoomIndex, current);
             rGenerateMap(nextRoom, roomDepth + 1, nextIndex);
         }
     }
@@ -299,6 +301,7 @@ public class Room {
         if (this.monster != null) {
             pane.getChildren().add(monster);
         }
+
         Rectangle background = new Rectangle(this.width, this.height, this.floorColor);
         StackPane sPane = new StackPane();
         sPane.getChildren().addAll(background, pane);
@@ -308,6 +311,27 @@ public class Room {
 
     public void updateHealthBar(Player player) {
         healthRect.setWidth(player.getHealth() * 10);
+    }
+
+    public void updateClosedExit(int closedExit, Room current) {
+        if (current.getMonster() != null && current.getMonster().isAlive()) {
+            if (closedExit == 0) {
+                closedExit++;
+                current.getExits().get(closedExit).setDisable(true);
+            } else if (closedExit == 1) {
+                closedExit--;
+                current.getExits().get(closedExit).setDisable(true);
+            } else {
+                current.getExits().get(closedExit).setDisable(true);
+            }
+        }
+    }
+    public void openClosedExits(Room current) {
+        for (Button closedExit : current.getExits()) {
+            if (closedExit.isDisable()) {
+                closedExit.setDisable(false);
+            }
+        }
     }
 
     /**
