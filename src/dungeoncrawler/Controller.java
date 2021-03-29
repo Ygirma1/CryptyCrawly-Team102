@@ -31,6 +31,7 @@ public class Controller extends Application {
     private static Difficulty diff;
     private static int gold = 0;
     private Button helpButton;
+    private boolean alive = true;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -153,7 +154,6 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
-
                 room.updateHealthBar(player);
 
                 if (!monster.isAlive()) {
@@ -171,36 +171,47 @@ public class Controller extends Application {
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
-            case "w": player.setGoNorth(true);
-                break;
-            case "a": player.setGoWest(true);
-                break;
-            case "s": player.setGoSouth(true);
-                break;
-            case "d": player.setGoEast(true);
-                break;
-            default:
-                break;
+                case "w":
+                    player.setGoNorth(true);
+                    break;
+                case "a":
+                    player.setGoWest(true);
+                    break;
+                case "s":
+                    player.setGoSouth(true);
+                    break;
+                case "d":
+                    player.setGoEast(true);
+                    break;
+                default:
+                    break;
             }
             player.move();
         });
         primaryStage.getScene().setOnKeyReleased(e -> {
             switch (e.getText()) {
-            case "w": player.setGoNorth(false);
-                break;
-            case "a": player.setGoWest(false);
-                break;
-            case "s": player.setGoSouth(false);
-                break;
-            case "d": player.setGoEast(false);
-                break;
-            default:
-                break;
+                case "w":
+                    player.setGoNorth(false);
+                    break;
+                case "a":
+                    player.setGoWest(false);
+                    break;
+                case "s":
+                    player.setGoSouth(false);
+                    break;
+                case "d":
+                    player.setGoEast(false);
+                    break;
+                default:
+                    break;
             }
         });
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
                 monster.takeDamage(player.getDamage());
+                if (monster != null && !monster.isAlive()) {
+                    room.openClosedExits(room);
+                }
             });
             //room.getMonster().relocate(2, 10);
         }
