@@ -1,16 +1,16 @@
 import dungeoncrawler.*;
 
-import javafx.scene.Node;
+//import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import org.junit.Test;
 
-import org.testfx.assertions.api.ButtonAssert;
+//import org.testfx.assertions.api.ButtonAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.matcher.control.ButtonMatchers;
+//import org.testfx.matcher.control.ButtonMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 import javafx.scene.control.Label;
 
@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;

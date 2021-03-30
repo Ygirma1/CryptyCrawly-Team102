@@ -112,7 +112,6 @@ public class Controller extends Application {
         room.setPlayer(player);
         int prevRoomIndex = room.getPrevRoomIndex();
         prevExitText = "" + prevRoomIndex;
-
         Button right = room.getBRight();
         right.setOnAction(e -> {
             if (room.getRight() != null) {
@@ -144,7 +143,6 @@ public class Controller extends Application {
             String exit = room.getCorrectExitRoomName();
             correctExitText = exit;
         });
-
         this.primaryStage.setScene(room.getScene());
         this.primaryStage.show();
 
@@ -179,7 +177,6 @@ public class Controller extends Application {
 
         TimerTask playerSwitchState = new PlayerSwitchState();
         timer.schedule(playerSwitchState, 0, 2000);
-
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
