@@ -51,6 +51,8 @@ public class Room {
     private int width;
     private int height;
     private Monster monster;
+    private Button correctExitButton;
+    private int prevRoomIndex;
 
     /**
      * Default constructor for Room class.
@@ -113,6 +115,7 @@ public class Room {
         this.healthText.setFill(Color.RED);
         this.healthText.setFont(smallFont);
         healthRect = new Rectangle(100, 15, Color.RED);
+        this.prevRoomIndex = 0;
     }
 
     /**
@@ -170,6 +173,7 @@ public class Room {
             nextRoom.right = null;
             updateAdjRooms(current);
             updateRoomArray(nextRoom);
+            updateClosedExit(newRoomIndex, current);
         } else {
             Random rand = new Random();
             addMonster(current);
@@ -182,7 +186,7 @@ public class Room {
                 nextRoomPrevIndex -= 1;
             }
             nextRoom.adjRooms[nextRoomPrevIndex] = current;
-
+            prevRoomIndex = nextRoomPrevIndex;
             updateAdjRooms(current);
             updateAdjRooms(nextRoom);
             int nextIndex = nextRoomPrevIndex;
@@ -281,27 +285,35 @@ public class Room {
         this.correctExit.setId("correctExit");
         if (this.right != null) {
             // right button
-            exits.get(1).setLayoutX(405);
-            exits.get(1).setLayoutY(235);
-            pane.getChildren().add(exits.get(1));
+            Button right = exits.get(1);
+            right.setLayoutX(405);
+            right.setLayoutY(235);
+            right.setId("right");
+            pane.getChildren().add(right);
         }
         if (this.left != null) {
             // left button
-            exits.get(0).setLayoutX(15);
-            exits.get(0).setLayoutY(235);
-            pane.getChildren().add(exits.get(0));
+            Button left = exits.get(0);
+            left.setLayoutX(15);
+            left.setLayoutY(235);
+            left.setId("left");
+            pane.getChildren().add(left);
         }
         if (this.up != null) {
             // up button
-            exits.get(2).setLayoutX(210);
-            exits.get(2).setLayoutY(15);
-            pane.getChildren().add(exits.get(2));
+            Button up = exits.get(2);
+            up.setLayoutX(210);
+            up.setLayoutY(15);
+            up.setId("up");
+            pane.getChildren().add(up);
         }
         if (this.down != null) {
             // down button
-            exits.get(3).setLayoutX(210);
-            exits.get(3).setLayoutY(445);
-            pane.getChildren().add(exits.get(3));
+            Button down = exits.get(3);
+            down.setLayoutX(210);
+            down.setLayoutY(445);
+            down.setId("down");
+            pane.getChildren().add(down);
         }
 
         Group helpGroup = new Group();
@@ -348,11 +360,17 @@ public class Room {
             if (closedExit == 0) {
                 closedExit++;
                 current.getExits().get(closedExit).setDisable(true);
+                correctExitButton = current.getExits().get(closedExit);
+                this.correctExitButton.setId("correctExitButton");
             } else if (closedExit == 1) {
                 closedExit--;
                 current.getExits().get(closedExit).setDisable(true);
+                correctExitButton = current.getExits().get(closedExit);
+                this.correctExitButton.setId("correctExitButton");
             } else {
                 current.getExits().get(closedExit).setDisable(true);
+                correctExitButton = current.getExits().get(closedExit);
+                this.correctExitButton.setId("correctExitButton");
             }
         }
     }
@@ -625,5 +643,9 @@ public class Room {
 
     public Monster getMonster() {
         return monster;
+    }
+
+    public int getPrevRoomIndex() {
+        return prevRoomIndex;
     }
 }

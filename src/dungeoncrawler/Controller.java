@@ -32,7 +32,8 @@ public class Controller extends Application {
     private static Difficulty diff;
     private static int gold = 0;
     private Button helpButton;
-    private boolean alive = true;
+    private String prevExitText = "";
+    private Monster roomMonster;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -110,7 +111,10 @@ public class Controller extends Application {
 
         Player player = new Player(100, 100, 50, 50);
         Monster monster = room.getMonster();
+        roomMonster = monster;
         room.setPlayer(player);
+        int prevRoomIndex = room.getPrevRoomIndex();
+        prevExitText = "" + prevRoomIndex;
 
         Button right = room.getBRight();
         right.setOnAction(e -> {
@@ -290,5 +294,13 @@ public class Controller extends Application {
 
     public String getCorrectRoomText() {
         return correctExitText;
+    }
+
+    public String getPrevExitText() {
+        return prevExitText;
+    }
+
+    public Monster getRoomMonster() {
+        return roomMonster;
     }
 }

@@ -1,13 +1,16 @@
 import dungeoncrawler.*;
 
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import org.junit.Test;
 
+import org.testfx.assertions.api.ButtonAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.control.ButtonMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
 import javafx.scene.control.Label;
 
@@ -43,9 +46,20 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         while (true) {
             Text roomID = lookup("#id").queryText();
+            if (roomID.equals("start")) {
+                Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+                String correctPath = correctExitLabel.getText().substring(8);
+                clickOn(correctPath);
+            }
             Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
             String correctPath = correctExitLabel.getText().substring(8);
+            if (controller.getRoomMonster() != null) {
+                controller.getRoomMonster().takeDamage(20);
+                type(KeyCode.S, 1);
+            }
             if (roomID.getText().equals("new5")) {
+                controller.getRoomMonster().takeDamage(20);
+                type(KeyCode.S, 1);
                 clickOn(correctPath);
                 break;
             }
@@ -247,7 +261,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
         if (!controller.getHelpButton().isVisible()) {
             String correctPathParse = controller.getCorrectRoomText();
             clickOn(correctPathParse);
-            sleep(5, TimeUnit.SECONDS);
         }
     }
 
@@ -493,7 +506,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
                         System.getProperty("user.dir") + "\\res\\yellowMonster2.png")))));
                 sleep(50);
                 assertEquals(monster.getFill(), new ImagePattern(new Image((new FileInputStream(
-                        System.getProperty("user.dir") + "\\res\\yellowMonster.png")))));
+                        System.getProperty("user.dir") + "\\*\\res\\yellowMonster.png")))));
             }
         } catch (FileNotFoundException exception) {
             System.out.println("The monster image file wasn't found" + exception);
@@ -532,6 +545,53 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(Color.RED, myPlayer.getFill());
         sleep(1500);
         assertEquals(Color.BLUE, myPlayer.getFill());
+    }
+
+    @Test
+    public void testClosedExits() {
+        getToStartRoom();
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+        if (!controller.getHelpButton().isVisible()) {
+            String correctPathParse = controller.getCorrectRoomText();
+            clickOn(correctPathParse);
+        }
+        clickOn("Correct Door");
+        assertFalse(controller.getHelpButton().isVisible());
+        if (!controller.getHelpButton().isVisible()) {
+            String correctPathParse = controller.getCorrectRoomText();
+            clickOn(correctPathParse);
+            verifyThat("#" + correctPathParse, NodeMatchers.isDisabled());
+            sleep(3000);
+        }
+    }
+
+    @Test
+    public void testExitOpenOnMonsterKill() {
+        getToStartRoom();
+        if (controller.getRoomMonster() == null) {
+            clickOn("Correct Door");
+        }
+        assertFalse(controller.getHelpButton().isVisible());
+        if (!controller.getHelpButton().isVisible()) {
+            String correctPathParse = controller.getCorrectRoomText();
+            clickOn(correctPathParse);
+        }
+        for (int i = 0; i < 7; i++) {
+            clickOn("Correct Door");
+            assertFalse(controller.getHelpButton().isVisible());
+            if (!controller.getHelpButton().isVisible()) {
+                String correctPathParse = controller.getCorrectRoomText();
+                verifyThat("#" + correctPathParse, NodeMatchers.isDisabled());
+            }
+            controller.getRoomMonster().takeDamage(20);
+            type(KeyCode.S, 1);
+            if (!controller.getHelpButton().isVisible()) {
+                String correctPathParse = controller.getCorrectRoomText();
+                verifyThat("#" + correctPathParse, NodeMatchers.isEnabled());
+                clickOn(correctPathParse);
+            }
+        }
     }
 }
 
