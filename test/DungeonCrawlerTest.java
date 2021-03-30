@@ -46,7 +46,8 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         while (true) {
             Text roomID = lookup("#id").queryText();
-            if (roomID.equals("start")) {
+            String room = roomID.toString();
+            if (room.equals("start")) {
                 Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
                 String correctPath = correctExitLabel.getText().substring(8);
                 clickOn(correctPath);
@@ -238,12 +239,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
     @Test
     public void testHelpButtonVisibility() {
-        clickOn("Start");
-        clickOn("#nameField").write("Yafet");
-        clickOn("#easyRB");
-        clickOn("#weaponDropdown");
-        clickOn("Shortsword");
-        clickOn("PROCEED");
+        getToStartRoom();
         clickOn("Correct Door");
         assertFalse(controller.getHelpButton().isVisible());
     }
