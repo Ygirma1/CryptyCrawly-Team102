@@ -92,7 +92,6 @@ public class Controller extends Application {
                 initRoom(goldRoom);
             });
         }
-
         if (room instanceof GoldRoom) {
             Button exitButton = ((GoldRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
@@ -100,7 +99,6 @@ public class Controller extends Application {
                 initRoom(puzzleRoom);
             });
         }
-
         if (room instanceof PuzzleRoom) {
             Button exitButton = ((PuzzleRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
@@ -108,7 +106,6 @@ public class Controller extends Application {
                 initRoom(winningRoom);
             });
         }
-
         Player player = new Player(100, 100, 50, 50);
         Monster monster = room.getMonster();
         roomMonster = monster;
@@ -186,39 +183,39 @@ public class Controller extends Application {
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
-                case "w":
-                    player.setGoNorth(true);
-                    break;
-                case "a":
-                    player.setGoWest(true);
-                    break;
-                case "s":
-                    player.setGoSouth(true);
-                    break;
-                case "d":
-                    player.setGoEast(true);
-                    break;
-                default:
-                    break;
+            case "w":
+                player.setGoNorth(true);
+                break;
+            case "a":
+                player.setGoWest(true);
+                break;
+            case "s":
+                player.setGoSouth(true);
+                break;
+            case "d":
+                player.setGoEast(true);
+                break;
+            default:
+                break;
             }
             player.move();
         });
         primaryStage.getScene().setOnKeyReleased(e -> {
             switch (e.getText()) {
-                case "w":
-                    player.setGoNorth(false);
-                    break;
-                case "a":
-                    player.setGoWest(false);
-                    break;
-                case "s":
-                    player.setGoSouth(false);
-                    break;
-                case "d":
-                    player.setGoEast(false);
-                    break;
-                default:
-                    break;
+            case "w":
+                player.setGoNorth(false);
+                break;
+            case "a":
+                player.setGoWest(false);
+                break;
+            case "s":
+                player.setGoSouth(false);
+                break;
+            case "d":
+                player.setGoEast(false);
+                break;
+            default:
+                break;
             }
             if (monster != null && !monster.isAlive()) {
                 room.openClosedExits(room);

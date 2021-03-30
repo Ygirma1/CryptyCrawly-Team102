@@ -15,7 +15,7 @@ import org.testfx.matcher.control.TextInputControlMatchers;
 import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
-import javafx.scene.layout.Pane;
+//import javafx.scene.layout.Pane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -429,7 +429,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
     public void testRespawn() {
         getToStartRoom();
         player.takeDamage(20);
-        moveBy(1,1);
+        moveBy(1, 1);
         clickOn("Play again");
         assertTrue(Player.isAlive());
         assertEquals(20, Player.getHealth());
