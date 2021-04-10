@@ -6,11 +6,9 @@ import dungeoncrawler.entity.Player;
 public class ZoomPotion implements Potion{
 
     @Override
-    public void applyEffect(Player player) {
-        if (player != null) {
-            // has to be static cause we create an instance of player for each room -> speed must be shared
-            Player.setSpeed(Player.speed + 3);
-        }
+    public void applyEffect() {
+        // has to be static cause we create an instance of player for each room -> speed must be shared
+        Player.setSpeed(Player.speed + 3);
     }
 
     @Override

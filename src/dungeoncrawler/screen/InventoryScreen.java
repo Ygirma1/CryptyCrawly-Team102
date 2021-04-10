@@ -18,14 +18,11 @@ public class InventoryScreen {
     private final int height;
 
     public InventoryScreen() {
-        this(500,500, null);
+        this(500,500);
     }
 
-    public InventoryScreen(Player player) {
-        this(500, 500, player);
-    }
 
-    public InventoryScreen(int width, int height, Player player) {
+    public InventoryScreen(int width, int height) {
         this.width = width;
         this.height = height;
         this.weapons = Player.getWeaponInventory();
@@ -37,18 +34,21 @@ public class InventoryScreen {
             items[i] = new Button(weapons[i].getName());
             items[i].setPrefSize(90, 70);
 
-//            if (potions != null) { //TODO delete line after implementing potions
-//                items[i + 3] = new Button(potions[i].toString()); //TODO update name of potions
-//                items[i + 3].setPrefSize(90, 70);
-//            }
-        }
-
-        if (potions != null) {
-            items[3] = new Button(potions[0].toString());
-            items[3].setPrefSize(90, 70);
-            items[3].setOnAction(e -> {
-                potions[0].applyEffect(player);
-            });
+            if (potions != null) {
+                Potion potion = potions[i];
+                if (potion != null) {
+                    items[i + 3] = new Button(potion.toString());
+                    items[i + 3].setId("itemsButton" + (i + 3));
+                    items[i + 3].setPrefSize(90, 70);
+                    items[i + 3].setOnAction(e -> {
+                        potion.applyEffect();
+                        int index = Character.getNumericValue(((Button)e.getSource()).getId().charAt(11));
+                        // Remove, only use each potion once
+                        Player.getPotionInventory()[index - 3] = null;
+                        this.items[index].setDisable(true);
+                    });
+                }
+            }
         }
 
         this.backButton = new Button("Back");

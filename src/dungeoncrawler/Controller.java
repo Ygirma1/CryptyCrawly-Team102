@@ -207,7 +207,7 @@ public class Controller extends Application {
                 player.setGoEast(true);
                 break;
             case "b":
-                InventoryScreen inventoryScreen = new InventoryScreen(player);
+                InventoryScreen inventoryScreen = new InventoryScreen();
                 inventoryScreen.getBackButton().setOnAction(event -> {
                     initRoom(room);
                 });
@@ -233,7 +233,7 @@ public class Controller extends Application {
                 player.setGoEast(false);
                 break;
             case "b":
-                InventoryScreen inventoryScreen = new InventoryScreen(player);
+                InventoryScreen inventoryScreen = new InventoryScreen();
                 inventoryScreen.getBackButton().setOnAction(event -> {
                     initRoom(room);
                 });

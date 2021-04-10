@@ -12,11 +12,9 @@ public class Player extends Rectangle {
     private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
                                                 new Weapon("Bludgeon", 2),
                                                 new Weapon("Greatsword", 3)};
-    private static Potion[] potionInventory;
-    //Indices for three weapons and three potions
+    private static Potion[] potionInventory = {new ZoomPotion(), new ZoomPotion(), new ZoomPotion()};
     private static final int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
     private static Weapon currentWeapon;
-
     private boolean goNorth;
     private boolean goSouth;
     private boolean goEast;
@@ -33,10 +31,20 @@ public class Player extends Rectangle {
         this.setId("player");
         currentWeapon = startingWeapon;
         damage = currentWeapon.getDamage();
-        this.potionInventory = new Potion[3];
-        this.potionInventory[0] = new ZoomPotion();
-        this.potionInventory[1] = new ZoomPotion();
-        this.potionInventory[2] = new ZoomPotion();
+    }
+
+    /**
+     * Add a potion into potionInventory at the first available slot
+     * @param potion Potion to add
+     */
+    public static void addPotion(Potion potion) {
+        for (int i = 0 ; i < 3; i++) {
+            if (Player.potionInventory[i] == null) {
+                Player.potionInventory[i] = potion;
+                return;
+            }
+        }
+        System.out.println("Potion Inventory is full... Can't add potion");
     }
 
     public void move() {
@@ -129,9 +137,9 @@ public class Player extends Rectangle {
     public static int getHealth() {
         return health;
     }
-
-
     public static void setSpeed(int speed) {
         Player.speed = speed;
     }
+
+
 }
