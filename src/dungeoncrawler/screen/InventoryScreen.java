@@ -2,10 +2,19 @@ package dungeoncrawler.screen;
 
 import dungeoncrawler.entity.Weapon;
 import dungeoncrawler.entity.Player;
+import dungeoncrawler.entity.potion.AttackPotion;
+import dungeoncrawler.entity.potion.HealthPotion;
 import dungeoncrawler.entity.potion.Potion;
+import dungeoncrawler.entity.potion.ZoomPotion;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import java.io.FileInputStream;
 
 public class InventoryScreen {
     private final Weapon[] weapons;
@@ -35,11 +44,67 @@ public class InventoryScreen {
             int finalI = i;
             if (i < 3) {
                 items[i] = new Button(weapons[i].getName());
+                if (weapons[i].getName() == "Shortsword") {
+                    try {
+                        Image shortSword = new Image (new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\Shortsword.png"));
+                        ImageView shortSwordView = new ImageView (shortSword);
+                        shortSwordView.setFitWidth(32);
+                        shortSwordView.setFitHeight(32);
+                        items[i].setGraphic(shortSwordView);
+                    } catch (FileNotFoundException exception) {
+                        System.out.println("Shortsword image not found " + exception);
+                    }
+                } else if (weapons[i].getName() == "Bludgeon") {
+                    try {
+                        Image bludgeon = new Image (new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\Bludgeon.png"));
+                        ImageView bludgeonView = new ImageView (bludgeon);
+                        bludgeonView.setFitWidth(32);
+                        bludgeonView.setFitHeight(32);
+                        items[i].setGraphic(bludgeonView);
+                    } catch (FileNotFoundException exception) {
+                        System.out.println("Bludgeon image not found " + exception);
+                    }
+                } else if (weapons[i].getName() == "Greatsword") {
+                    try {
+                        Image greatSword = new Image (new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\Greatsword.png"));
+                        ImageView greatSwordView = new ImageView (greatSword);
+                        greatSwordView.setFitWidth(40);
+                        greatSwordView.setFitHeight(40);
+                        items[i].setGraphic(greatSwordView);
+                    } catch (FileNotFoundException exception) {
+                        System.out.println("Greatsword image not found " + exception);
+                    }
+                }
                 items[i].setOnAction(e -> {
                     Player.updateWeapon(Player.getWeaponInventory()[finalI]);
                 });
             } else {
                 items[i] = new Button(potions[i - 3].toString());
+                if (potions[i - 3] instanceof HealthPotion) {
+                    try {
+                        items[i].setGraphic(new ImageView (new Image (new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\healthPotion.png"))));
+                    } catch (FileNotFoundException exception) {
+                        System.out.println("Health potion image not found " + exception);
+                    }
+                } else if (potions[i - 3] instanceof ZoomPotion) {
+                    try {
+                        items[i].setGraphic(new ImageView (new Image (new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\zoomPotion.png"))));
+                    } catch (FileNotFoundException exception) {
+                        System.out.println("Zoom potion image not found " + exception);
+                    }
+                } else if (potions[i - 3] instanceof AttackPotion) {
+                    try {
+                        items[i].setGraphic(new ImageView (new Image (new FileInputStream(
+                                System.getProperty("user.dir") + "\\res\\attackPotion.png"))));
+                    } catch (FileNotFoundException exception) {
+                        System.out.println("Attack potion image not found " + exception);
+                    }
+                }
                 items[i].setOnAction(e -> {
                    potions[finalI - 3].applyEffect();
                    quantities[finalI]--;
@@ -48,7 +113,7 @@ public class InventoryScreen {
                    }
                 });
             }
-            items[i].setPrefSize(90, 70);
+            items[i].setPrefSize(125, 70);
             if (quantities[i] <= 0) {
                 items[i].setDisable(true);
             }
