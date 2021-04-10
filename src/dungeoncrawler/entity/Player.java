@@ -1,5 +1,6 @@
 package dungeoncrawler.entity;
 
+import dungeoncrawler.entity.potion.HealthPotion;
 import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.ZoomPotion;
 import javafx.scene.paint.Color;
@@ -12,7 +13,7 @@ public class Player extends Rectangle {
     private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
                                                 new Weapon("Bludgeon", 2),
                                                 new Weapon("Greatsword", 3)};
-    private static Potion[] potionInventory = {new ZoomPotion(), new ZoomPotion(), new ZoomPotion()};
+    private static Potion[] potionInventory = {new ZoomPotion(), new ZoomPotion(), new HealthPotion()};
     private static final int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
     private static Weapon currentWeapon;
     private boolean goNorth;
