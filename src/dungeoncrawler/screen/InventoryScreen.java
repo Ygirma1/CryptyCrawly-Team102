@@ -77,7 +77,7 @@ public class InventoryScreen {
                 }
             }
         }
-        
+
          */
 
         this.backButton = new Button("Back");
