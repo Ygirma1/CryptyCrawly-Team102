@@ -3,7 +3,6 @@ package dungeoncrawler.screen;
 import dungeoncrawler.entity.Weapon;
 import dungeoncrawler.entity.Player;
 import dungeoncrawler.entity.potion.Potion;
-import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;

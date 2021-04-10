@@ -1,7 +1,8 @@
 package dungeoncrawler.entity;
 
-import dungeoncrawler.entity.potion.HealthPotion;
 import dungeoncrawler.entity.potion.Potion;
+import dungeoncrawler.entity.potion.HealthPotion;
+import dungeoncrawler.entity.potion.AttackPotion;
 import dungeoncrawler.entity.potion.ZoomPotion;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -13,7 +14,7 @@ public class Player extends Rectangle {
     private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
                                                 new Weapon("Bludgeon", 2),
                                                 new Weapon("Greatsword", 3)};
-    private static Potion[] potionInventory = {new ZoomPotion(), new ZoomPotion(), new HealthPotion()};
+    private final static Potion[] potionInventory = {new HealthPotion(), new AttackPotion(), new ZoomPotion()};
     private static final int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
     private static Weapon currentWeapon;
     private boolean goNorth;
@@ -139,8 +140,12 @@ public class Player extends Rectangle {
         this.goWest = goWest;
     }
 
-    public int getDamage() {
+    public static int getDamage() {
         return damage;
+    }
+
+    public static void setDamage(int newDamage) {
+        damage = newDamage;
     }
 
     public void setIsAggressive(boolean isAggressive) {
