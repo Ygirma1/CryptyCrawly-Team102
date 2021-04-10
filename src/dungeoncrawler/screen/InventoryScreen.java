@@ -41,7 +41,7 @@ public class InventoryScreen {
             } else {
                 items[i] = new Button(potions[i - 3].toString());
                 items[i].setOnAction(e -> {
-                   potions[finalI].applyEffect();
+                   potions[finalI - 3].applyEffect();
                    quantities[finalI]--;
                    if (quantities[finalI] <= 0) {
                        items[finalI].setDisable(true);
