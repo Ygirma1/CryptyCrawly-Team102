@@ -47,7 +47,8 @@ public class Player extends Rectangle {
         System.out.println("Potion Inventory is full... Can't add potion");
     }
 
-    public void move() {
+    public void move(int height, int width) {
+
         int dx = 0;
         int dy = 0;
         if (goNorth) {
@@ -63,8 +64,23 @@ public class Player extends Rectangle {
             dx = this.speed;
         }
 
-        this.setX(this.getX() + dx);
-        this.setY(this.getY() + dy);
+        double newX = this.getX() + dx;
+        double newY = this.getY() + dy;
+        if (newY < 0) {
+            newY = 0;
+        }
+        if (newX < 0) {
+            newX = 0;
+        }
+        if (newY + this.getHeight() > height) {
+            newY = height - this.getHeight();
+        }
+        if (newX + this.getWidth() > width) {
+            newX = width - this.getWidth();
+        }
+
+        this.setX(newX);
+        this.setY(newY);
     }
 
     public void takeDamage(int damageCount) {

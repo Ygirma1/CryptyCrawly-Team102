@@ -215,7 +215,7 @@ public class Controller extends Application {
             default:
                 break;
             }
-            player.move();
+            player.move(room.getHeight(), room.getWidth());
         });
 
         primaryStage.getScene().setOnKeyReleased(e -> {
