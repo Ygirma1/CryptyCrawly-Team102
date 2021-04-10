@@ -1,4 +1,4 @@
-package dungeoncrawler;
+package dungeoncrawler.entity;
 
 //import javafx.scene.layout.Pane;
 //import javafx.scene.Node;

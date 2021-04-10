@@ -1,4 +1,4 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ public class InitialGameScreen {
     private final int gold;
     private int width;
     private int height;
-    private Color backgroundColor = Color.rgb(120, 135, 135);
+    private final Color backgroundColor = Color.rgb(120, 135, 135);
 
     /**
      * No-parameter constructor using default difficulty of medium.

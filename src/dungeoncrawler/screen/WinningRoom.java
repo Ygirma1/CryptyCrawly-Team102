@@ -1,5 +1,7 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
+import dungeoncrawler.entity.Difficulty;
+import dungeoncrawler.screen.Room;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;

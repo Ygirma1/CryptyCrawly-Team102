@@ -1,8 +1,16 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
 //import javafx.animation.KeyFrame;
 //import javafx.animation.KeyValue;
 //import javafx.animation.Timeline;
+import dungeoncrawler.*;
+
+import dungeoncrawler.entity.Difficulty;
+import dungeoncrawler.entity.Player;
+import dungeoncrawler.entity.monster.GreenMonster;
+import dungeoncrawler.entity.monster.Monster;
+import dungeoncrawler.entity.monster.PinkMonster;
+import dungeoncrawler.entity.monster.YellowMonster;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 //import javafx.geometry.Bounds;
@@ -27,23 +35,23 @@ import java.util.Random;
 
 public class Room {
     private ArrayList<Button> exits;
-    private Room[] adjRooms = new Room[4]; // ordered right, left, up, down
-    private Button helpButton;
-    private Button bLeft;
-    private Button bRight;
-    private Button bUp;
-    private Button bDown;
+    private final Room[] adjRooms = new Room[4]; // ordered right, left, up, down
+    private final Button helpButton;
+    private final Button bLeft;
+    private final Button bRight;
+    private final Button bUp;
+    private final Button bDown;
     private Text id; // just a label for a room, use for debugging
     private Label correctExit; //Displays proper exit in bottom right corner
     private String pathID; //Text displaying correct exit to choose
-    private Text goldText;
-    private Text healthText;
+    private final Text goldText;
+    private final Text healthText;
     private static Rectangle healthRect;
     private Room left;
     private Room right;
     private Room up;
     private Room down;
-    private Difficulty diff;
+    private final Difficulty diff;
     private Player player;
     private final Color floorColor = Color.rgb(129, 137, 147);
     private final Color goldColor = Color.rgb(255, 215, 0);

@@ -1,8 +1,8 @@
-package dungeoncrawler;
+package dungeoncrawler.entity;
 
 public class Weapon {
-    private String name;
-    private int damage;
+    private final String name;
+    private final int damage;
 
     public Weapon(String name, int damage) {
         this.name = name;

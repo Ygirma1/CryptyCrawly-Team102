@@ -1,6 +1,12 @@
 import dungeoncrawler.*;
 
 //import javafx.scene.Node;
+import dungeoncrawler.entity.Difficulty;
+import dungeoncrawler.entity.Player;
+import dungeoncrawler.entity.monster.GreenMonster;
+import dungeoncrawler.entity.monster.Monster;
+import dungeoncrawler.entity.monster.PinkMonster;
+import dungeoncrawler.entity.monster.YellowMonster;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -27,8 +33,8 @@ import javafx.scene.input.KeyCode;
 
 public class DungeonCrawlerTest extends ApplicationTest {
     private Controller controller = new Controller();
-    private Player player = new Player(250, 250, 100, 100, Player.getWeaponInventory()[1]);
-    private Monster monster = new Monster(50, 50, 25, Color.RED);
+    private final Player player = new Player(250, 250, 100, 100, Player.getWeaponInventory()[1]);
+    private final Monster monster = new Monster(50, 50, 25, Color.RED);
     @Override
     public void start(Stage primaryStage) throws Exception {
         controller = new Controller();
@@ -153,7 +159,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#weaponDropdown");
         clickOn("Greatsword");
         clickOn("PROCEED");
-        assertEquals(100, controller.getGold());
+        assertEquals(100, Controller.getGold());
     }
 
     @Test
@@ -164,7 +170,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#weaponDropdown");
         clickOn("Greatsword");
         clickOn("PROCEED");
-        assertEquals(75, controller.getGold());
+        assertEquals(75, Controller.getGold());
     }
 
     @Test
@@ -175,7 +181,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("#weaponDropdown");
         clickOn("Greatsword");
         clickOn("PROCEED");
-        assertEquals(50, controller.getGold());
+        assertEquals(50, Controller.getGold());
     }
 
     @Test
@@ -438,7 +444,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         String correctPath = correctExitLabel.getText().substring(8);
         clickOn(correctPath);
         player.takeDamage(20);
-        assertFalse(player.isAlive());
+        assertFalse(Player.isAlive());
     }
 
     @Test
@@ -512,7 +518,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
     @Test
     public void testBasicMovement() {
         getToStartRoom();
-        Player myPlayer = (Player) lookup("#player").queryAs(Player.class);
+        Player myPlayer = lookup("#player").queryAs(Player.class);
         assertEquals(100.0, myPlayer.getX(), 0.1);
         assertEquals(100.0, myPlayer.getY(), 0.1);
         type(KeyCode.S, 20);
@@ -530,7 +536,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
     @Test
     public void testSwitchColor() {
         getToStartRoom();
-        Player myPlayer = (Player) lookup("#player").queryAs(Player.class);
+        Player myPlayer = lookup("#player").queryAs(Player.class);
 
         assertEquals(Color.BLUE, myPlayer.getFill());
         sleep(500);

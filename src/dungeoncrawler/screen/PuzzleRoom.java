@@ -1,5 +1,6 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
+import dungeoncrawler.entity.Difficulty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,10 +11,10 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 
 public class PuzzleRoom extends Room {
-    private Label instructionLabel;
-    private Label puzzleLabel;
-    private ArrayList<Button> puzzleButtons;
-    private Button exitButton;
+    private final Label instructionLabel;
+    private final Label puzzleLabel;
+    private final ArrayList<Button> puzzleButtons;
+    private final Button exitButton;
 
     public PuzzleRoom(int width, int height, Difficulty diff) {
         super(width, height, "Puzzle", diff);

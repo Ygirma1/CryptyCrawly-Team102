@@ -1,5 +1,7 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
+import dungeoncrawler.entity.Difficulty;
+import dungeoncrawler.entity.Player;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

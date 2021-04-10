@@ -1,5 +1,7 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
+import dungeoncrawler.Controller;
+import dungeoncrawler.entity.Difficulty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,14 +17,14 @@ import java.io.FileNotFoundException;
 
 public class GoldRoom extends Room {
     private Label instructionLabel;
-    private Button goldButton;
-    private Button goldButton2;
-    private Button goldButton3;
-    private Button exitButton;
-    private Text goldText;
-    private Text goldButtonText;
+    private final Button goldButton;
+    private final Button goldButton2;
+    private final Button goldButton3;
+    private final Button exitButton;
+    private final Text goldText;
+    private final Text goldButtonText;
     private final Text goldButton2Text;
-    private Text goldButton3Text;
+    private final Text goldButton3Text;
     private final Color goldColor = Color.rgb(255, 215, 0);
     private int goldIncAmount;
 

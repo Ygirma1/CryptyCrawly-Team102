@@ -1,5 +1,6 @@
-package dungeoncrawler;
+package dungeoncrawler.entity.monster;
 
+import dungeoncrawler.entity.monster.Monster;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 

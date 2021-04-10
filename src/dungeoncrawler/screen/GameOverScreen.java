@@ -1,4 +1,4 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -8,12 +8,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class GameOverScreen {
-    private int width;
-    private int height;
-    private Text deathText;
+    private final int width;
+    private final int height;
+    private final Text deathText;
     private final Font deathFont = new Font("High Tower Text", 55);
     private final Font btFont = new Font("High Tower Text", 25);
-    private Button playButton;
+    private final Button playButton;
 
     /**
      * No argument constructor for GameOverScreen.

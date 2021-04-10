@@ -1,5 +1,6 @@
-package dungeoncrawler;
+package dungeoncrawler.screen;
 
+import dungeoncrawler.entity.Difficulty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,9 +15,9 @@ import java.io.FileNotFoundException;
 public class DogeRoom extends Room {
     private Label instructionLabel;
     private Label instructionLabel2;
-    private Button dogeButton;
+    private final Button dogeButton;
     private int dogeCounter;
-    private Button exitButton;
+    private final Button exitButton;
 
 
     public DogeRoom(int width, int height, String id, Difficulty diff) {

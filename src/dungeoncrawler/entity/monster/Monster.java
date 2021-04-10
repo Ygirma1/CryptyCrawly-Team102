@@ -1,4 +1,5 @@
-package dungeoncrawler;
+package dungeoncrawler.entity.monster;
+import dungeoncrawler.entity.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

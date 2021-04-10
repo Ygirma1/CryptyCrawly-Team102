@@ -1,5 +1,7 @@
-package dungeoncrawler;
+package dungeoncrawler.entity;
 
+import dungeoncrawler.entity.potion.Potion;
+import dungeoncrawler.entity.potion.ZoomPotion;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -7,12 +9,12 @@ public class Player extends Rectangle {
 
     private static int health = 20;
     private static int damage;
-    private static Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
+    private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
                                                 new Weapon("Bludgeon", 2),
                                                 new Weapon("Greatsword", 3)};
     private static Potion[] potionInventory;
     //Indices for three weapons and three potions
-    private static int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
+    private static final int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
     private static Weapon currentWeapon;
 
     private boolean goNorth;
@@ -21,6 +23,7 @@ public class Player extends Rectangle {
     private boolean goWest;
     private static boolean alive = true;
     private boolean isAggressive;
+    public static int speed = 7;
 
     public Player(double x, double y, int width, int height, Weapon startingWeapon) {
         super(x, y, width, height);
@@ -30,22 +33,26 @@ public class Player extends Rectangle {
         this.setId("player");
         currentWeapon = startingWeapon;
         damage = currentWeapon.getDamage();
+        this.potionInventory = new Potion[3];
+        this.potionInventory[0] = new ZoomPotion();
+        this.potionInventory[1] = new ZoomPotion();
+        this.potionInventory[2] = new ZoomPotion();
     }
 
     public void move() {
         int dx = 0;
         int dy = 0;
         if (goNorth) {
-            dy = -7;
+            dy = -this.speed;
         }
         if (goWest) {
-            dx = -7;
+            dx = -this.speed;
         }
         if (goSouth) {
-            dy = 7;
+            dy = this.speed;
         }
         if (goEast) {
-            dx = 7;
+            dx = this.speed;
         }
 
         this.setX(this.getX() + dx);
@@ -121,6 +128,10 @@ public class Player extends Rectangle {
 
     public static int getHealth() {
         return health;
+    }
 
+
+    public static void setSpeed(int speed) {
+        Player.speed = speed;
     }
 }

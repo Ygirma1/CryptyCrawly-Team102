@@ -3,6 +3,12 @@ package dungeoncrawler;
 //import javafx.animation.KeyFrame;
 //import javafx.animation.KeyValue;
 //import javafx.animation.Timeline;
+
+import dungeoncrawler.entity.Difficulty;
+import dungeoncrawler.entity.Player;
+import dungeoncrawler.entity.Weapon;
+import dungeoncrawler.entity.monster.Monster;
+import dungeoncrawler.screen.*;
 import javafx.scene.paint.Color;
 import javafx.application.Application;
 //import javafx.event.EventHandler;
@@ -42,8 +48,8 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 
-        //welcomeScreen();
-        inventoryScreen();
+        welcomeScreen();
+        //inventoryScreen();
     }
 
     private void welcomeScreen() {
@@ -72,8 +78,8 @@ public class Controller extends Application {
                 return;
             }
             this.difficulty = configScreen.getDifficulty().toString();
-            this.diff = configScreen.getDifficulty();
-            this.gold = 100 - 25 * configScreen.getDifficulty().ordinal();
+            diff = configScreen.getDifficulty();
+            gold = 100 - 25 * configScreen.getDifficulty().ordinal();
             //Checking if selected weapon is valid (not null)
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
@@ -112,6 +118,8 @@ public class Controller extends Application {
                 initRoom(winningRoom);
             });
         }
+
+
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         Monster monster = room.getMonster();
         roomMonster = monster;
@@ -198,11 +206,18 @@ public class Controller extends Application {
             case "d":
                 player.setGoEast(true);
                 break;
+            case "b":
+                InventoryScreen inventoryScreen = new InventoryScreen(player);
+                inventoryScreen.getBackButton().setOnAction(event -> {
+                    initRoom(room);
+                });
+                primaryStage.setScene(inventoryScreen.getScene());
             default:
                 break;
             }
             player.move();
         });
+
         primaryStage.getScene().setOnKeyReleased(e -> {
             switch (e.getText()) {
             case "w":
@@ -216,6 +231,13 @@ public class Controller extends Application {
                 break;
             case "d":
                 player.setGoEast(false);
+                break;
+            case "b":
+                InventoryScreen inventoryScreen = new InventoryScreen(player);
+                inventoryScreen.getBackButton().setOnAction(event -> {
+                    initRoom(room);
+                });
+                primaryStage.setScene(inventoryScreen.getScene());
                 break;
             default:
                 break;
