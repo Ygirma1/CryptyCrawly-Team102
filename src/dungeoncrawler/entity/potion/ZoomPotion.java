@@ -3,7 +3,7 @@ package dungeoncrawler.entity.potion;
 import dungeoncrawler.entity.Player;
 
 // Maybe let this be a Rectangle so we can click and do stuff to it?
-public class ZoomPotion implements Potion{
+public class ZoomPotion implements Potion {
 
     @Override
     public void applyEffect() {

@@ -266,14 +266,6 @@ public class Controller extends Application {
     private void inventoryScreen() {
         InventoryScreen inventoryScreen = new InventoryScreen();
         Button[] items = inventoryScreen.getItems();
-        for (int i = 0; i < 3; i++) {
-            int finalI = i;
-            items[i].setOnAction(e -> {
-               Player.updateWeapon(Player.getWeaponInventory()[finalI]);
-                System.out.println(Player.getCurrentWeapon().getName());
-            });
-        }
-
         this.primaryStage.setScene(inventoryScreen.getScene());
         this.primaryStage.show();
     }

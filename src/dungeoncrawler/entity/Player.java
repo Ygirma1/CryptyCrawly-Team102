@@ -12,7 +12,7 @@ public class Player extends Rectangle {
     private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
                                                 new Weapon("Bludgeon", 2),
                                                 new Weapon("Greatsword", 3)};
-    private static Potion[] potionInventory = {new ZoomPotion(), new ZoomPotion(), new ZoomPotion()};
+    private static Potion[] potionInventory = {new ZoomPotion(), new ZoomPotion(), new ZoomPotion()}; //TODO change to have different potion types
     private static final int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
     private static Weapon currentWeapon;
     private boolean goNorth;

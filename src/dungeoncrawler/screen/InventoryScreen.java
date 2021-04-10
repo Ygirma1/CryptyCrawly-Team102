@@ -3,6 +3,7 @@ package dungeoncrawler.screen;
 import dungeoncrawler.entity.Weapon;
 import dungeoncrawler.entity.Player;
 import dungeoncrawler.entity.potion.Potion;
+import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -30,6 +31,32 @@ public class InventoryScreen {
         this.quantities = Player.getInventoryQuantity();
         this.items = new Button[6];
 
+        //init empty buttons
+        for (int i = 0; i < 6; i++) {
+            int finalI = i;
+            if (i < 3) {
+                items[i] = new Button(weapons[i].getName());
+                items[i].setOnAction(e -> {
+                    Player.updateWeapon(Player.getWeaponInventory()[finalI]);
+                });
+            } else {
+                items[i] = new Button(potions[i - 3].toString());
+                items[i].setOnAction(e -> {
+                   potions[finalI].applyEffect();
+                   quantities[finalI]--;
+                   if (quantities[finalI] <= 0) {
+                       items[finalI].setDisable(true);
+                   }
+                });
+            }
+            items[i].setPrefSize(90, 70);
+            if (quantities[i] <= 0) {
+                items[i].setDisable(true);
+            }
+
+        }
+
+        /*
         for (int i = 0; i < 3; i++) {
             items[i] = new Button(weapons[i].getName());
             items[i].setPrefSize(90, 70);
@@ -50,6 +77,8 @@ public class InventoryScreen {
                 }
             }
         }
+        
+         */
 
         this.backButton = new Button("Back");
         this.backButton.setLayoutX(450);
