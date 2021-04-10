@@ -42,7 +42,8 @@ public class Controller extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
 
-        welcomeScreen();
+        //welcomeScreen();
+        inventoryScreen();
     }
 
     private void welcomeScreen() {
@@ -79,8 +80,8 @@ public class Controller extends Application {
             }
             int selectedIndex = configScreen.getWeaponDropdown().getItems().indexOf(configScreen.getWeaponDropdown().getValue());
             this.startingWeapon = Player.getWeaponInventory()[selectedIndex];
-            System.out.println(startingWeapon.getName());
-            this.weapon = configScreen.getWeaponDropdown().getValue();
+            Player.getInventoryQuantity()[selectedIndex] = 1;
+            this.weapon = configScreen.getWeaponDropdown().getValue(); //not sure if needed anymore
             Room start = new Room("start", configScreen.getDifficulty());
             start.generateMap(start);
             initRoom(start);
@@ -238,6 +239,21 @@ public class Controller extends Application {
                 }
             });
         }
+    }
+
+    private void inventoryScreen() {
+        InventoryScreen inventoryScreen = new InventoryScreen();
+        Button[] items = inventoryScreen.getItems();
+        for (int i = 0; i < 3; i++) {
+            int finalI = i;
+            items[i].setOnAction(e -> {
+               Player.updateWeapon(Player.getWeaponInventory()[finalI]);
+                System.out.println(Player.getCurrentWeapon().getName());
+            });
+        }
+
+        this.primaryStage.setScene(inventoryScreen.getScene());
+        this.primaryStage.show();
     }
 
     private void gameOverScreen() {

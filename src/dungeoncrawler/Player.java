@@ -11,6 +11,7 @@ public class Player extends Rectangle {
                                                 new Weapon("Bludgeon", 2),
                                                 new Weapon("Greatsword", 3)};
     private static Potion[] potionInventory;
+    //Indices for three weapons and three potions
     private static int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
     private static Weapon currentWeapon;
 
@@ -58,12 +59,24 @@ public class Player extends Rectangle {
         }
     }
 
-    public void updateWeapon(Weapon newWeapon) {
+    public static void updateWeapon(Weapon newWeapon) {
         currentWeapon = newWeapon;
     }
 
     public static Weapon[] getWeaponInventory() {
         return weaponInventory;
+    }
+
+    public static Potion[] getPotionInventory() {
+        return potionInventory;
+    }
+
+    public static int[] getInventoryQuantity() {
+        return inventoryQuantity;
+    }
+
+    public static Weapon getCurrentWeapon() {
+        return currentWeapon;
     }
 
     public static boolean isAlive() {
