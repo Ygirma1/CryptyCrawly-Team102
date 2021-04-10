@@ -35,6 +35,8 @@ public class Controller extends Application {
     private String prevExitText = "";
     private Monster roomMonster;
 
+    private Weapon startingWeapon;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -75,6 +77,9 @@ public class Controller extends Application {
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
             }
+            int selectedIndex = configScreen.getWeaponDropdown().getItems().indexOf(configScreen.getWeaponDropdown().getValue());
+            this.startingWeapon = Player.getWeaponInventory()[selectedIndex];
+            System.out.println(startingWeapon.getName());
             this.weapon = configScreen.getWeaponDropdown().getValue();
             Room start = new Room("start", configScreen.getDifficulty());
             start.generateMap(start);
@@ -106,7 +111,7 @@ public class Controller extends Application {
                 initRoom(winningRoom);
             });
         }
-        Player player = new Player(100, 100, 50, 50);
+        Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         Monster monster = room.getMonster();
         roomMonster = monster;
         room.setPlayer(player);

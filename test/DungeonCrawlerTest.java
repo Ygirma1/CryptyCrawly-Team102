@@ -27,7 +27,7 @@ import javafx.scene.input.KeyCode;
 
 public class DungeonCrawlerTest extends ApplicationTest {
     private Controller controller = new Controller();
-    private Player player = new Player(250, 250, 100, 100);
+    private Player player = new Player(250, 250, 100, 100, Player.getWeaponInventory()[1]);
     private Monster monster = new Monster(50, 50, 25, Color.RED);
     @Override
     public void start(Stage primaryStage) throws Exception {

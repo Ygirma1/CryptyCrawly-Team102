@@ -6,7 +6,13 @@ import javafx.scene.shape.Rectangle;
 public class Player extends Rectangle {
 
     private static int health = 20;
-    private static int damage = 1;
+    private static int damage;
+    private static Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
+                                                new Weapon("Bludgeon", 2),
+                                                new Weapon("Greatsword", 3)};
+    private static Potion[] potionInventory;
+    private static int[] inventoryQuantity = {0, 0, 0, 0, 0, 0, 0};
+    private static Weapon currentWeapon;
 
     private boolean goNorth;
     private boolean goSouth;
@@ -14,12 +20,15 @@ public class Player extends Rectangle {
     private boolean goWest;
     private static boolean alive = true;
     private boolean isAggressive;
-    public Player(double x, double y, int width, int height) {
+
+    public Player(double x, double y, int width, int height, Weapon startingWeapon) {
         super(x, y, width, height);
         this.setVisible(true);
         this.setFill(Color.RED);
         this.isAggressive = true;
         this.setId("player");
+        currentWeapon = startingWeapon;
+        damage = currentWeapon.getDamage();
     }
 
     public void move() {
@@ -47,6 +56,14 @@ public class Player extends Rectangle {
         if (health <= 0) {
             alive = false;
         }
+    }
+
+    public void updateWeapon(Weapon newWeapon) {
+        currentWeapon = newWeapon;
+    }
+
+    public static Weapon[] getWeaponInventory() {
+        return weaponInventory;
     }
 
     public static boolean isAlive() {

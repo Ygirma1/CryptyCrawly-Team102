@@ -97,9 +97,9 @@ public class ConfigScreen {
         this.weaponDropdown.setBackground(new Background(
                 new BackgroundFill(nodeColor, null, null)));
         this.weaponDropdown.setStyle("-fx-font: 14px \"High Tower Text\";");
-        this.weaponDropdown.getItems().add("Shortsword");
-        this.weaponDropdown.getItems().add("Bludgeon");
-        this.weaponDropdown.getItems().add("Greatsword");
+        this.weaponDropdown.getItems().add(Player.getWeaponInventory()[0].getName());
+        this.weaponDropdown.getItems().add(Player.getWeaponInventory()[1].getName());
+        this.weaponDropdown.getItems().add(Player.getWeaponInventory()[2].getName());
 
         // Proceed button init
         this.proceedButton = new Button("PROCEED");
