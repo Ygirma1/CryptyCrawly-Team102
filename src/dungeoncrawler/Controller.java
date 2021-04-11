@@ -123,6 +123,19 @@ public class Controller extends Application {
             });
         }
 
+        if (room.getIdText().equals("start")) {
+            Player.updateWeapon(null);
+            Player.resetStats();
+            int index = -1;
+            if (this.startingWeapon.getName().equals("Shortsword")) {
+                index = 0;
+            } else if (this.startingWeapon.getName().equals("Bludgeon")) {
+                index = 1;
+            } else {
+                index = 2;
+            }
+            Player.getInventoryQuantity()[index] = 1;
+        }
 
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         Monster monster = room.getMonster();
@@ -224,6 +237,10 @@ public class Controller extends Application {
                     initRoom(room);
                 });
                 primaryStage.setScene(inventoryScreen.getScene());
+                break;
+            case "l":
+                player.takeDamage(999);
+                break;
             default:
                 break;
             }
@@ -251,31 +268,53 @@ public class Controller extends Application {
                 });
                 primaryStage.setScene(inventoryScreen.getScene());
                 break;
+            case "l":
+                player.takeDamage(999);
+                break;
             default:
                 break;
             }
             if (monster != null && !monster.isAlive()) {
-                if (monster.isPotionDropAvailable()) {
+                if (monster.isItemDropAvailable()) {
                     int randomNumber = rand.nextInt(10) + 1; // 1 to 10
                     if (randomNumber <= 5) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Potion Drop Notification");
+                        alert.setTitle("Item Drop Notification");
                         alert.setHeaderText(null);
-                        int potionIndex;
-                        int randomNumber2 = rand.nextInt(3);
+                        int itemIndex = -1;
+                        int randomNumber2 = rand.nextInt(6);
+                        System.out.println(randomNumber2);
                         if (randomNumber2 == 0) {
                             alert.setContentText("The monster drops a Health potion");
-                            potionIndex = 3;
+                            itemIndex = 3;
                         } else if (randomNumber2 == 1) {
                             alert.setContentText("The monster drops an Attack potion");
-                            potionIndex = 4;
-                        } else {
+                            itemIndex = 4;
+                        } else if (randomNumber2 == 2){
                             alert.setContentText("The monster drops a Zoom potion");
-                            potionIndex = 5;
+                            itemIndex = 5;
+                        } else if (randomNumber2 == 3) {
+                            alert.setContentText("The monster drops a Shortsword");
+                            itemIndex = 0;
+                        } else if (randomNumber2 == 4) {
+                            alert.setContentText("The monster drops a Bludgeon");
+                            itemIndex = 1;
+                        } else if (randomNumber2 == 5) {
+                            alert.setContentText("The monster drops a Greatsword");
+                            itemIndex = 2;
                         }
-                        player.getInventoryQuantity()[potionIndex]++;
-                        monster.setPotionDropAvailable(false);
-                        alert.show();
+                        if (itemIndex != -1) {
+                            if (itemIndex >= 0 && itemIndex <= 2) {
+                                if (player.getInventoryQuantity()[itemIndex] != 1) {
+                                    player.getInventoryQuantity()[itemIndex]++;
+                                    alert.show();
+                                }
+                            } else {
+                                player.getInventoryQuantity()[itemIndex]++;
+                                alert.show();
+                            }
+                        }
+                        monster.setItemDropAvailable(false);
                     }
                 }
                 room.openClosedExits(room);
@@ -297,13 +336,6 @@ public class Controller extends Application {
                 }
             });
         }
-    }
-
-    private void inventoryScreen() {
-        InventoryScreen inventoryScreen = new InventoryScreen();
-        Button[] items = inventoryScreen.getItems();
-        this.primaryStage.setScene(inventoryScreen.getScene());
-        this.primaryStage.show();
     }
 
     private void gameOverScreen() {
