@@ -127,6 +127,7 @@ public class Controller extends Application {
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         Monster monster = room.getMonster();
         roomMonster = monster;
+        room.updateMonsterHealthBar();
         room.setPlayer(player);
         int prevRoomIndex = room.getPrevRoomIndex();
         prevExitText = "" + prevRoomIndex;
@@ -167,6 +168,7 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
+                room.updateMonsterHealthBar();
                 room.updateHealthBar();
                 if (!monster.isAlive() || !Player.isAlive()) {
                     cancel();
@@ -194,7 +196,13 @@ public class Controller extends Application {
         }
 
         TimerTask playerSwitchState = new PlayerSwitchState();
-        timer.schedule(playerSwitchState, 0, 2000);
+        if (player.getCurrentWeapon().getName().equals("Bludgeon")) {
+            timer.schedule(playerSwitchState, 0, 2500);
+        } else if (player.getCurrentWeapon().getName().equals("Greatsword")) {
+            timer.schedule(playerSwitchState, 0, 2000);
+        } else {
+            timer.schedule(playerSwitchState, 0, 1500);
+        }
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
@@ -283,6 +291,7 @@ public class Controller extends Application {
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
                 monster.takeDamage(player.getDamage());
+                room.updateMonsterHealthBar();
                 if (monster != null && !monster.isAlive()) {
                     room.openClosedExits(room);
                 }

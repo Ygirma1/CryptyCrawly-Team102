@@ -47,6 +47,8 @@ public class Room {
     private final Text goldText;
     private final Text healthText;
     private static Rectangle healthRect;
+    private final Text monsterHealthText;
+    private static Rectangle monsterHealthRect;
     private Room left;
     private Room right;
     private Room up;
@@ -123,6 +125,11 @@ public class Room {
         this.healthText.setFill(Color.RED);
         this.healthText.setFont(smallFont);
         healthRect = new Rectangle(100, 15, Color.RED);
+
+        this.monsterHealthText = new Text("Monster HP");
+        this.monsterHealthText.setFont(smallFont);
+        monsterHealthRect = new Rectangle(100, 15, Color.BLUEVIOLET);
+
         this.prevRoomIndex = 0;
     }
 
@@ -345,7 +352,14 @@ public class Room {
         this.healthText.relocate(5, 5);
         healthRect.relocate(35, 6);
 
-        pane.getChildren().addAll(id, this.goldText, healthGroup, helpGroup);
+        Group monsterHealthGroup = new Group();
+        if (monster != null) {
+            monsterHealthGroup.getChildren().addAll(monsterHealthText, monsterHealthRect);
+            this.monsterHealthText.relocate(395, 25);
+            monsterHealthRect.relocate(395, 46);
+        }
+
+        pane.getChildren().addAll(id, this.goldText, healthGroup, monsterHealthGroup, helpGroup);
 
         Group playerWeapon = new Group();
         playerWeapon.getChildren().addAll(player, player.getWeaponSprite());
@@ -363,6 +377,12 @@ public class Room {
 
     public void updateHealthBar() {
         healthRect.setWidth(Player.getHealth() * 5);
+    }
+
+    public void updateMonsterHealthBar() {
+        if (monster != null) {
+            monsterHealthRect.setWidth(monster.getHealth() * 20);
+        }
     }
 
     public void updateClosedExit(int closedExit, Room current) {
