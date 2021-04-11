@@ -27,7 +27,6 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.SQLOutput;
 //import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -633,8 +632,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
         int initialInv = 0;
         int decrInv = 0;
 
-
-
         getToStartRoom();
 
         for (int i = 0; i < player.getInventoryQuantity().length; i++) {
@@ -656,6 +653,42 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         assertEquals(decrInv, initialInv - 3);
     }
+
+    @Test
+    public void testStartWeaponInvBludgeon() {
+        //default selects bludgeon
+        getToStartRoom();
+        int[] startingInv = player.getInventoryQuantity();
+        assertEquals(startingInv[1], 1);
+
+    }
+
+    @Test
+    public void testStartWeaponInvShortsword() {
+        int[] startingInv = player.getInventoryQuantity();
+        clickOn("Start");
+        clickOn("#nameField").write("Test");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+
+        assertEquals(startingInv[0], 1);
+    }
+
+    @Test
+    public void testStartWeaponInvGreatsword() {
+        int[] startingInv = player.getInventoryQuantity();
+        clickOn("Start");
+        clickOn("#nameField").write("Test");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+
+        assertEquals(startingInv[2], 1);
+    }
+
 
 
 
