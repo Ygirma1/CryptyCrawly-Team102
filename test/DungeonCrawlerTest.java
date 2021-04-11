@@ -631,6 +631,11 @@ public class DungeonCrawlerTest extends ApplicationTest {
     @Test
     public void testInventorySizeDecr() {
         int initialInv = 0;
+        int decrInv = 0;
+
+
+
+        getToStartRoom();
 
         for (int i = 0; i < player.getInventoryQuantity().length; i++) {
             if (player.getInventoryQuantity()[i] != 0) {
@@ -638,16 +643,18 @@ public class DungeonCrawlerTest extends ApplicationTest {
             }
         }
 
-        getToStartRoom();
         type(KeyCode.B, 1);
         clickOn("Attack Potion");
-        initialInv--;
         clickOn("Zoom Potion");
-        initialInv--;
         clickOn("Health Potion");
-        initialInv--;
 
-        assertEquals(initialInv, 0);
+        for (int i = 0; i < player.getInventoryQuantity().length; i++) {
+            if (player.getInventoryQuantity()[i] != 0) {
+                decrInv += player.getInventoryQuantity()[i];
+            }
+        }
+
+        assertEquals(decrInv, initialInv - 3);
     }
 
 
