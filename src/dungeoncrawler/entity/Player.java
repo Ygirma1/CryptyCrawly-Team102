@@ -11,10 +11,12 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.security.PublicKey;
 
 public class Player extends Rectangle {
-
-    private static int health = 20;
+    public static final int ORIGINAL_HEALTH = 20;
+    public static final int ORIGINAL_SPEED = 7;
+    private static int health = ORIGINAL_HEALTH;
     private static int damage;
     private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
                                                 new Weapon("Bludgeon", 2),
@@ -29,7 +31,7 @@ public class Player extends Rectangle {
     private boolean goWest;
     private static boolean alive = true;
     private boolean isAggressive;
-    public static int speed = 7;
+    public static int speed = ORIGINAL_SPEED;
 
     public Player(double x, double y, int width, int height, Weapon startingWeapon) {
         super(x, y, width, height);
@@ -37,23 +39,12 @@ public class Player extends Rectangle {
         this.setFill(Color.RED);
         this.isAggressive = true;
         this.setId("player");
-        currentWeapon = startingWeapon;
+        if (currentWeapon == null) {
+            currentWeapon = startingWeapon;
+        }
         damage = currentWeapon.getDamage();
     }
 
-    /**
-     * Add a potion into potionInventory at the first available slot
-     * @param potion Potion to add
-     */
-    public static void addPotion(Potion potion) {
-        for (int i = 0 ; i < 3; i++) {
-            if (Player.potionInventory[i] == null) {
-                Player.potionInventory[i] = potion;
-                return;
-            }
-        }
-        System.out.println("Potion Inventory is full... Can't add potion");
-    }
 
     public Rectangle getWeaponSprite() {
         weapon = new Rectangle(this.getWidth(), this.getHeight());
@@ -135,6 +126,16 @@ public class Player extends Rectangle {
         currentWeapon = newWeapon;
     }
 
+    public static void resetStats() {
+        Player.health = ORIGINAL_HEALTH;
+        Player.speed = ORIGINAL_SPEED;
+        Player.inventoryQuantity[3] = 1;
+        Player.inventoryQuantity[4] = 1;
+        Player.inventoryQuantity[5] = 1;
+        Player.inventoryQuantity[0] = 0;
+        Player.inventoryQuantity[1] = 0;
+        Player.inventoryQuantity[2] = 0;
+    }
     public static Weapon[] getWeaponInventory() {
         return weaponInventory;
     }

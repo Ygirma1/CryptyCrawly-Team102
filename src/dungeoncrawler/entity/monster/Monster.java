@@ -25,12 +25,12 @@ public class Monster extends Rectangle {
     private int health;
     private int damage = 1;
     private boolean alive = true;
-    private boolean potionDropAvailable;
+    private boolean itemDropAvailable;
 
     public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
         this.health = health;
-        this.potionDropAvailable = true;
+        this.itemDropAvailable = true;
     }
 
     /**
@@ -147,11 +147,12 @@ public class Monster extends Rectangle {
         return this.alive;
     }
 
-    public boolean isPotionDropAvailable() {
-        return potionDropAvailable;
+    public boolean isItemDropAvailable() {
+        return itemDropAvailable;
     }
 
-    public void setPotionDropAvailable(boolean potionDropAvailable) {
-        this.potionDropAvailable = potionDropAvailable;
+
+    public void setItemDropAvailable(boolean itemDropAvailable) {
+        this.itemDropAvailable = itemDropAvailable;
     }
 }

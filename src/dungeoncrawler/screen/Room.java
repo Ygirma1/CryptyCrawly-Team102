@@ -658,4 +658,8 @@ public class Room {
     public int getPrevRoomIndex() {
         return prevRoomIndex;
     }
+
+    public String getIdText() {
+        return id.getText();
+    }
 }
