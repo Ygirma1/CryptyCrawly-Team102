@@ -117,9 +117,11 @@ public class Player extends Rectangle {
         }
 
         this.setX(newX);
-        weapon.setX(newX + 25);
-        this.setY(newY);
-        weapon.setY(newY);
+        if (this.weapon != null) {
+            weapon.setX(newX + 25);
+            this.setY(newY);
+            weapon.setY(newY);
+        }
     }
 
     public void takeDamage(int damageCount) {
