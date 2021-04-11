@@ -19,8 +19,8 @@ public class Player extends Rectangle {
     private static int health = ORIGINAL_HEALTH;
     private static int damage;
     private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
-                                                new Weapon("Greatsword", 2),
-                                                new Weapon("Bludgeon", 3)};
+                                                new Weapon("Bludgeon", 2),
+                                                new Weapon("Greatsword", 3)};
     private final static Potion[] potionInventory = {new HealthPotion(), new AttackPotion(), new ZoomPotion()};
     private static final int[] inventoryQuantity = {0, 0, 0, 1, 1, 1}; //alter this to change potion quantity
     private static Weapon currentWeapon;

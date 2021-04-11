@@ -210,9 +210,9 @@ public class Controller extends Application {
 
         TimerTask playerSwitchState = new PlayerSwitchState();
         if (player.getCurrentWeapon().getName().equals("Bludgeon")) {
-            timer.schedule(playerSwitchState, 0, 2500);
-        } else if (player.getCurrentWeapon().getName().equals("Greatsword")) {
             timer.schedule(playerSwitchState, 0, 2000);
+        } else if (player.getCurrentWeapon().getName().equals("Greatsword")) {
+            timer.schedule(playerSwitchState, 0, 2500);
         } else {
             timer.schedule(playerSwitchState, 0, 1500);
         }
