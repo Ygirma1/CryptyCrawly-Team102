@@ -79,7 +79,7 @@ public class Player extends Rectangle {
                 System.out.println("Shortsword image not found " + exception);
             }
         }
-        weapon.setX(this.getX());
+        weapon.setX(this.getX() + 25);
         weapon.setY(this.getY());
         return (weapon);
     }
@@ -117,7 +117,7 @@ public class Player extends Rectangle {
         }
 
         this.setX(newX);
-        weapon.setX(newX);
+        weapon.setX(newX + 25);
         this.setY(newY);
         weapon.setY(newY);
     }
