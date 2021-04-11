@@ -238,9 +238,6 @@ public class Controller extends Application {
                 });
                 primaryStage.setScene(inventoryScreen.getScene());
                 break;
-            case "l":
-                player.takeDamage(999);
-                break;
             default:
                 break;
             }
@@ -267,9 +264,6 @@ public class Controller extends Application {
                     initRoom(room);
                 });
                 primaryStage.setScene(inventoryScreen.getScene());
-                break;
-            case "l":
-                player.takeDamage(999);
                 break;
             default:
                 break;
