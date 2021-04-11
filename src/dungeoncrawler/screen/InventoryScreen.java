@@ -47,7 +47,7 @@ public class InventoryScreen {
                 if (weapons[i].getName() == "Shortsword") {
                     try {
                         Image shortSword = new Image (new FileInputStream(
-                                System.getProperty("user.dir") + "\\res\\Shortsword.png"));
+                                System.getProperty("user.dir") + "\\res\\shortsword.png"));
                         ImageView shortSwordView = new ImageView (shortSword);
                         shortSwordView.setFitWidth(32);
                         shortSwordView.setFitHeight(32);
@@ -58,7 +58,7 @@ public class InventoryScreen {
                 } else if (weapons[i].getName() == "Bludgeon") {
                     try {
                         Image bludgeon = new Image (new FileInputStream(
-                                System.getProperty("user.dir") + "\\res\\Bludgeon.png"));
+                                System.getProperty("user.dir") + "\\res\\bludgeon.png"));
                         ImageView bludgeonView = new ImageView (bludgeon);
                         bludgeonView.setFitWidth(32);
                         bludgeonView.setFitHeight(32);
@@ -69,7 +69,7 @@ public class InventoryScreen {
                 } else if (weapons[i].getName() == "Greatsword") {
                     try {
                         Image greatSword = new Image (new FileInputStream(
-                                System.getProperty("user.dir") + "\\res\\Greatsword.png"));
+                                System.getProperty("user.dir") + "\\res\\greatsword.png"));
                         ImageView greatSwordView = new ImageView (greatSword);
                         greatSwordView.setFitWidth(40);
                         greatSwordView.setFitHeight(40);
