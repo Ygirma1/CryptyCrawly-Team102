@@ -7,6 +7,8 @@ import dungeoncrawler.entity.monster.GreenMonster;
 import dungeoncrawler.entity.monster.Monster;
 import dungeoncrawler.entity.monster.PinkMonster;
 import dungeoncrawler.entity.monster.YellowMonster;
+import dungeoncrawler.entity.potion.Potion;
+import dungeoncrawler.entity.potion.ZoomPotion;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -595,5 +597,35 @@ public class DungeonCrawlerTest extends ApplicationTest {
             }
         }
     }
+
+    @Test
+    public void testZoomPotion() {
+        getToStartRoom();
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED);
+        Potion potion = new ZoomPotion();
+
+        potion.applyEffect();
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED + 3);
+        potion.applyEffect();
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED + 6);
+        player.takeDamage(999); // kill player
+        moveBy(1, 1);
+        clickOn("Play again");
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED);
+    }
+
+    @Test
+    public void testEnteringInventoryScreen() {
+        getToStartRoom();
+        type(KeyCode.B, 1);
+        clickOn("Attack Potion");
+        clickOn("Back");
+
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        assertNotNull(correctExitLabel);
+        String correctPath = correctExitLabel.getText().substring(8);
+        assertNotNull(correctPath);
+    }
+
 }
 

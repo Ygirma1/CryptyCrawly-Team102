@@ -199,6 +199,8 @@ public class Player extends Rectangle {
     public static int getHealth() {
         return health;
     }
+
+    public static int getSpeed() {return speed;}
     public static void setSpeed(int speed) {
         Player.speed = speed;
     }
