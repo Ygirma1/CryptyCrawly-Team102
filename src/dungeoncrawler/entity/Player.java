@@ -4,8 +4,13 @@ import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.HealthPotion;
 import dungeoncrawler.entity.potion.AttackPotion;
 import dungeoncrawler.entity.potion.ZoomPotion;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Player extends Rectangle {
 
@@ -17,6 +22,7 @@ public class Player extends Rectangle {
     private final static Potion[] potionInventory = {new HealthPotion(), new AttackPotion(), new ZoomPotion()};
     private static final int[] inventoryQuantity = {0, 0, 0, 1, 1, 1}; //alter this to change potion quantity
     private static Weapon currentWeapon;
+    private Rectangle weapon;
     private boolean goNorth;
     private boolean goSouth;
     private boolean goEast;
@@ -47,6 +53,35 @@ public class Player extends Rectangle {
             }
         }
         System.out.println("Potion Inventory is full... Can't add potion");
+    }
+
+    public Rectangle getWeaponSprite() {
+        weapon = new Rectangle(this.getWidth(), this.getHeight());
+        if (this.getCurrentWeapon().getName().equals("Bludgeon")) {
+            try {
+                weapon.setFill(new ImagePattern(new Image(new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\bludgeon.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Bludgeon image not found " + exception);
+            }
+        } else if (this.getCurrentWeapon().getName().equals("Greatsword")) {
+            try {
+                weapon.setFill(new ImagePattern(new Image(new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\greatsword.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Greatsword image not found " + exception);
+            }
+        } else {
+            try {
+                weapon.setFill(new ImagePattern(new Image(new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\shortsword.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Shortsword image not found " + exception);
+            }
+        }
+        weapon.setX(this.getX());
+        weapon.setY(this.getY());
+        return (weapon);
     }
 
     public void move(int height, int width) {
@@ -82,7 +117,9 @@ public class Player extends Rectangle {
         }
 
         this.setX(newX);
+        weapon.setX(newX);
         this.setY(newY);
+        weapon.setY(newY);
     }
 
     public void takeDamage(int damageCount) {

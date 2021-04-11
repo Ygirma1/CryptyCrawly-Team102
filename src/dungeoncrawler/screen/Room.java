@@ -347,7 +347,9 @@ public class Room {
 
         pane.getChildren().addAll(id, this.goldText, healthGroup, helpGroup);
 
-        pane.getChildren().add(player);
+        Group playerWeapon = new Group();
+        playerWeapon.getChildren().addAll(player, player.getWeaponSprite());
+        pane.getChildren().add(playerWeapon);
         if (this.monster != null) {
             pane.getChildren().add(monster);
         }
