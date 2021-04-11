@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 //import javafx.scene.input.KeyCodeCombination;
 //import javafx.scene.input.KeyCombination;
 //import javafx.scene.input.KeyEvent;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 //import javafx.util.Duration;
 //import javafx.scene.paint.Color;
@@ -26,6 +27,9 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import java.util.Random;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -40,8 +44,8 @@ public class Controller extends Application {
     private Button helpButton;
     private String prevExitText = "";
     private Monster roomMonster;
-
     private Weapon startingWeapon;
+    private static Random rand = new Random();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -243,6 +247,29 @@ public class Controller extends Application {
                 break;
             }
             if (monster != null && !monster.isAlive()) {
+                if (monster.isPotionDropAvailable()) {
+                    int randomNumber = rand.nextInt(10) + 1; // 1 to 10
+                    if (randomNumber <= 5) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Potion Drop Notification");
+                        alert.setHeaderText(null);
+                        int potionIndex;
+                        int randomNumber2 = rand.nextInt(3);
+                        if (randomNumber2 == 0) {
+                            alert.setContentText("The monster drops a Health potion");
+                            potionIndex = 3;
+                        } else if (randomNumber2 == 1) {
+                            alert.setContentText("The monster drops an Attack potion");
+                            potionIndex = 4;
+                        } else {
+                            alert.setContentText("The monster drops a Zoom potion");
+                            potionIndex = 5;
+                        }
+                        player.getInventoryQuantity()[potionIndex]++;
+                        monster.setPotionDropAvailable(false);
+                        alert.show();
+                    }
+                }
                 room.openClosedExits(room);
             }
         });
