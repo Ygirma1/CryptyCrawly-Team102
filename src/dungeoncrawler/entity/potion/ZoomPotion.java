@@ -9,7 +9,7 @@ public class ZoomPotion implements Potion {
     public void applyEffect() {
         // has to be static cause we create an instance of player for each room
         // -> speed must be shared
-        Player.setSpeed(Player.speed + 3);
+        Player.setSpeed(Player.getSpeed() + 3);
     }
 
     @Override

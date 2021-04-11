@@ -5,7 +5,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 //import javafx.animation.Animation;
 //import javafx.geometry.Bounds;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;

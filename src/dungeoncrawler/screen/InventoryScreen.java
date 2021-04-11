@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 
 public class InventoryScreen {
     private final Weapon[] weapons;
@@ -27,7 +27,7 @@ public class InventoryScreen {
     private final int height;
 
     public InventoryScreen() {
-        this(500,500);
+        this(500, 500);
     }
 
 
@@ -46,9 +46,9 @@ public class InventoryScreen {
                 items[i] = new Button(weapons[i].getName());
                 if (weapons[i].getName() == "Shortsword") {
                     try {
-                        Image shortSword = new Image (new FileInputStream(
+                        Image shortSword = new Image(new FileInputStream(
                                 System.getProperty("user.dir") + "\\res\\shortsword.png"));
-                        ImageView shortSwordView = new ImageView (shortSword);
+                        ImageView shortSwordView = new ImageView(shortSword);
                         shortSwordView.setFitWidth(32);
                         shortSwordView.setFitHeight(32);
                         items[i].setGraphic(shortSwordView);
@@ -57,9 +57,9 @@ public class InventoryScreen {
                     }
                 } else if (weapons[i].getName() == "Bludgeon") {
                     try {
-                        Image bludgeon = new Image (new FileInputStream(
+                        Image bludgeon = new Image(new FileInputStream(
                                 System.getProperty("user.dir") + "\\res\\bludgeon.png"));
-                        ImageView bludgeonView = new ImageView (bludgeon);
+                        ImageView bludgeonView = new ImageView(bludgeon);
                         bludgeonView.setFitWidth(32);
                         bludgeonView.setFitHeight(32);
                         items[i].setGraphic(bludgeonView);
@@ -68,9 +68,9 @@ public class InventoryScreen {
                     }
                 } else if (weapons[i].getName() == "Greatsword") {
                     try {
-                        Image greatSword = new Image (new FileInputStream(
+                        Image greatSword = new Image(new FileInputStream(
                                 System.getProperty("user.dir") + "\\res\\greatsword.png"));
-                        ImageView greatSwordView = new ImageView (greatSword);
+                        ImageView greatSwordView = new ImageView(greatSword);
                         greatSwordView.setFitWidth(40);
                         greatSwordView.setFitHeight(40);
                         items[i].setGraphic(greatSwordView);
@@ -85,32 +85,32 @@ public class InventoryScreen {
                 items[i] = new Button(potions[i - 3].toString());
                 if (potions[i - 3] instanceof HealthPotion) {
                     try {
-                        items[i].setGraphic(new ImageView (new Image (new FileInputStream(
+                        items[i].setGraphic(new ImageView(new Image(new FileInputStream(
                                 System.getProperty("user.dir") + "\\res\\healthPotion.png"))));
                     } catch (FileNotFoundException exception) {
                         System.out.println("Health potion image not found " + exception);
                     }
                 } else if (potions[i - 3] instanceof ZoomPotion) {
                     try {
-                        items[i].setGraphic(new ImageView (new Image (new FileInputStream(
+                        items[i].setGraphic(new ImageView(new Image(new FileInputStream(
                                 System.getProperty("user.dir") + "\\res\\zoomPotion.png"))));
                     } catch (FileNotFoundException exception) {
                         System.out.println("Zoom potion image not found " + exception);
                     }
                 } else if (potions[i - 3] instanceof AttackPotion) {
                     try {
-                        items[i].setGraphic(new ImageView (new Image (new FileInputStream(
+                        items[i].setGraphic(new ImageView(new Image(new FileInputStream(
                                 System.getProperty("user.dir") + "\\res\\attackPotion.png"))));
                     } catch (FileNotFoundException exception) {
                         System.out.println("Attack potion image not found " + exception);
                     }
                 }
                 items[i].setOnAction(e -> {
-                   potions[finalI - 3].applyEffect();
-                   quantities[finalI]--;
-                   if (quantities[finalI] <= 0) {
-                       items[finalI].setDisable(true);
-                   }
+                    potions[finalI - 3].applyEffect();
+                    quantities[finalI]--;
+                    if (quantities[finalI] <= 0) {
+                        items[finalI].setDisable(true);
+                    }
                 });
             }
             items[i].setPrefSize(125, 70);

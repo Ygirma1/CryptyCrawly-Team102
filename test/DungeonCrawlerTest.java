@@ -27,6 +27,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 //import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -626,6 +627,30 @@ public class DungeonCrawlerTest extends ApplicationTest {
         String correctPath = correctExitLabel.getText().substring(8);
         assertNotNull(correctPath);
     }
+
+    @Test
+    public void testInventorySizeDecr() {
+        int initialInv = 0;
+
+        for (int i = 0; i < player.getInventoryQuantity().length; i++) {
+            if (player.getInventoryQuantity()[i] != 0) {
+                initialInv += player.getInventoryQuantity()[i];
+            }
+        }
+
+        getToStartRoom();
+        type(KeyCode.B, 1);
+        clickOn("Attack Potion");
+        initialInv--;
+        clickOn("Zoom Potion");
+        initialInv--;
+        clickOn("Health Potion");
+        initialInv--;
+
+        assertEquals(initialInv, 0);
+    }
+
+
 
 }
 

@@ -19,7 +19,7 @@ import javafx.scene.control.Button;
 //import javafx.scene.input.KeyCodeCombination;
 //import javafx.scene.input.KeyCombination;
 //import javafx.scene.input.KeyEvent;
-import javafx.stage.Popup;
+//import javafx.stage.Popup;
 import javafx.stage.Stage;
 //import javafx.util.Duration;
 //import javafx.scene.paint.Color;
@@ -28,7 +28,7 @@ import javafx.scene.layout.Pane;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert.AlertType;
 import java.util.Random;
 
 public class Controller extends Application {
@@ -88,10 +88,12 @@ public class Controller extends Application {
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
             }
-            int selectedIndex = configScreen.getWeaponDropdown().getItems().indexOf(configScreen.getWeaponDropdown().getValue());
+            int selectedIndex = configScreen.getWeaponDropdown().getItems().indexOf(
+                    configScreen.getWeaponDropdown().getValue());
             this.startingWeapon = Player.getWeaponInventory()[selectedIndex];
             Player.getInventoryQuantity()[selectedIndex] = 1;
-            this.weapon = configScreen.getWeaponDropdown().getValue(); //not sure if needed anymore
+            //not sure if needed anymore
+            this.weapon = configScreen.getWeaponDropdown().getValue();
             Room start = new Room("start", configScreen.getDifficulty());
             start.generateMap(start);
             initRoom(start);
@@ -284,7 +286,7 @@ public class Controller extends Application {
                         } else if (randomNumber2 == 1) {
                             alert.setContentText("The monster drops an Attack potion");
                             itemIndex = 4;
-                        } else if (randomNumber2 == 2){
+                        } else if (randomNumber2 == 2) {
                             alert.setContentText("The monster drops a Zoom potion");
                             itemIndex = 5;
                         } else if (randomNumber2 == 3) {
