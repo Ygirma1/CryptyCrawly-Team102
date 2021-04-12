@@ -7,6 +7,8 @@ import dungeoncrawler.entity.monster.GreenMonster;
 import dungeoncrawler.entity.monster.Monster;
 import dungeoncrawler.entity.monster.PinkMonster;
 import dungeoncrawler.entity.monster.YellowMonster;
+import dungeoncrawler.entity.potion.Potion;
+import dungeoncrawler.entity.potion.ZoomPotion;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -595,5 +597,100 @@ public class DungeonCrawlerTest extends ApplicationTest {
             }
         }
     }
+
+    @Test
+    public void testZoomPotion() {
+        getToStartRoom();
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED);
+        Potion potion = new ZoomPotion();
+
+        potion.applyEffect();
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED + 3);
+        potion.applyEffect();
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED + 6);
+        player.takeDamage(999); // kill player
+        moveBy(1, 1);
+        clickOn("Play again");
+        assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED);
+    }
+
+    @Test
+    public void testEnteringInventoryScreen() {
+        getToStartRoom();
+        type(KeyCode.B, 1);
+        clickOn("Attack Potion");
+        clickOn("Back");
+
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        assertNotNull(correctExitLabel);
+        String correctPath = correctExitLabel.getText().substring(8);
+        assertNotNull(correctPath);
+    }
+
+    @Test
+    public void testInventorySizeDecr() {
+        int initialInv = 0;
+        int decrInv = 0;
+
+        getToStartRoom();
+
+        for (int i = 0; i < player.getInventoryQuantity().length; i++) {
+            if (player.getInventoryQuantity()[i] != 0) {
+                initialInv += player.getInventoryQuantity()[i];
+            }
+        }
+
+        type(KeyCode.B, 1);
+        clickOn("Attack Potion");
+        clickOn("Zoom Potion");
+        clickOn("Health Potion");
+
+        for (int i = 0; i < player.getInventoryQuantity().length; i++) {
+            if (player.getInventoryQuantity()[i] != 0) {
+                decrInv += player.getInventoryQuantity()[i];
+            }
+        }
+
+        assertEquals(decrInv, initialInv - 3);
+    }
+
+    @Test
+    public void testStartWeaponInvBludgeon() {
+        //default selects bludgeon
+        getToStartRoom();
+        int[] startingInv = player.getInventoryQuantity();
+        assertEquals(startingInv[1], 1);
+
+    }
+
+    @Test
+    public void testStartWeaponInvShortsword() {
+        int[] startingInv = player.getInventoryQuantity();
+        clickOn("Start");
+        clickOn("#nameField").write("Test");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+
+        assertEquals(startingInv[0], 1);
+    }
+
+    @Test
+    public void testStartWeaponInvGreatsword() {
+        int[] startingInv = player.getInventoryQuantity();
+        clickOn("Start");
+        clickOn("#nameField").write("Test");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+
+        assertEquals(startingInv[2], 1);
+    }
+
+
+
+
 }
 

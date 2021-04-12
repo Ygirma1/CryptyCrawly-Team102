@@ -5,6 +5,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 //import javafx.animation.Animation;
 //import javafx.geometry.Bounds;
+//import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -24,9 +25,12 @@ public class Monster extends Rectangle {
     private int health;
     private int damage = 1;
     private boolean alive = true;
+    private boolean itemDropAvailable;
+
     public Monster(int width, int height, int health, Color color) {
         super(width, height, color);
         this.health = health;
+        this.itemDropAvailable = true;
     }
 
     /**
@@ -62,7 +66,6 @@ public class Monster extends Rectangle {
 
     public void takeDamage(int damageCount) {
         this.health -= damageCount;
-        System.out.println(this.health);
         if (this.health <= 0) {
             this.setVisible(false);
             this.alive = false;
@@ -113,10 +116,8 @@ public class Monster extends Rectangle {
     public void attackPlayer(Player player) {
         if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
             if (player.getIsAggressive()) {
-                System.out.println("Attacking monster");
                 this.takeDamage(player.getDamage());
             } else {
-                System.out.println("monster attack");
                 player.takeDamage(this.damage);
             }
         }
@@ -144,5 +145,14 @@ public class Monster extends Rectangle {
 
     public boolean isAlive() {
         return this.alive;
+    }
+
+    public boolean isItemDropAvailable() {
+        return itemDropAvailable;
+    }
+
+
+    public void setItemDropAvailable(boolean itemDropAvailable) {
+        this.itemDropAvailable = itemDropAvailable;
     }
 }

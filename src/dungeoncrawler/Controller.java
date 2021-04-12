@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 //import javafx.scene.input.KeyCodeCombination;
 //import javafx.scene.input.KeyCombination;
 //import javafx.scene.input.KeyEvent;
+//import javafx.stage.Popup;
 import javafx.stage.Stage;
 //import javafx.util.Duration;
 //import javafx.scene.paint.Color;
@@ -26,6 +27,9 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
+import java.util.Random;
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -40,8 +44,8 @@ public class Controller extends Application {
     private Button helpButton;
     private String prevExitText = "";
     private Monster roomMonster;
-
     private Weapon startingWeapon;
+    private static Random rand = new Random();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -84,10 +88,12 @@ public class Controller extends Application {
             if (configScreen.getWeaponDropdown().getValue() == null) {
                 return;
             }
-            int selectedIndex = configScreen.getWeaponDropdown().getItems().indexOf(configScreen.getWeaponDropdown().getValue());
+            int selectedIndex = configScreen.getWeaponDropdown().getItems().indexOf(
+                    configScreen.getWeaponDropdown().getValue());
             this.startingWeapon = Player.getWeaponInventory()[selectedIndex];
             Player.getInventoryQuantity()[selectedIndex] = 1;
-            this.weapon = configScreen.getWeaponDropdown().getValue(); //not sure if needed anymore
+            //not sure if needed anymore
+            this.weapon = configScreen.getWeaponDropdown().getValue();
             Room start = new Room("start", configScreen.getDifficulty());
             start.generateMap(start);
             initRoom(start);
@@ -118,11 +124,23 @@ public class Controller extends Application {
                 initRoom(winningRoom);
             });
         }
-
-
+        if (room.getIdText().equals("start")) {
+            Player.updateWeapon(null);
+            Player.resetStats();
+            int index = -1;
+            if (this.startingWeapon.getName().equals("Shortsword")) {
+                index = 0;
+            } else if (this.startingWeapon.getName().equals("Bludgeon")) {
+                index = 1;
+            } else {
+                index = 2;
+            }
+            Player.getInventoryQuantity()[index] = 1;
+        }
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         Monster monster = room.getMonster();
         roomMonster = monster;
+        room.updateMonsterHealthBar();
         room.setPlayer(player);
         int prevRoomIndex = room.getPrevRoomIndex();
         prevExitText = "" + prevRoomIndex;
@@ -163,6 +181,7 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 monster.attackPlayer(player);
+                room.updateMonsterHealthBar();
                 room.updateHealthBar();
                 if (!monster.isAlive() || !Player.isAlive()) {
                     cancel();
@@ -190,7 +209,13 @@ public class Controller extends Application {
         }
 
         TimerTask playerSwitchState = new PlayerSwitchState();
-        timer.schedule(playerSwitchState, 0, 2000);
+        if (player.getCurrentWeapon().getName().equals("Bludgeon")) {
+            timer.schedule(playerSwitchState, 0, 2000);
+        } else if (player.getCurrentWeapon().getName().equals("Greatsword")) {
+            timer.schedule(playerSwitchState, 0, 2500);
+        } else {
+            timer.schedule(playerSwitchState, 0, 1500);
+        }
 
         primaryStage.getScene().setOnKeyPressed(e -> {
             switch (e.getText()) {
@@ -212,12 +237,12 @@ public class Controller extends Application {
                     initRoom(room);
                 });
                 primaryStage.setScene(inventoryScreen.getScene());
+                break;
             default:
                 break;
             }
             player.move(room.getHeight(), room.getWidth());
         });
-
         primaryStage.getScene().setOnKeyReleased(e -> {
             switch (e.getText()) {
             case "w":
@@ -243,6 +268,48 @@ public class Controller extends Application {
                 break;
             }
             if (monster != null && !monster.isAlive()) {
+                if (monster.isItemDropAvailable()) {
+                    int randomNumber = rand.nextInt(10) + 1; // 1 to 10
+                    if (randomNumber <= 5) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Item Drop Notification");
+                        alert.setHeaderText(null);
+                        int itemIndex = -1;
+                        int randomNumber2 = rand.nextInt(6);
+                        System.out.println(randomNumber2);
+                        if (randomNumber2 == 0) {
+                            alert.setContentText("The monster drops a Health potion");
+                            itemIndex = 3;
+                        } else if (randomNumber2 == 1) {
+                            alert.setContentText("The monster drops an Attack potion");
+                            itemIndex = 4;
+                        } else if (randomNumber2 == 2) {
+                            alert.setContentText("The monster drops a Zoom potion");
+                            itemIndex = 5;
+                        } else if (randomNumber2 == 3) {
+                            alert.setContentText("The monster drops a Shortsword");
+                            itemIndex = 0;
+                        } else if (randomNumber2 == 4) {
+                            alert.setContentText("The monster drops a Bludgeon");
+                            itemIndex = 1;
+                        } else if (randomNumber2 == 5) {
+                            alert.setContentText("The monster drops a Greatsword");
+                            itemIndex = 2;
+                        }
+                        if (itemIndex != -1) {
+                            if (itemIndex >= 0 && itemIndex <= 2) {
+                                if (player.getInventoryQuantity()[itemIndex] != 1) {
+                                    player.getInventoryQuantity()[itemIndex]++;
+                                    alert.show();
+                                }
+                            } else {
+                                player.getInventoryQuantity()[itemIndex]++;
+                                alert.show();
+                            }
+                        }
+                        monster.setItemDropAvailable(false);
+                    }
+                }
                 room.openClosedExits(room);
             }
         });
@@ -256,18 +323,12 @@ public class Controller extends Application {
         if (monster != null) {
             monster.setOnMouseClicked(e -> {
                 monster.takeDamage(player.getDamage());
+                room.updateMonsterHealthBar();
                 if (monster != null && !monster.isAlive()) {
                     room.openClosedExits(room);
                 }
             });
         }
-    }
-
-    private void inventoryScreen() {
-        InventoryScreen inventoryScreen = new InventoryScreen();
-        Button[] items = inventoryScreen.getItems();
-        this.primaryStage.setScene(inventoryScreen.getScene());
-        this.primaryStage.show();
     }
 
     private void gameOverScreen() {

@@ -4,26 +4,36 @@ import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.HealthPotion;
 import dungeoncrawler.entity.potion.AttackPotion;
 import dungeoncrawler.entity.potion.ZoomPotion;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-public class Player extends Rectangle {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
-    private static int health = 20;
+public class Player extends Rectangle {
+    public static final int ORIGINAL_HEALTH = 20;
+    public static final int ORIGINAL_SPEED = 7;
+    private static int health = ORIGINAL_HEALTH;
     private static int damage;
-    private static final Weapon[] weaponInventory = {new Weapon("Shortsword", 1),
-                                                     new Weapon("Bludgeon", 2),
-                                                     new Weapon("Greatsword", 3)};
-    private final static Potion[] potionInventory = {new HealthPotion(), new AttackPotion(), new ZoomPotion()};
-    private static final int[] inventoryQuantity = {0, 0, 0, 0, 1, 0}; //alter last three indices to change potion quantity
+    private static final Weapon[] WEAPON_INVENTORY = {new Weapon("Shortsword", 1),
+                                                      new Weapon("Bludgeon", 2),
+                                                      new Weapon("Greatsword", 3)};
+    private static final Potion[] POTION_INVENTORY = {new HealthPotion(),
+                                                      new AttackPotion(),
+                                                      new ZoomPotion()};
+    //alter this to change potion quantity
+    private static final int[] INVENTORY_QUANTITY = {0, 0, 0, 1, 1, 1};
     private static Weapon currentWeapon;
+    private Rectangle weapon;
     private boolean goNorth;
     private boolean goSouth;
     private boolean goEast;
     private boolean goWest;
     private static boolean alive = true;
     private boolean isAggressive;
-    public static int speed = 7;
+    private static int speed = ORIGINAL_SPEED;
 
     public Player(double x, double y, int width, int height, Weapon startingWeapon) {
         super(x, y, width, height);
@@ -31,22 +41,40 @@ public class Player extends Rectangle {
         this.setFill(Color.RED);
         this.isAggressive = true;
         this.setId("player");
-        currentWeapon = startingWeapon;
+        if (currentWeapon == null) {
+            currentWeapon = startingWeapon;
+        }
         damage = currentWeapon.getDamage();
     }
 
-    /**
-     * Add a potion into potionInventory at the first available slot
-     * @param potion Potion to add
-     */
-    public static void addPotion(Potion potion) {
-        for (int i = 0 ; i < 3; i++) {
-            if (Player.potionInventory[i] == null) {
-                Player.potionInventory[i] = potion;
-                return;
+
+    public Rectangle getWeaponSprite() {
+        weapon = new Rectangle(this.getWidth(), this.getHeight());
+        if (this.getCurrentWeapon().getName().equals("Bludgeon")) {
+            try {
+                weapon.setFill(new ImagePattern(new Image(new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\bludgeon.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Bludgeon image not found " + exception);
+            }
+        } else if (this.getCurrentWeapon().getName().equals("Greatsword")) {
+            try {
+                weapon.setFill(new ImagePattern(new Image(new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\greatsword.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Greatsword image not found " + exception);
+            }
+        } else {
+            try {
+                weapon.setFill(new ImagePattern(new Image(new FileInputStream(
+                        System.getProperty("user.dir") + "\\res\\shortsword.png"))));
+            } catch (FileNotFoundException exception) {
+                System.out.println("Shortsword image not found " + exception);
             }
         }
-        System.out.println("Potion Inventory is full... Can't add potion");
+        weapon.setX(this.getX() + 25);
+        weapon.setY(this.getY());
+        return (weapon);
     }
 
     public void move(int height, int width) {
@@ -82,7 +110,11 @@ public class Player extends Rectangle {
         }
 
         this.setX(newX);
-        this.setY(newY);
+        if (this.weapon != null) {
+            weapon.setX(newX + 25);
+            this.setY(newY);
+            weapon.setY(newY);
+        }
     }
 
     public void takeDamage(int damageCount) {
@@ -96,16 +128,26 @@ public class Player extends Rectangle {
         currentWeapon = newWeapon;
     }
 
+    public static void resetStats() {
+        Player.health = ORIGINAL_HEALTH;
+        Player.speed = ORIGINAL_SPEED;
+        Player.INVENTORY_QUANTITY[3] = 1;
+        Player.INVENTORY_QUANTITY[4] = 1;
+        Player.INVENTORY_QUANTITY[5] = 1;
+        Player.INVENTORY_QUANTITY[0] = 0;
+        Player.INVENTORY_QUANTITY[1] = 0;
+        Player.INVENTORY_QUANTITY[2] = 0;
+    }
     public static Weapon[] getWeaponInventory() {
-        return weaponInventory;
+        return WEAPON_INVENTORY;
     }
 
     public static Potion[] getPotionInventory() {
-        return potionInventory;
+        return POTION_INVENTORY;
     }
 
     public static int[] getInventoryQuantity() {
-        return inventoryQuantity;
+        return INVENTORY_QUANTITY;
     }
 
     public static Weapon getCurrentWeapon() {
@@ -159,6 +201,11 @@ public class Player extends Rectangle {
     public static int getHealth() {
         return health;
     }
+
+    public static int getSpeed() {
+        return speed;
+    }
+
     public static void setSpeed(int speed) {
         Player.speed = speed;
     }
