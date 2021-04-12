@@ -53,7 +53,6 @@ public class Controller extends Application {
         this.primaryStage.setTitle("Dungeon Crawler");
 
         welcomeScreen();
-        //inventoryScreen();
     }
 
     private void welcomeScreen() {
@@ -124,6 +123,7 @@ public class Controller extends Application {
                 initRoom(winningRoom);
             });
         }
+        /*
         if (room.getIdText().equals("start")) {
             Player.updateWeapon(null);
             Player.resetStats();
@@ -137,6 +137,8 @@ public class Controller extends Application {
             }
             Player.getInventoryQuantity()[index] = 1;
         }
+
+         */
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         Monster monster = room.getMonster();
         roomMonster = monster;

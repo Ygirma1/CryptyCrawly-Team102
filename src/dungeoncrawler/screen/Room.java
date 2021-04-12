@@ -294,6 +294,8 @@ public class Room {
      * @return The newly created scene
      */
     public Scene getScene() {
+        this.goldText.setText("Gold: " + Controller.getGold());
+
         Pane pane = new Pane();
         String path = getPathID();
         this.correctExit = new Label(path);

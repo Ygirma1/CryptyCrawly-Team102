@@ -50,14 +50,14 @@ public class Player extends Rectangle {
 
     public Rectangle getWeaponSprite() {
         weapon = new Rectangle(this.getWidth(), this.getHeight());
-        if (this.getCurrentWeapon().getName().equals("Bludgeon")) {
+        if (Player.getCurrentWeapon().getName().equals("Bludgeon")) {
             try {
                 weapon.setFill(new ImagePattern(new Image(new FileInputStream(
                         System.getProperty("user.dir") + "\\res\\bludgeon.png"))));
             } catch (FileNotFoundException exception) {
                 System.out.println("Bludgeon image not found " + exception);
             }
-        } else if (this.getCurrentWeapon().getName().equals("Greatsword")) {
+        } else if (Player.getCurrentWeapon().getName().equals("Greatsword")) {
             try {
                 weapon.setFill(new ImagePattern(new Image(new FileInputStream(
                         System.getProperty("user.dir") + "\\res\\greatsword.png"))));
@@ -82,16 +82,16 @@ public class Player extends Rectangle {
         int dx = 0;
         int dy = 0;
         if (goNorth) {
-            dy = -this.speed;
+            dy = -speed;
         }
         if (goWest) {
-            dx = -this.speed;
+            dx = -speed;
         }
         if (goSouth) {
-            dy = this.speed;
+            dy = speed;
         }
         if (goEast) {
-            dx = this.speed;
+            dx = speed;
         }
 
         double newX = this.getX() + dx;

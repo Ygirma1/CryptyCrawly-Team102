@@ -1,5 +1,6 @@
 package dungeoncrawler.screen;
 
+import dungeoncrawler.Controller;
 import dungeoncrawler.entity.Weapon;
 import dungeoncrawler.entity.Player;
 import dungeoncrawler.entity.potion.AttackPotion;
@@ -12,8 +13,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 //import java.io.FileInputStream;
 
@@ -22,8 +28,14 @@ public class InventoryScreen {
     private final Potion[] potions;
     private final int[] quantities;
     private Button backButton;
+    private Button shopButton;
     private Player player;
     private final Button[] items;
+    private Color backgroundColor;
+    private Text goldText;
+    private Text price;
+    private final Color goldColor = Color.rgb(255, 215, 0);
+    private final Font smallFont = new Font("High Tower Text", 19);
     private final int width;
     private final int height;
 
@@ -39,6 +51,13 @@ public class InventoryScreen {
         this.potions = Player.getPotionInventory();
         this.quantities = Player.getInventoryQuantity();
         this.items = new Button[6];
+        this.shopButton = new Button("SHOP TEXT");
+        this.backgroundColor = Color.GREY;
+        this.goldText = new Text("Gold: " + Controller.getGold());
+        this.goldText.setFont(smallFont);
+        this.goldText.setFill(goldColor);
+        this.goldText.setX(420);
+        this.goldText.setY(20);
 
         //init item buttons
         //buttons are static, quantities[item index] determines if usable
@@ -46,6 +65,7 @@ public class InventoryScreen {
             int finalI = i;
             if (i < 3) {
                 items[i] = new Button(weapons[i].getName());
+                items[i].setStyle("-fx-background-color: #bebebe;");
                 if (weapons[i].getName() == "Shortsword") {
                     try {
                         Image shortSword = new Image(new FileInputStream(
@@ -85,6 +105,7 @@ public class InventoryScreen {
                 });
             } else {
                 items[i] = new Button(potions[i - 3].toString());
+                items[i].setStyle("-fx-background-color: #bebebe;");
                 if (potions[i - 3] instanceof HealthPotion) {
                     try {
                         items[i].setGraphic(new ImageView(new Image(new FileInputStream(
@@ -119,11 +140,27 @@ public class InventoryScreen {
             if (quantities[i] <= 0) {
                 items[i].setDisable(true);
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> master
         }
+
+        Random rand = new Random();
+        int shopItem = rand.nextInt(6);
+        this.shopButton.setPrefSize(items[shopItem].getWidth(), items[shopItem].getHeight());
+        this.shopButton.setStyle("-fx-background-color: #bebebe;");
+        this.shopButton.setText(items[shopItem].getText());
+        int priceNum = rand.nextInt(15) + 30;
+        this.price = new Text("Price: " + priceNum);
+        this.price.setFont(smallFont);
+        this.price.setFill(goldColor);
+        shopButton.setOnAction(e -> {
+            if (Controller.getGold() >= priceNum) {
+                shopButton.setDisable(true);
+                Controller.setGold(Controller.getGold() - priceNum);
+                Player.getInventoryQuantity()[shopItem]++;
+                items[shopItem].setDisable(false);
+                this.goldText.setText("Gold: " + Controller.getGold());
+                System.out.println(Player.getInventoryQuantity()[shopItem]);
+            }
+        });
 
         this.backButton = new Button("Back");
         this.backButton.setLayoutX(450);
@@ -140,9 +177,10 @@ public class InventoryScreen {
         }
 
         VBox shop = new VBox();
-        Button shopButton = new Button("SHOP TEXT");
         shopButton.setPrefSize(90, 70);
-        shop.getChildren().add(shopButton);
+        shop.setSpacing(15);
+        shop.setAlignment(Pos.CENTER);
+        shop.getChildren().addAll(shopButton, price);
 
         HBox columns = new HBox();
         columns.setAlignment(Pos.CENTER);
@@ -154,10 +192,15 @@ public class InventoryScreen {
         exit.getChildren().add(backButton);
 
         BorderPane bp = new BorderPane();
+        bp.setTop(goldText);
         bp.setCenter(columns);
         bp.setBottom(exit);
 
-        return new Scene(bp, width, height);
+        Rectangle background = new Rectangle(this.width, this.height, this.backgroundColor);
+        StackPane sp = new StackPane();
+        sp.getChildren().addAll(background, bp);
+
+        return new Scene(sp, width, height);
     }
 
     public Button[] getItems() {
