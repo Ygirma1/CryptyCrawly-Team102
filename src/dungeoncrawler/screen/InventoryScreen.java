@@ -3,6 +3,7 @@ package dungeoncrawler.screen;
 import dungeoncrawler.entity.Weapon;
 import dungeoncrawler.entity.Player;
 import dungeoncrawler.entity.potion.Potion;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -30,7 +31,8 @@ public class InventoryScreen {
         this.quantities = Player.getInventoryQuantity();
         this.items = new Button[6];
 
-        //init empty buttons
+        //init item buttons
+        //buttons are static, quantities[item index] determines if usable
         for (int i = 0; i < 6; i++) {
             int finalI = i;
             if (i < 3) {
@@ -52,32 +54,7 @@ public class InventoryScreen {
             if (quantities[i] <= 0) {
                 items[i].setDisable(true);
             }
-
         }
-
-        /*
-        for (int i = 0; i < 3; i++) {
-            items[i] = new Button(weapons[i].getName());
-            items[i].setPrefSize(90, 70);
-
-            if (potions != null) {
-                Potion potion = potions[i];
-                if (potion != null) {
-                    items[i + 3] = new Button(potion.toString());
-                    items[i + 3].setId("itemsButton" + (i + 3));
-                    items[i + 3].setPrefSize(90, 70);
-                    items[i + 3].setOnAction(e -> {
-                        potion.applyEffect();
-                        int index = Character.getNumericValue(((Button)e.getSource()).getId().charAt(11));
-                        // Remove, only use each potion once
-                        Player.getPotionInventory()[index - 3] = null;
-                        this.items[index].setDisable(true);
-                    });
-                }
-            }
-        }
-
-         */
 
         this.backButton = new Button("Back");
         this.backButton.setLayoutX(450);
@@ -94,16 +71,30 @@ public class InventoryScreen {
 
     //alter player inventory in player constructor
     public Scene getScene() {
-        VBox weaponBox = new VBox();
+        VBox inventory = new VBox();
         for (Button button: items) {
-            if (button != null) {
-                weaponBox.getChildren().add(button);
-            }
+            inventory.getChildren().add(button);
         }
-        Pane pane = new Pane();
-        pane.getChildren().addAll(weaponBox, this.backButton);
 
-        return new Scene(pane, width, height);
+        VBox shop = new VBox();
+        Button shopButton = new Button("SHOP TEXT");
+        shopButton.setPrefSize(90, 70);
+        shop.getChildren().add(shopButton);
+
+        HBox columns = new HBox();
+        columns.setAlignment(Pos.CENTER);
+        columns.setSpacing(100);
+        columns.getChildren().addAll(inventory, shop);
+
+        HBox exit = new HBox();
+        exit.setAlignment(Pos.CENTER);
+        exit.getChildren().add(backButton);
+
+        BorderPane bp = new BorderPane();
+        bp.setCenter(columns);
+        bp.setBottom(exit);
+
+        return new Scene(bp, width, height);
     }
 
     public Button[] getItems() {
