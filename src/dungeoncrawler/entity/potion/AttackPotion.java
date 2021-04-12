@@ -6,7 +6,7 @@ public class AttackPotion implements Potion {
 
     @Override
     public void applyEffect() {
-        Player.setDamage(Player.getDamage() + 1);
+        Player.setDamageModifier(Player.getDamageModifier() + 1);
     }
 
     @Override
