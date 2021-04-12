@@ -144,6 +144,10 @@ public class Controller extends Application {
         roomMonster = monster;
         room.updateMonsterHealthBar();
         room.setPlayer(player);
+        if (player.getHealth() > 20) {
+            player.setHealth(player.ORIGINAL_HEALTH);
+        }
+        room.updateHealthBar();
         int prevRoomIndex = room.getPrevRoomIndex();
         prevExitText = "" + prevRoomIndex;
         Button right = room.getBRight();
@@ -259,13 +263,6 @@ public class Controller extends Application {
             case "d":
                 player.setGoEast(false);
                 break;
-            case "b":
-                InventoryScreen inventoryScreen = new InventoryScreen();
-                inventoryScreen.getBackButton().setOnAction(event -> {
-                    initRoom(room);
-                });
-                primaryStage.setScene(inventoryScreen.getScene());
-                break;
             default:
                 break;
             }
@@ -337,6 +334,7 @@ public class Controller extends Application {
         GameOverScreen gameOverScreen = new GameOverScreen();
         Button playButton = gameOverScreen.getPlayButton();
         playButton.setOnAction(e -> {
+            Player.resetStats();
             Room start = new Room("start", diff);
             start.generateMap(start);
             initRoom(start);
