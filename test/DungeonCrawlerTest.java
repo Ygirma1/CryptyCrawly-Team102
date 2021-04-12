@@ -10,6 +10,7 @@ import dungeoncrawler.entity.monster.YellowMonster;
 import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.ZoomPotion;
 import dungeoncrawler.screen.InventoryScreen;
+import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
@@ -606,7 +607,6 @@ public class DungeonCrawlerTest extends ApplicationTest {
         getToStartRoom();
         assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED);
         Potion potion = new ZoomPotion();
-
         potion.applyEffect();
         assertEquals(Player.getSpeed(), Player.ORIGINAL_SPEED + 3);
         potion.applyEffect();
@@ -720,6 +720,30 @@ public class DungeonCrawlerTest extends ApplicationTest {
         type(KeyCode.B, 1);
         clickOn("Purchase");
         assertEquals(Controller.getGold(), 10);
+    }
+
+    @Test
+    public void testHealthPotion() {
+        getToStartRoom();
+        Player.setHealth(1); //Sets player health to 1
+        int healthbefore = Player.getHealth();
+        assertEquals(healthbefore, 1);
+        type(KeyCode.B);
+        clickOn("Health Potion");
+        assertEquals(healthbefore + 10, Player.getHealth());
+        clickOn("Back");
+        assertEquals(healthbefore + 10, Player.getHealth());
+        sleep(1000); //Used to show that the health bar reflects proper health
+    }
+
+    @Test
+    public void testAttackPotion() {
+        getToStartRoom();
+        assertEquals(2, Player.getDamage());
+        type(KeyCode.B);
+        clickOn("Attack Potion");
+        clickOn("Back");
+        assertEquals(3, Player.getDamage());
     }
 }
 
