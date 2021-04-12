@@ -33,7 +33,7 @@ public class InventoryScreen {
     private final Button[] items;
     private Color backgroundColor;
     private Text goldText;
-    private Text price;
+    private Text itemText;
     private final Color goldColor = Color.rgb(255, 215, 0);
     private final Font smallFont = new Font("High Tower Text", 19);
     private final int width;
@@ -146,11 +146,11 @@ public class InventoryScreen {
         int shopItem = rand.nextInt(6);
         this.shopButton.setPrefSize(items[shopItem].getWidth(), items[shopItem].getHeight());
         this.shopButton.setStyle("-fx-background-color: #bebebe;");
-        this.shopButton.setText(items[shopItem].getText());
+        this.shopButton.setText("Purchase");
         int priceNum = rand.nextInt(15) + 30;
-        this.price = new Text("Price: " + priceNum);
-        this.price.setFont(smallFont);
-        this.price.setFill(goldColor);
+        this.itemText = new Text( items[shopItem].getText() + "\nPrice: " + priceNum);
+        this.itemText.setFont(smallFont);
+        this.itemText.setFill(goldColor);
         shopButton.setOnAction(e -> {
             if (Controller.getGold() >= priceNum) {
                 shopButton.setDisable(true);
@@ -180,7 +180,7 @@ public class InventoryScreen {
         shopButton.setPrefSize(90, 70);
         shop.setSpacing(15);
         shop.setAlignment(Pos.CENTER);
-        shop.getChildren().addAll(shopButton, price);
+        shop.getChildren().addAll(shopButton, itemText);
 
         HBox columns = new HBox();
         columns.setAlignment(Pos.CENTER);

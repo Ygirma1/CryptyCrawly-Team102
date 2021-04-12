@@ -9,10 +9,13 @@ import dungeoncrawler.entity.monster.PinkMonster;
 import dungeoncrawler.entity.monster.YellowMonster;
 import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.ZoomPotion;
+import dungeoncrawler.screen.InventoryScreen;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Button;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
 import org.junit.Test;
 
 //import org.testfx.assertions.api.ButtonAssert;
@@ -689,8 +692,34 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(startingInv[2], 1);
     }
 
+    @Test
+    public void testShopPurchase() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        for (int i = 0; i < 6; i++) {
+            player.getInventoryQuantity()[i] = 0;
+        }
+        type(KeyCode.B, 1);
+        clickOn("Purchase");
+        assertTrue(Controller.getGold() != 50);
+    }
 
-
-
+    @Test
+    public void testInvalidPurchase() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        Controller.setGold(10);
+        type(KeyCode.B, 1);
+        clickOn("Purchase");
+        assertEquals(Controller.getGold(), 10);
+    }
 }
 
