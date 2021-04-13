@@ -16,7 +16,7 @@ public class Player extends Rectangle {
     public static final int ORIGINAL_HEALTH = 20;
     public static final int ORIGINAL_SPEED = 7;
     private static int health = ORIGINAL_HEALTH;
-    private static int damageModifier = 0; //Keeps track of attack potion application and boosts player damage
+    private static int damageModifier = 0; //Tracks bonuses to player damage
     private static int damage;
     private static final Weapon[] WEAPON_INVENTORY = {new Weapon("Shortsword", 1),
                                                       new Weapon("Bludgeon", 2),
