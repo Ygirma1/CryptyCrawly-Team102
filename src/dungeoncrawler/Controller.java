@@ -46,6 +46,7 @@ public class Controller extends Application {
     private Monster roomMonster;
     private Weapon startingWeapon;
     private static Random rand = new Random();
+    private Player currPlayer;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -140,6 +141,8 @@ public class Controller extends Application {
 
          */
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
+        player.updateWeapon(this.startingWeapon);
+        currPlayer = player;
         Monster monster = room.getMonster();
         roomMonster = monster;
         room.updateMonsterHealthBar();
@@ -394,5 +397,9 @@ public class Controller extends Application {
 
     public Monster getRoomMonster() {
         return roomMonster;
+    }
+
+    public Player getPlayer() {
+        return (currPlayer);
     }
 }

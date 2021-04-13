@@ -721,5 +721,119 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Purchase");
         assertEquals(Controller.getGold(), 10);
     }
+
+    @Test
+    public void testBludgeonDamage() {
+        clickOn("Start");
+        clickOn("#nameField").write("Nishant");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+
+        assertEquals(controller.getPlayer().getCurrentWeapon().getName(), "Bludgeon");
+        clickOn("up");
+        clickOn(controller.getRoomMonster());
+        if (controller.getRoomMonster() instanceof GreenMonster) {
+            assertEquals(1, controller.getRoomMonster().getHealth());
+        } else if (controller.getRoomMonster() instanceof PinkMonster) {
+            assertEquals(2, controller.getRoomMonster().getHealth());
+        } else {
+            assertEquals(3, controller.getRoomMonster().getHealth());
+        }
+    }
+
+    @Test
+    public void testGreatswordDamage() {
+        clickOn("Start");
+        clickOn("#nameField").write("Nishant");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+
+        assertEquals("Greatsword", controller.getPlayer().getCurrentWeapon().getName());
+        clickOn("up");
+        clickOn(controller.getRoomMonster());
+        if (controller.getRoomMonster() instanceof GreenMonster) {
+            assertEquals(0, controller.getRoomMonster().getHealth());
+        } else if (controller.getRoomMonster() instanceof PinkMonster) {
+            assertEquals(1, controller.getRoomMonster().getHealth());
+        } else {
+            assertEquals(2, controller.getRoomMonster().getHealth());
+        }
+    }
+
+    @Test
+    public void testShortswordDamage() {
+        clickOn("Start");
+        clickOn("#nameField").write("Nishant");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+
+        assertEquals(controller.getPlayer().getCurrentWeapon().getName(), "Shortsword");
+        clickOn("up");
+        clickOn(controller.getRoomMonster());
+        if (controller.getRoomMonster() instanceof GreenMonster) {
+            assertEquals(2, controller.getRoomMonster().getHealth());
+        } else if (controller.getRoomMonster() instanceof PinkMonster) {
+            assertEquals(3, controller.getRoomMonster().getHealth());
+        } else {
+            assertEquals(4, controller.getRoomMonster().getHealth());
+        }
+    }
+
+    @Test
+    public void testBludgeonTimer() {
+        clickOn("Start");
+        clickOn("#nameField").write("Nishant");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Bludgeon");
+        clickOn("PROCEED");
+
+        assertEquals(controller.getPlayer().getCurrentWeapon().getName(), "Bludgeon");
+        assertEquals(controller.getPlayer().getIsAggressive(), false);
+        sleep(2000);
+        assertEquals(controller.getPlayer().getIsAggressive(), true);
+        sleep(2000);
+        assertEquals(controller.getPlayer().getIsAggressive(), false);
+    }
+
+    @Test
+    public void testGreatswordTimer() {
+        clickOn("Start");
+        clickOn("#nameField").write("Nishant");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+
+        assertEquals(controller.getPlayer().getCurrentWeapon().getName(), "Greatsword");
+        assertEquals(controller.getPlayer().getIsAggressive(), false);
+        sleep(2500);
+        assertEquals(controller.getPlayer().getIsAggressive(), true);
+        sleep(2500);
+        assertEquals(controller.getPlayer().getIsAggressive(), false);
+    }
+
+    @Test
+    public void testShortswordTimer() {
+        clickOn("Start");
+        clickOn("#nameField").write("Nishant");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Shortsword");
+        clickOn("PROCEED");
+
+        assertEquals(controller.getPlayer().getCurrentWeapon().getName(), "Shortsword");
+        assertEquals(controller.getPlayer().getIsAggressive(), false);
+        sleep(1500);
+        assertEquals(controller.getPlayer().getIsAggressive(), true);
+        sleep(1500);
+        assertEquals(controller.getPlayer().getIsAggressive(), false);
+    }
 }
 
