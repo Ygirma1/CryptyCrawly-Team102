@@ -16,6 +16,7 @@ public class Player extends Rectangle {
     public static final int ORIGINAL_HEALTH = 20;
     public static final int ORIGINAL_SPEED = 7;
     private static int health = ORIGINAL_HEALTH;
+    private static int damageModifier = 0; //Tracks bonuses to player damage
     private static int damage;
     private static final Weapon[] WEAPON_INVENTORY = {new Weapon("Shortsword", 1),
                                                       new Weapon("Bludgeon", 2),
@@ -44,7 +45,7 @@ public class Player extends Rectangle {
         if (currentWeapon == null) {
             currentWeapon = startingWeapon;
         }
-        damage = currentWeapon.getDamage();
+        damage = damageModifier + currentWeapon.getDamage();
     }
 
 
@@ -208,6 +209,14 @@ public class Player extends Rectangle {
 
     public static void setSpeed(int speed) {
         Player.speed = speed;
+    }
+
+    public static int getDamageModifier() {
+        return damageModifier;
+    }
+
+    public static void setDamageModifier(int newDamageMod) {
+        damageModifier = newDamageMod;
     }
 
 
