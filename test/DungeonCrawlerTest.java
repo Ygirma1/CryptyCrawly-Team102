@@ -9,13 +9,13 @@ import dungeoncrawler.entity.monster.PinkMonster;
 import dungeoncrawler.entity.monster.YellowMonster;
 import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.ZoomPotion;
-import dungeoncrawler.screen.InventoryScreen;
+//import dungeoncrawler.screen.InventoryScreen;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.control.Button;
+//import javafx.scene.control.Button;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
+//import javafx.scene.Scene;
 import org.junit.Test;
 
 //import org.testfx.assertions.api.ButtonAssert;

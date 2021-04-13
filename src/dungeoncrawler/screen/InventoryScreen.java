@@ -148,7 +148,7 @@ public class InventoryScreen {
         this.shopButton.setStyle("-fx-background-color: #bebebe;");
         this.shopButton.setText("Purchase");
         int priceNum = rand.nextInt(15) + 30;
-        this.itemText = new Text( items[shopItem].getText() + "\nPrice: " + priceNum);
+        this.itemText = new Text(items[shopItem].getText() + "\nPrice: " + priceNum);
         this.itemText.setFont(smallFont);
         this.itemText.setFill(goldColor);
         shopButton.setOnAction(e -> {
