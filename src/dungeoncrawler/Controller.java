@@ -124,7 +124,8 @@ public class Controller extends Application {
                 initRoom(winningRoom);
             });
         }
-        /*
+
+        // Reset after death
         if (room.getIdText().equals("start")) {
             Player.updateWeapon(null);
             Player.resetStats();
@@ -139,7 +140,7 @@ public class Controller extends Application {
             Player.getInventoryQuantity()[index] = 1;
         }
 
-         */
+
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         currPlayer = player;
         Monster monster = room.getMonster();
