@@ -141,7 +141,6 @@ public class Controller extends Application {
 
          */
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
-        player.updateWeapon(this.startingWeapon);
         currPlayer = player;
         Monster monster = room.getMonster();
         roomMonster = monster;
