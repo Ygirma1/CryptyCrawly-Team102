@@ -1,5 +1,6 @@
 package dungeoncrawler.entity;
 
+import dungeoncrawler.Controller;
 import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.HealthPotion;
 import dungeoncrawler.entity.potion.AttackPotion;
@@ -138,6 +139,7 @@ public class Player extends Rectangle {
         Player.INVENTORY_QUANTITY[0] = 0;
         Player.INVENTORY_QUANTITY[1] = 0;
         Player.INVENTORY_QUANTITY[2] = 0;
+        Controller.setGold(100 - 25 * Controller.getDifficulty().ordinal());
     }
     public static Weapon[] getWeaponInventory() {
         return WEAPON_INVENTORY;

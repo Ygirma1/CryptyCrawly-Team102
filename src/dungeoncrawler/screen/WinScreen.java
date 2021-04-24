@@ -8,18 +8,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class GameOverScreen {
+public class WinScreen {
     private final int width;
     private final int height;
-    private final Text deathText;
-    private final Font deathFont = new Font("High Tower Text", 55);
+    private final Text winText;
+    private final Font winFont = new Font("High Tower Text", 55);
+    Color lime;
     private final Font btFont = new Font("High Tower Text", 25);
     private final Button playButton;
 
     /**
      * No argument constructor for GameOverScreen.
      */
-    public GameOverScreen() {
+    public WinScreen() {
         this(500, 500);
     }
 
@@ -28,29 +29,29 @@ public class GameOverScreen {
      * @param width The width of the scene
      * @param height The height of the scene
      */
-    public GameOverScreen(int width, int height) {
+    public WinScreen(int width, int height) {
         this.width = width;
         this.height = height;
-        this.deathText = new Text("YOU DIED");
-        this.deathText.setFont(deathFont);
-        this.deathText.setFill(Color.DARKRED);
+        this.winText = new Text("YOU WON");
+        this.winText.setFont(winFont);
+        this.winText.setFill(lime.rgb(50, 205, 50));
         this.playButton = new Button("Play again");
     }
 
     public Scene getScene() {
         Rectangle background = new Rectangle(this.width, this.height);
         background.setFill(Color.BLACK);
-        this.deathText.relocate(100, 150);
+        this.winText.relocate(100, 150);
 
         this.playButton.setFont(btFont);
         this.playButton.setTextFill(Color.BLACK);
-        this.playButton.setStyle("-fx-background-color: #8B0000;");
+        this.playButton.setStyle("-fx-background-color: #32CD32;");
         this.playButton.setPrefWidth(150.0);
         this.playButton.setPrefHeight(50.0);
         this.playButton.relocate(175, 250);
 
         Pane pane = new Pane();
-        pane.getChildren().addAll(background, deathText, playButton);
+        pane.getChildren().addAll(background, winText, playButton);
         return new Scene(pane, this.width, this.height);
     }
 

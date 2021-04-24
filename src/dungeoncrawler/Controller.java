@@ -131,12 +131,14 @@ public class Controller extends Application {
         if (room instanceof PuzzleRoom) {
             Button exitButton = ((PuzzleRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
-                Room winningRoom = new WinningRoom(500, 500, Controller.diff);
-                initRoom(winningRoom);
+                //Room winningRoom = new WinningRoom(500, 500, Controller.diff);
+                //initRoom(winningRoom);
+                winScreen();
             });
         }
 
         // Reset after death
+        /*
         if (room.getIdText().equals("start")) {
             Player.updateWeapon(null);
             Player.resetStats();
@@ -150,6 +152,8 @@ public class Controller extends Application {
             }
             Player.getInventoryQuantity()[index] = 1;
         }
+
+         */
 
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         currPlayer = player;
@@ -191,8 +195,8 @@ public class Controller extends Application {
         }
         room.setPlayer(player);
 
-        if (player.getHealth() > 20) {
-            player.setHealth(player.ORIGINAL_HEALTH);
+        if (Player.getHealth() > 20) {
+            Player.setHealth(Player.ORIGINAL_HEALTH);
         }
 
         room.updateHealthBar();
@@ -440,18 +444,25 @@ public class Controller extends Application {
         GameOverScreen gameOverScreen = new GameOverScreen();
         Button playButton = gameOverScreen.getPlayButton();
         playButton.setOnAction(e -> {
-            Room start;
-            if (challengeRoom1Reached) {
-                start = new ChallengeRoom1(500, 500, "challenge1", diff);
-            } else {
-                Player.resetStats();
-                start = new Room("start", diff);
-            }
-
+            Room start = new Room("start", diff);
+            Player.resetStats();
             start.generateMap(start);
             initRoom(start);
         });
         this.primaryStage.setScene(gameOverScreen.getScene());
+        this.primaryStage.show();
+    }
+
+    public void winScreen() {
+        WinScreen winScreen = new WinScreen();
+        Button playAgainButton = winScreen.getPlayButton();
+        playAgainButton.setOnAction(e -> {
+            Room start = new Room("start", diff);
+            start.generateMap(start);
+            Player.resetStats();
+            initRoom(start);
+        });
+        this.primaryStage.setScene(winScreen.getScene());
         this.primaryStage.show();
     }
 
@@ -466,8 +477,8 @@ public class Controller extends Application {
         return characterName;
     }
 
-    public String getDifficulty() {
-        return difficulty;
+    public static Difficulty getDifficulty() {
+        return diff;
     }
 
     public String getWeapon() {
