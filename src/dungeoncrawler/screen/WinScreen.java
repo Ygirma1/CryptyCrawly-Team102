@@ -20,14 +20,14 @@ public class WinScreen {
     private Color lime;
 
     /**
-     * No argument constructor for GameOverScreen.
+     * No argument constructor for WinScreen.
      */
     public WinScreen() {
         this(500, 500);
     }
 
     /**
-     * GameOverScreen constructor.
+     * WinScreen constructor.
      * @param width The width of the scene
      * @param height The height of the scene
      */

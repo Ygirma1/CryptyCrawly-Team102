@@ -1,8 +1,5 @@
 package dungeoncrawler;
 
-//import javafx.animation.KeyFrame;
-//import javafx.animation.KeyValue;
-//import javafx.animation.Timeline;
 import javafx.scene.control.ButtonType;
 import dungeoncrawler.entity.Difficulty;
 import dungeoncrawler.entity.Player;
@@ -11,25 +8,11 @@ import dungeoncrawler.entity.monster.Monster;
 import dungeoncrawler.screen.*;
 import javafx.scene.paint.Color;
 import javafx.application.Application;
-//import javafx.event.EventHandler;
-//import javafx.geometry.Bounds;
-//import javafx.scene.Scene;
 import javafx.scene.control.Button;
-//import javafx.scene.input.KeyCode;
-//import javafx.scene.input.KeyCodeCombination;
-//import javafx.scene.input.KeyCombination;
-//import javafx.scene.input.KeyEvent;
-//import javafx.stage.Popup;
 import javafx.stage.Stage;
-//import javafx.util.Duration;
-//import javafx.scene.paint.Color;
-//import java.sql.Time;
 import javafx.scene.layout.Pane;
-
 import java.util.*;
-
 import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
 
 
 public class Controller extends Application {
@@ -131,29 +114,9 @@ public class Controller extends Application {
         if (room instanceof PuzzleRoom) {
             Button exitButton = ((PuzzleRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
-                //Room winningRoom = new WinningRoom(500, 500, Controller.diff);
-                //initRoom(winningRoom);
                 winScreen();
             });
         }
-
-        // Reset after death
-        /*
-        if (room.getIdText().equals("start")) {
-            Player.updateWeapon(null);
-            Player.resetStats();
-            int index = -1;
-            if (this.startingWeapon.getName().equals("Shortsword")) {
-                index = 0;
-            } else if (this.startingWeapon.getName().equals("Bludgeon")) {
-                index = 1;
-            } else {
-                index = 2;
-            }
-            Player.getInventoryQuantity()[index] = 1;
-        }
-
-         */
 
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         currPlayer = player;
