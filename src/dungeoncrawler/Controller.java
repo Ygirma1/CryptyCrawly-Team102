@@ -25,6 +25,8 @@ import javafx.stage.Stage;
 //import javafx.scene.paint.Color;
 //import java.sql.Time;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.control.Alert;
@@ -103,6 +105,14 @@ public class Controller extends Application {
     }
 
     private void initRoom(Room room) {
+        if (room instanceof ChallengeRoom1) {
+            Button exitButton = ((ChallengeRoom1) room).getChallengeExitButton();
+            exitButton.setOnAction(e -> {
+                Room dogeRoom = new DogeRoom(500, 500, "Doge", Controller.diff);
+                initRoom(dogeRoom);
+            });
+        }
+
         if (room instanceof DogeRoom) {
             Button exitButton = ((DogeRoom) room).getExitButton();
             exitButton.setOnAction(e -> {
@@ -140,16 +150,22 @@ public class Controller extends Application {
             Player.getInventoryQuantity()[index] = 1;
         }
 
-
         Player player = new Player(100, 100, 50, 50, this.startingWeapon);
         currPlayer = player;
+
         Monster monster = room.getMonster();
-        roomMonster = monster;
-        room.updateMonsterHealthBar();
+        if (room instanceof ChallengeRoom1) {
+            ((ChallengeRoom1) room).updateMonsterHealthBar();
+        } else {
+            roomMonster = monster;
+            room.updateMonsterHealthBar();
+        }
         room.setPlayer(player);
+
         if (player.getHealth() > 20) {
             player.setHealth(player.ORIGINAL_HEALTH);
         }
+
         room.updateHealthBar();
         int prevRoomIndex = room.getPrevRoomIndex();
         prevExitText = "" + prevRoomIndex;
@@ -189,12 +205,20 @@ public class Controller extends Application {
 
         class Helper extends TimerTask {
             public void run() {
-                monster.attackPlayer(player);
-                room.updateMonsterHealthBar();
-                room.updateHealthBar();
-                if (!monster.isAlive() || !Player.isAlive()) {
-                    cancel();
+                if (room instanceof ChallengeRoom1) {
+                    for (Monster monster : ((ChallengeRoom1) room).getMonsterArrayList()) {
+                        monster.attackPlayer(player);
+                        ((ChallengeRoom1) room).updateMonsterHealthBar();
+                    }
+                } else {
+                    monster.attackPlayer(player);
+                    room.updateMonsterHealthBar();
+
+                    if (!monster.isAlive() || !Player.isAlive()) {
+                        cancel();
+                    }
                 }
+                room.updateHealthBar();
             }
         }
 
@@ -211,10 +235,18 @@ public class Controller extends Application {
         }
 
         Timer timer = new Timer();
-        if (monster != null) {
-            monster.move((Pane) this.primaryStage.getScene().getRoot());
-            TimerTask task = new Helper();
-            timer.schedule(task, 0, 500);
+        if (room instanceof ChallengeRoom1) {
+            for (Monster tempMonster : ((ChallengeRoom1) room).getMonsterArrayList()) {
+                tempMonster.move((Pane) this.primaryStage.getScene().getRoot());
+                TimerTask task = new Helper();
+                timer.schedule(task, 0, 500);
+            }
+        } else {
+            if (monster != null) {
+                monster.move((Pane) this.primaryStage.getScene().getRoot());
+                TimerTask task = new Helper();
+                timer.schedule(task, 0, 500);
+            }
         }
 
         TimerTask playerSwitchState = new PlayerSwitchState();
@@ -269,7 +301,8 @@ public class Controller extends Application {
             default:
                 break;
             }
-            if (monster != null && !monster.isAlive()) {
+
+            if (!(room instanceof ChallengeRoom1) && monster != null && !monster.isAlive()) {
                 if (monster.isItemDropAvailable()) {
                     int randomNumber = rand.nextInt(10) + 1; // 1 to 10
                     if (randomNumber <= 5) {
@@ -315,6 +348,19 @@ public class Controller extends Application {
                 room.openClosedExits(room);
             }
         });
+
+        if (room instanceof ChallengeRoom1) {
+            if (((ChallengeRoom1) room).allMonstersAreDead()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Challenge Complete");
+                alert.setContentText("You received 2 potions of each type");
+                ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                player.getInventoryQuantity()[3] += 2;
+                player.getInventoryQuantity()[4] += 2;
+                player.getInventoryQuantity()[5] += 2;
+            }
+        }
+
         primaryStage.getScene().setOnMouseMoved(e -> {
             if (!Player.isAlive()) {
                 Player.setIsAlive(true);
@@ -322,15 +368,38 @@ public class Controller extends Application {
                 gameOverScreen();
             }
         });
-        if (monster != null) {
-            monster.setOnMouseClicked(e -> {
-                monster.takeDamage(player.getDamage());
-                room.updateMonsterHealthBar();
-                if (monster != null && !monster.isAlive()) {
-                    room.openClosedExits(room);
-                }
-            });
+
+        if (room instanceof ChallengeRoom1) {
+            for (Monster tempMonster : ((ChallengeRoom1) room).getMonsterArrayList()) {
+                tempMonster.setOnMouseClicked(e -> {
+                    tempMonster.takeDamage(player.getDamage());
+                    room.updateMonsterHealthBar();
+
+                    if (((ChallengeRoom1) room).allMonstersAreDead()) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Challenge Complete");
+                        alert.setContentText("You received 2 potions of each type");
+                        ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                        player.getInventoryQuantity()[3] += 2;
+                        player.getInventoryQuantity()[4] += 2;
+                        player.getInventoryQuantity()[5] += 2;
+                    }
+                });
+
+            }
+        } else {
+            if (monster != null) {
+                monster.setOnMouseClicked(e -> {
+                    monster.takeDamage(player.getDamage());
+                    room.updateMonsterHealthBar();
+                    if (monster != null && !monster.isAlive()) {
+                        room.openClosedExits(room);
+                    }
+                });
+            }
         }
+
+
     }
 
     private void gameOverScreen() {
@@ -400,4 +469,6 @@ public class Controller extends Application {
     public Player getPlayer() {
         return (currPlayer);
     }
+
+
 }

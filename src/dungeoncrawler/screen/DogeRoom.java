@@ -1,6 +1,7 @@
 package dungeoncrawler.screen;
 
 import dungeoncrawler.entity.Difficulty;
+import dungeoncrawler.entity.monster.Monster;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -179,7 +179,8 @@ public class Room {
     private void rGenerateMap(Room current, int roomDepth, int newRoomIndex) {
         current.setPathID(pathReveal(newRoomIndex));
         if (roomDepth >= 6) {
-            Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
+            Room nextRoom = new ChallengeRoom1(500, 500, "challenge1", current.diff);
+            //Room nextRoom = new DogeRoom(500, 500, "Boss", current.diff);
             current.adjRooms[newRoomIndex] = nextRoom;
             addMonster(current);
             nextRoom.down = null;
@@ -271,7 +272,6 @@ public class Room {
         default:
             break;
         }
-
     }
 
     private String pathReveal(int nextIndex) {
@@ -683,5 +683,37 @@ public class Room {
 
     public String getIdText() {
         return id.getText();
+    }
+
+    public Text getGoldText() {
+        return goldText;
+    }
+
+    public Text getHealthText() {
+        return healthText;
+    }
+
+    public static Rectangle getHealthRect() {
+        return healthRect;
+    }
+
+    public Text getMonsterHealthText() {
+        return monsterHealthText;
+    }
+
+    public static Rectangle getMonsterHealthRect() {
+        return monsterHealthRect;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Color getFloorColor() {
+        return floorColor;
+    }
+
+    public static void setMonsterHealthRect(Rectangle monsterHealthRect) {
+        Room.monsterHealthRect = monsterHealthRect;
     }
 }
