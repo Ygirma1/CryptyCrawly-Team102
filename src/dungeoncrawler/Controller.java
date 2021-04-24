@@ -3,7 +3,7 @@ package dungeoncrawler;
 //import javafx.animation.KeyFrame;
 //import javafx.animation.KeyValue;
 //import javafx.animation.Timeline;
-
+import javafx.scene.control.ButtonType;
 import dungeoncrawler.entity.Difficulty;
 import dungeoncrawler.entity.Player;
 import dungeoncrawler.entity.Weapon;
@@ -26,12 +26,11 @@ import javafx.stage.Stage;
 //import java.sql.Time;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+
 import javafx.scene.control.Alert;
 //import javafx.scene.control.Alert.AlertType;
-import java.util.Random;
+
 
 public class Controller extends Application {
     private Stage primaryStage;
@@ -49,6 +48,8 @@ public class Controller extends Application {
     private Weapon startingWeapon;
     private static Random rand = new Random();
     private Player currPlayer;
+    private static boolean challengeRoom1Reached = false;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -155,7 +156,35 @@ public class Controller extends Application {
 
         Monster monster = room.getMonster();
         if (room instanceof ChallengeRoom1) {
-            ((ChallengeRoom1) room).updateMonsterHealthBar();
+            challengeRoom1Reached = true;
+
+            if (ChallengeRoom1.isChallengeCompleted()) {
+                // this is so that when we go back from the inventory, the challenge does not start again
+                ((ChallengeRoom1) room).setMonsterArrayList(new ArrayList<>());
+                ((ChallengeRoom1) room).setMonsterHealthRectList(new ArrayList<>());
+                ((ChallengeRoom1) room).updateMonsterHealthBar();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirm Challenge");
+                alert.setHeaderText("A challenge is presented");
+                alert.setContentText("Do you want to take the challenge?\nIf you win, you get hella prizes!");
+
+                ButtonType buttonTypeOK = new ButtonType("OK");
+                ButtonType buttonTypeNope = new ButtonType("Nope");
+                alert.getButtonTypes().setAll(buttonTypeOK, buttonTypeNope);
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == buttonTypeNope) {
+                    ((ChallengeRoom1) room).setMonsterArrayList(new ArrayList<>());
+                    ((ChallengeRoom1) room).setMonsterHealthRectList(new ArrayList<>());
+                    ChallengeRoom1.setChallengeCompleted(true);
+                    ChallengeRoom1.setItemDropsAvailable(false);
+                    ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                } else {
+                    ((ChallengeRoom1) room).updateMonsterHealthBar();
+                }
+            }
         } else {
             roomMonster = monster;
             room.updateMonsterHealthBar();
@@ -209,6 +238,10 @@ public class Controller extends Application {
                     for (Monster monster : ((ChallengeRoom1) room).getMonsterArrayList()) {
                         monster.attackPlayer(player);
                         ((ChallengeRoom1) room).updateMonsterHealthBar();
+
+                        if (((ChallengeRoom1) room).allMonstersAreDead()) {
+                            cancel();
+                        }
                     }
                 } else {
                     monster.attackPlayer(player);
@@ -273,6 +306,10 @@ public class Controller extends Application {
                 player.setGoEast(true);
                 break;
             case "b":
+                if (challengeRoom1Reached && !ChallengeRoom1.isChallengeCompleted()) {
+                    // disable inventory button while in the challenge
+                    break;
+                }
                 InventoryScreen inventoryScreen = new InventoryScreen();
                 inventoryScreen.getBackButton().setOnAction(event -> {
                     initRoom(room);
@@ -301,6 +338,23 @@ public class Controller extends Application {
             default:
                 break;
             }
+
+            if (room instanceof ChallengeRoom1) {
+                if (((ChallengeRoom1) room).allMonstersAreDead() && ChallengeRoom1.isItemDropsAvailable()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Challenge Complete");
+                    alert.setContentText("You received 2 potions of each type");
+                    ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                    player.getInventoryQuantity()[3] += 2;
+                    player.getInventoryQuantity()[4] += 2;
+                    player.getInventoryQuantity()[5] += 2;
+                    alert.show();
+                    ((ChallengeRoom1) room).setItemDropsAvailable(false);
+                    ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                    ((ChallengeRoom1) room).setChallengeCompleted(true);
+                }
+            }
+
 
             if (!(room instanceof ChallengeRoom1) && monster != null && !monster.isAlive()) {
                 if (monster.isItemDropAvailable()) {
@@ -349,17 +403,7 @@ public class Controller extends Application {
             }
         });
 
-        if (room instanceof ChallengeRoom1) {
-            if (((ChallengeRoom1) room).allMonstersAreDead()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Challenge Complete");
-                alert.setContentText("You received 2 potions of each type");
-                ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
-                player.getInventoryQuantity()[3] += 2;
-                player.getInventoryQuantity()[4] += 2;
-                player.getInventoryQuantity()[5] += 2;
-            }
-        }
+
 
         primaryStage.getScene().setOnMouseMoved(e -> {
             if (!Player.isAlive()) {
@@ -374,16 +418,6 @@ public class Controller extends Application {
                 tempMonster.setOnMouseClicked(e -> {
                     tempMonster.takeDamage(player.getDamage());
                     room.updateMonsterHealthBar();
-
-                    if (((ChallengeRoom1) room).allMonstersAreDead()) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Challenge Complete");
-                        alert.setContentText("You received 2 potions of each type");
-                        ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
-                        player.getInventoryQuantity()[3] += 2;
-                        player.getInventoryQuantity()[4] += 2;
-                        player.getInventoryQuantity()[5] += 2;
-                    }
                 });
 
             }
@@ -406,8 +440,14 @@ public class Controller extends Application {
         GameOverScreen gameOverScreen = new GameOverScreen();
         Button playButton = gameOverScreen.getPlayButton();
         playButton.setOnAction(e -> {
-            Player.resetStats();
-            Room start = new Room("start", diff);
+            Room start;
+            if (challengeRoom1Reached) {
+                start = new ChallengeRoom1(500, 500, "challenge1", diff);
+            } else {
+                Player.resetStats();
+                start = new Room("start", diff);
+            }
+
             start.generateMap(start);
             initRoom(start);
         });

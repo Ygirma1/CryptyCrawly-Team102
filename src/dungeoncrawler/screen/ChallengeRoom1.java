@@ -32,6 +32,8 @@ public class ChallengeRoom1 extends Room {
     private final Button challengeExitButton;
     private ArrayList<Monster> monsterArrayList;
     private ArrayList<Rectangle> monsterHealthRectList;
+    private static boolean itemDropsAvailable = true;
+    private static boolean challengeCompleted = false;
 
     public ChallengeRoom1(int width, int height, String id, Difficulty diff) {
         super(width, height, id, diff);
@@ -41,7 +43,6 @@ public class ChallengeRoom1 extends Room {
         this.challengeExitButton.setPrefSize(50, 50);
         this.challengeExitButton.setDisable(true);
         this.challengeExitButton.setId("exitButton");
-
         generateMonsters();
     }
 
@@ -179,5 +180,21 @@ public class ChallengeRoom1 extends Room {
 
     public Button getChallengeExitButton() {
         return challengeExitButton;
+    }
+
+    public static boolean isItemDropsAvailable() {
+        return itemDropsAvailable;
+    }
+
+    public static void setItemDropsAvailable(boolean itemDropsAvailable) {
+        ChallengeRoom1.itemDropsAvailable = itemDropsAvailable;
+    }
+
+    public static boolean isChallengeCompleted() {
+        return challengeCompleted;
+    }
+
+    public static void setChallengeCompleted(boolean challengeCompleted) {
+        ChallengeRoom1.challengeCompleted = challengeCompleted;
     }
 }
