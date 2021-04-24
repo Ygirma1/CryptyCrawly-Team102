@@ -1,5 +1,6 @@
 package dungeoncrawler.screen;
 
+import dungeoncrawler.entity.Player;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -12,6 +13,7 @@ public class GameOverScreen {
     private final int width;
     private final int height;
     private final Text deathText;
+    private Text stats;
     private final Font deathFont = new Font("High Tower Text", 55);
     private final Font btFont = new Font("High Tower Text", 25);
     private final Button playButton;
@@ -34,23 +36,29 @@ public class GameOverScreen {
         this.deathText = new Text("YOU DIED");
         this.deathText.setFont(deathFont);
         this.deathText.setFill(Color.DARKRED);
+        this.stats = new Text("Monsters killed: " + Player.getMonstersKilled() +
+                "\nPotions drank: " + Player.getPotionsDrank() +
+                "\nItems purchased: " + Player.getItemsPurchased());
+        this.stats.setFont(btFont);
+        this.stats.setFill(Color.DARKRED);
         this.playButton = new Button("Play again");
     }
 
     public Scene getScene() {
         Rectangle background = new Rectangle(this.width, this.height);
         background.setFill(Color.BLACK);
-        this.deathText.relocate(100, 150);
+        this.deathText.relocate(100, 100);
+        this.stats.relocate(150, 175);
 
         this.playButton.setFont(btFont);
         this.playButton.setTextFill(Color.BLACK);
         this.playButton.setStyle("-fx-background-color: #8B0000;");
         this.playButton.setPrefWidth(150.0);
         this.playButton.setPrefHeight(50.0);
-        this.playButton.relocate(175, 250);
+        this.playButton.relocate(175, 275);
 
         Pane pane = new Pane();
-        pane.getChildren().addAll(background, deathText, playButton);
+        pane.getChildren().addAll(background, deathText, stats, playButton);
         return new Scene(pane, this.width, this.height);
     }
 

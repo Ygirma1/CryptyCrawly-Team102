@@ -16,6 +16,9 @@ import java.io.FileNotFoundException;
 public class Player extends Rectangle {
     public static final int ORIGINAL_HEALTH = 20;
     public static final int ORIGINAL_SPEED = 7;
+    private static int MONSTERS_KILLED = 0;
+    private static int POTIONS_DRANK = 0;
+    private static int ITEMS_PURCHASED = 0;
     private static int health = ORIGINAL_HEALTH;
     private static int damageModifier = 0; //Tracks bonuses to player damage
     private static int damage;
@@ -221,5 +224,27 @@ public class Player extends Rectangle {
         damageModifier = newDamageMod;
     }
 
+    public static void killMonster() {
+        MONSTERS_KILLED++;
+    }
 
+    public static int getMonstersKilled() {
+        return MONSTERS_KILLED;
+    }
+
+    public static void drinkPotion() {
+        POTIONS_DRANK++;
+    }
+
+    public static int getPotionsDrank() {
+        return POTIONS_DRANK;
+    }
+
+    public static void purchaseItem() {
+        ITEMS_PURCHASED++;
+    }
+
+    public static int getItemsPurchased() {
+        return ITEMS_PURCHASED;
+    }
 }

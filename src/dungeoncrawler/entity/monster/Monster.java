@@ -67,6 +67,7 @@ public class Monster extends Rectangle {
     public void takeDamage(int damageCount) {
         this.health -= damageCount;
         if (this.health <= 0) {
+            Player.killMonster();
             this.setVisible(false);
             this.alive = false;
         } else {

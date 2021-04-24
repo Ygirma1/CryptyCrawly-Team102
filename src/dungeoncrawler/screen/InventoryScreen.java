@@ -129,6 +129,7 @@ public class InventoryScreen {
                     }
                 }
                 items[i].setOnAction(e -> {
+                    Player.drinkPotion();
                     potions[finalI - 3].applyEffect();
                     quantities[finalI]--;
                     if (quantities[finalI] <= 0) {
@@ -153,6 +154,7 @@ public class InventoryScreen {
         this.itemText.setFill(goldColor);
         shopButton.setOnAction(e -> {
             if (Controller.getGold() >= priceNum) {
+                Player.purchaseItem();
                 shopButton.setDisable(true);
                 Controller.setGold(Controller.getGold() - priceNum);
                 Player.getInventoryQuantity()[shopItem]++;
