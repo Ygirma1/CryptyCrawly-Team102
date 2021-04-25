@@ -859,4 +859,41 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn("Back");
         assertEquals(3, Player.getDamage());
     }
+
+    @Test
+    public void testMonstersKilled() {
+        for (int i = 0; i < 30; i++) {
+            Player.killMonster();
+        }
+        assertTrue(Player.getMonstersKilled() == 30);
+    }
+
+    @Test
+    public void testPotionsDrank() {
+        for (int i = 0; i < 50; i++) {
+            Player.drinkPotion();
+        }
+        assertTrue(Player.getPotionsDrank() == 50);
+    }
+
+    @Test
+    public void testItemsPurchased() {
+        for (int i = 0; i < 40; i++) {
+            Player.purchaseItem();
+        }
+        assertTrue(Player.getItemsPurchased() == 40);
+    }
+
+    @Test
+    public void testSingleItemPurchase() {
+        clickOn("Start");
+        clickOn("#nameField").write("Tristan");
+        clickOn("#hardRB");
+        clickOn("#weaponDropdown");
+        clickOn("Greatsword");
+        clickOn("PROCEED");
+        press(KeyCode.B);
+        clickOn("Purchase");
+        assertTrue(Player.getItemsPurchased() == 1);
+    }
 }
