@@ -34,6 +34,7 @@ public class Controller extends Application {
     private static Random rand = new Random();
     private Player currPlayer;
     private static boolean challengeRoom1Reached = false;
+    private static boolean challengeRoom2Reached = false;
 
 
     @Override
@@ -94,6 +95,16 @@ public class Controller extends Application {
         if (room instanceof ChallengeRoom1) {
             Button exitButton = ((ChallengeRoom1) room).getChallengeExitButton();
             exitButton.setOnAction(e -> {
+                Room challengeRoom2 = new ChallengeRoom2(500, 500, "ChallengeRoom2", Controller.diff);
+                challengeRoom2.setPlayer(currPlayer);
+                initRoom(challengeRoom2);
+            });
+        }
+
+        if (room instanceof ChallengeRoom2) {
+            Button exitButton = ((ChallengeRoom2) room).getChallengeExitButton();
+            exitButton.setOnAction(e -> {
+                int prevRoomIndex = ((ChallengeRoom2) room).getPrevRoomIndex();
                 Room dogeRoom = new DogeRoom(500, 500, "Doge", Controller.diff);
                 dogeRoom.setPlayer(currPlayer);
                 initRoom(dogeRoom);
@@ -155,6 +166,36 @@ public class Controller extends Application {
                     ((ChallengeRoom1) room).updateMonsterHealthBar();
                 }
             }
+        } else if (room instanceof ChallengeRoom2) {
+            challengeRoom2Reached = true;
+
+            if (ChallengeRoom2.isChallengeCompleted()) {
+                // this is so that when we go back from the inventory, the challenge does not start again
+                ((ChallengeRoom2) room).setMonsterArrayList(new ArrayList<>());
+                ((ChallengeRoom2) room).setMonsterHealthRectList(new ArrayList<>());
+                ((ChallengeRoom2) room).updateMonsterHealthBar();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirm Challenge");
+                alert.setHeaderText("A challenge is presented");
+                alert.setContentText("Do you want to take the challenge?\nIf you win, you get hella prizes!");
+
+                ButtonType buttonTypeOK = new ButtonType("OK");
+                ButtonType buttonTypeNope = new ButtonType("Nope");
+                alert.getButtonTypes().setAll(buttonTypeOK, buttonTypeNope);
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == buttonTypeNope) {
+                    ((ChallengeRoom2) room).setMonsterArrayList(new ArrayList<>());
+                    ((ChallengeRoom2) room).setMonsterHealthRectList(new ArrayList<>());
+                    ChallengeRoom2.setChallengeCompleted(true);
+                    ChallengeRoom2.setItemDropsAvailable(false);
+                    ((ChallengeRoom2) room).getChallengeExitButton().setDisable(false);
+                } else {
+                    ((ChallengeRoom2) room).updateMonsterHealthBar();
+                }
+            }
         } else {
             roomMonster = monster;
             room.updateMonsterHealthBar();
@@ -213,6 +254,15 @@ public class Controller extends Application {
                             cancel();
                         }
                     }
+                } else if (room instanceof ChallengeRoom2) {
+                    for (Monster monster : ((ChallengeRoom2) room).getMonsterArrayList()) {
+                        monster.attackPlayer(player);
+                        ((ChallengeRoom2) room).updateMonsterHealthBar();
+
+                        if (((ChallengeRoom2) room).allMonstersAreDead()) {
+                            cancel();
+                        }
+                    }
                 } else if (room instanceof DogeRoom) {
                     DogeMonster doge = ((DogeRoom) room).getDogeMonster();
                     doge.attackPlayer(player);
@@ -253,6 +303,12 @@ public class Controller extends Application {
                 TimerTask task = new Helper();
                 timer.schedule(task, 0, 500);
             }
+        } else if (room instanceof ChallengeRoom2) {
+            for (Monster tempMonster : ((ChallengeRoom2) room).getMonsterArrayList()) {
+                tempMonster.move((Pane) this.primaryStage.getScene().getRoot());
+                TimerTask task = new Helper();
+                timer.schedule(task, 0, 500);
+            }
         } else {
             if (room instanceof DogeRoom) {
                 ((DogeRoom) room).getDogeMonster().move((Pane) this.primaryStage.getScene().getRoot());
@@ -289,7 +345,8 @@ public class Controller extends Application {
                 player.setGoEast(true);
                 break;
             case "b":
-                if (challengeRoom1Reached && !ChallengeRoom1.isChallengeCompleted()) {
+                if ((challengeRoom1Reached && !ChallengeRoom1.isChallengeCompleted()
+                        || (challengeRoom2Reached && !ChallengeRoom2.isChallengeCompleted()))) {
                     // disable inventory button while in the challenge
                     break;
                 }
@@ -337,9 +394,23 @@ public class Controller extends Application {
                     ((ChallengeRoom1) room).setChallengeCompleted(true);
                 }
             }
+            if (room instanceof ChallengeRoom2) {
+                if (((ChallengeRoom2) room).allMonstersAreDead() && ChallengeRoom2.isItemDropsAvailable()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Challenge Complete");
+                    alert.setContentText("You received 75 gold for completing the room!");
+                    ((ChallengeRoom2) room).getChallengeExitButton().setDisable(false);
+                    Controller.setGold(Controller.getGold() + 75);
+                    alert.show();
+                    ((ChallengeRoom2) room).setItemDropsAvailable(false);
+                    ((ChallengeRoom2) room).getChallengeExitButton().setDisable(false);
+                    ((ChallengeRoom2) room).setChallengeCompleted(true);
+                }
+            }
 
 
-            if (!(room instanceof ChallengeRoom1) && monster != null && !monster.isAlive()) {
+            if ((!(room instanceof ChallengeRoom1) || !(room instanceof ChallengeRoom2))
+                    && monster != null && !monster.isAlive()) {
                 if (monster.isItemDropAvailable()) {
                     int randomNumber = rand.nextInt(10) + 1; // 1 to 10
                     if (randomNumber <= 5) {
@@ -402,7 +473,13 @@ public class Controller extends Application {
                     tempMonster.takeDamage(player.getDamage());
                     room.updateMonsterHealthBar();
                 });
-
+            }
+        } else if (room instanceof ChallengeRoom2) {
+            for (Monster tempMonster : ((ChallengeRoom2) room).getMonsterArrayList()) {
+                tempMonster.setOnMouseClicked(e -> {
+                    tempMonster.takeDamage(player.getDamage());
+                    room.updateMonsterHealthBar();
+                });
             }
         } else if (room instanceof DogeRoom) {
             DogeRoom dogeRoom = (DogeRoom) room;
