@@ -23,7 +23,6 @@ import java.io.FileNotFoundException;
 public class DogeRoom extends Room {
     private Label instructionLabel;
     private Label instructionLabel2;
-    //private final Button dogeButton;
     private int dogeCounter;
     private final Button exitButton;
     private final Font smallFont = new Font("High Tower Text", 19);
@@ -57,66 +56,14 @@ public class DogeRoom extends Room {
 
         this.bossHealthText = new Text("Doge HP");
         this.bossHealthText.setFont(smallFont);
-        bossHealthRect = new Rectangle(100, 15, Color.DARKRED);
+        bossHealthRect = new Rectangle(200, 15, Color.DARKRED);
 
         addDoge(this);
-
-        /*
-        this.instructionLabel = new Label();
-        this.instructionLabel = new Label("You have been captured by the doge!");
-        this.instructionLabel.setFont(new Font("Comic Sans MS", 20));
-        this.instructionLabel.setLayoutX(80);
-        this.instructionLabel.setLayoutY(100);
-
-        this.instructionLabel2 = new Label();
-        this.instructionLabel2 = new Label("Press on it 5 times to escape!");
-        this.instructionLabel2.setFont(new Font("Comic Sans MS", 20));
-        this.instructionLabel2.setLayoutX(120);
-        this.instructionLabel2.setLayoutY(130);
-
-
-
-
-        this.dogeButton = new Button();
-        this.dogeButton.setPrefSize(200, 200);
-        this.dogeButton.setLayoutY(170);
-        this.dogeButton.setLayoutX(150);
-        this.dogeButton.setId("dogeButton");
-
-        try {
-            Image dogeImage = new Image(new FileInputStream(System.getProperty("user.dir")
-                    + "\\res\\doge.png"));
-            ImageView imageView = new ImageView(dogeImage);
-            imageView.setFitWidth(200);
-            imageView.setFitHeight(200);
-            this.dogeButton.setGraphic(imageView);
-        } catch (FileNotFoundException exception) {
-            System.out.println("rip " + exception);
-        }
-        this.dogeCounter = 0;
-        this.dogeButton.setOnAction(e -> {
-            this.dogeCounter++;
-            if (this.dogeCounter >= 5) {
-                this.dogeButton.setDisable(true);
-                this.instructionLabel2.setText("");
-                this.instructionLabel.setText("You have escaped from the doge!");
-                this.instructionLabel.setLayoutX(100);
-                this.instructionLabel.setLayoutY(100);
-
-                this.exitButton.setDisable(false);
-
-            }
-        });
-
-         */
-
     }
 
     @Override
     public Scene getScene() {
         Pane pane = new Pane();
-        //pane.getChildren().addAll(this.instructionLabel, this.dogeButton,
-        //        this.instructionLabel2, this.exitButton);
         pane.getChildren().add(this.exitButton);
         pane.getChildren().add(dogeMonster);
         if (player == null || player.getWeaponSprite() == null) {
