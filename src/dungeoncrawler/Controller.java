@@ -5,6 +5,7 @@ import dungeoncrawler.entity.Difficulty;
 import dungeoncrawler.entity.Player;
 import dungeoncrawler.entity.Weapon;
 import dungeoncrawler.entity.monster.Monster;
+import dungeoncrawler.entity.monster.DogeMonster;
 import dungeoncrawler.screen.*;
 import javafx.scene.paint.Color;
 import javafx.application.Application;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import java.util.*;
 import javafx.scene.control.Alert;
+import org.assertj.core.internal.Diff;
 
 
 public class Controller extends Application {
@@ -38,7 +40,7 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Dungeon Crawler");
-
+        //initRoom(new DogeRoom(500, 500, "boss", Difficulty.EASY));
         welcomeScreen();
     }
 
@@ -93,6 +95,7 @@ public class Controller extends Application {
             Button exitButton = ((ChallengeRoom1) room).getChallengeExitButton();
             exitButton.setOnAction(e -> {
                 Room dogeRoom = new DogeRoom(500, 500, "Doge", Controller.diff);
+                dogeRoom.setPlayer(currPlayer);
                 initRoom(dogeRoom);
             });
         }
@@ -210,6 +213,12 @@ public class Controller extends Application {
                             cancel();
                         }
                     }
+                } else if (room instanceof DogeRoom) {
+                    DogeMonster doge = ((DogeRoom) room).getDogeMonster();
+                    doge.attackPlayer(player);
+                    if (!doge.isAlive() || !Player.isAlive()) {
+                        cancel();
+                    }
                 } else {
                     monster.attackPlayer(player);
                     room.updateMonsterHealthBar();
@@ -242,7 +251,11 @@ public class Controller extends Application {
                 timer.schedule(task, 0, 500);
             }
         } else {
-            if (monster != null) {
+            if (room instanceof DogeRoom) {
+                ((DogeRoom) room).getDogeMonster().move((Pane) this.primaryStage.getScene().getRoot());
+                TimerTask task = new Helper();
+                timer.schedule(task, 0, 500);
+            } else if (monster != null) {
                 monster.move((Pane) this.primaryStage.getScene().getRoot());
                 TimerTask task = new Helper();
                 timer.schedule(task, 0, 500);

@@ -117,7 +117,7 @@ public class Monster extends Rectangle {
     public void attackPlayer(Player player) {
         if (this.getBoundsInParent().intersects(player.getBoundsInParent())) {
             if (player.getIsAggressive()) {
-                this.takeDamage(player.getDamage());
+                this.takeDamage(Player.getDamage());
             } else {
                 player.takeDamage(this.damage);
             }
