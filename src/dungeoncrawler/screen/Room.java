@@ -406,7 +406,7 @@ public class Room {
             }
         }
     }
-    public void openClosedExits(Room current) {
+    public static void openClosedExits(Room current) {
         for (Button closedExit : current.getExits()) {
             if (closedExit.isDisable()) {
                 closedExit.setDisable(false);

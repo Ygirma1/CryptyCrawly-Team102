@@ -3,6 +3,7 @@ import dungeoncrawler.*;
 //import javafx.scene.Node;
 import dungeoncrawler.entity.Difficulty;
 import dungeoncrawler.entity.Player;
+import dungeoncrawler.entity.monster.DogeMonster;
 import dungeoncrawler.entity.monster.GreenMonster;
 import dungeoncrawler.entity.monster.Monster;
 import dungeoncrawler.entity.monster.PinkMonster;
@@ -12,6 +13,12 @@ import dungeoncrawler.entity.potion.ZoomPotion;
 //import dungeoncrawler.screen.InventoryScreen;
 //import javafx.scene.control.Control;
 import dungeoncrawler.screen.ChallengeRoom1;
+import dungeoncrawler.screen.DogeRoom;
+import dungeoncrawler.screen.GoldRoom;
+import dungeoncrawler.screen.Room;
+import dungeoncrawler.screen.WinScreen;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 //import javafx.scene.control.Button;
@@ -952,5 +959,52 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(potion1Original + 2, player.getInventoryQuantity()[3]);
         assertEquals(potion2Original + 2, player.getInventoryQuantity()[4]);
         assertEquals(potion3Original + 2, player.getInventoryQuantity()[5]);
+    }
+
+    @Test
+    public void testPlayAgainWin() {
+
+        getToStartRoom();
+        // to skip to challenge room 1, press "p"
+        type(KeyCode.P, 1);
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom1.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.setAlive(false);
+            }
+        }
+
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        clickOn("OK");
+
+        clickOn("Exit");
+
+       
+        Player.setDamage(9999);
+        sleep(1000);
+        clickOn("#Doge");
+
+        clickOn("Exit");
+
+
+        clickOn("#goldButton");
+        clickOn("#goldButton2");
+        clickOn("#goldButton3");
+        clickOn("#exitButton");
+
+        clickOn("#Correct1");
+
+        clickOn("#Correct2");
+
+        clickOn("Yes!!");
+
+        clickOn("#dungeonExit");
+
+        clickOn("Play again");
+        assertEquals(Player.getHealth(), 20);
+        assertEquals(Player.getDamageModifier(), 0);
+        assertEquals(Player.getSpeed(), 7);
+
     }
 }

@@ -8,6 +8,7 @@ public class DogeMonster extends Monster {
     public DogeMonster(int width, int height, int health, ImagePattern img) {
         super(width, height, health, Color.WHITE);
         this.setFill(img);
+        this.setId("Doge");
     }
 
     public int getDamage() {
