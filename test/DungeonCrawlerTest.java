@@ -13,6 +13,7 @@ import dungeoncrawler.entity.potion.ZoomPotion;
 //import dungeoncrawler.screen.InventoryScreen;
 //import javafx.scene.control.Control;
 import dungeoncrawler.screen.ChallengeRoom1;
+import dungeoncrawler.screen.ChallengeRoom2;
 import dungeoncrawler.screen.DogeRoom;
 import dungeoncrawler.screen.GoldRoom;
 import dungeoncrawler.screen.Room;
@@ -965,11 +966,11 @@ public class DungeonCrawlerTest extends ApplicationTest {
     public void testPlayAgainWin() {
 
         getToStartRoom();
-        // to skip to challenge room 1, press "p"
-        type(KeyCode.P, 1);
+        // to skip to challenge room 2, press ";"
+        type(KeyCode.SEMICOLON, 1);
         clickOn("OK");
 
-        for (Monster monster : ChallengeRoom1.getMonsterArrayList()) {
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
             if (monster.isAlive()) {
                 monster.setAlive(false);
             }
@@ -978,9 +979,9 @@ public class DungeonCrawlerTest extends ApplicationTest {
         type(KeyCode.S, 2); // trigger notification to receive potions!
         clickOn("OK");
 
-        clickOn("Exit");
 
-       
+        ChallengeRoom2.setChallengeCompleted(true);
+        clickOn("Exit");
         Player.setDamage(9999);
         sleep(1000);
         clickOn("#Doge");

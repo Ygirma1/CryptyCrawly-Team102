@@ -385,6 +385,11 @@ public class Controller extends Application {
                 challengeRoom1.generateMap(challengeRoom1);
                 initRoom(challengeRoom1);
                 break;
+                case ";":
+                    Room challengeRoom2 = new ChallengeRoom2(500, 500, "challenge1", diff);
+                    challengeRoom2.generateMap(challengeRoom2);
+                    initRoom(challengeRoom2);
+                    break;
             default:
                 break;
             }

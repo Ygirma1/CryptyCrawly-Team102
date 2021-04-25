@@ -30,7 +30,7 @@ import java.util.Random;
 public class ChallengeRoom2 extends Room {
 
     private final Button challengeExitButton;
-    private ArrayList<Monster> monsterArrayList;
+    private static ArrayList<Monster> monsterArrayList;
     private ArrayList<Rectangle> monsterHealthRectList;
     private static boolean itemDropsAvailable = true;
     private static boolean challengeCompleted = false;
@@ -161,7 +161,7 @@ public class ChallengeRoom2 extends Room {
     }
 
 
-    public ArrayList<Monster> getMonsterArrayList() {
+    public static ArrayList<Monster> getMonsterArrayList() {
         return monsterArrayList;
     }
 
