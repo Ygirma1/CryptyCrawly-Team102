@@ -404,6 +404,18 @@ public class Controller extends Application {
                 });
 
             }
+        } else if (room instanceof DogeRoom) {
+            DogeRoom dogeRoom = (DogeRoom) room;
+            DogeMonster dogeMonster = dogeRoom.getDogeMonster();
+            if (dogeMonster != null) {
+                dogeMonster.setOnMouseClicked(e -> {
+                    dogeMonster.takeDamage(player.getDamage());
+                    dogeRoom.updateDogeHealthBar();
+                    if (dogeMonster != null && !dogeMonster.isAlive()) {
+                        dogeRoom.openClosedExits(dogeRoom);
+                    }
+                });
+            }
         } else {
             if (monster != null) {
                 monster.setOnMouseClicked(e -> {
