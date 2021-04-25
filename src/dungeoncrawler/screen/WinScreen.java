@@ -16,6 +16,7 @@ public class WinScreen {
     private final Font winFont = new Font("High Tower Text", 55);
     private final Font btFont = new Font("High Tower Text", 25);
     private final Button playButton;
+    private final Button exitButton;
     private Text stats;
     private Color lime;
 
@@ -43,6 +44,7 @@ public class WinScreen {
         this.stats.setFont(btFont);
         this.stats.setFill(lime.rgb(50, 205, 50));
         this.playButton = new Button("Play again");
+        this.exitButton = new Button("Quit game");
     }
 
     public Scene getScene() {
@@ -58,12 +60,20 @@ public class WinScreen {
         this.playButton.setPrefHeight(50.0);
         this.playButton.relocate(175, 280);
 
+        this.exitButton.setFont(btFont);
+        this.exitButton.setTextFill(Color.BLACK);
+        this.exitButton.setStyle("-fx-background-color: #32CD32;");
+        this.exitButton.setPrefWidth(150.0);
+        this.exitButton.setPrefHeight(50.0);
+        this.exitButton.relocate(175, 330);
+
         Pane pane = new Pane();
-        pane.getChildren().addAll(background, winText, stats, playButton);
+        pane.getChildren().addAll(background, winText, stats, playButton, exitButton);
         return new Scene(pane, this.width, this.height);
     }
 
     public Button getPlayButton() {
         return this.playButton;
     }
+    public Button getExitButton() {return this.exitButton; }
 }

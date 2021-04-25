@@ -1,5 +1,6 @@
 package dungeoncrawler;
 
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import dungeoncrawler.entity.Difficulty;
 import dungeoncrawler.entity.Player;
@@ -539,12 +540,16 @@ public class Controller extends Application {
     public void winScreen() {
         WinScreen winScreen = new WinScreen();
         Button playAgainButton = winScreen.getPlayButton();
+        Button exitButton = winScreen.getExitButton();
         playAgainButton.setOnAction(e -> {
             Room start = new Room("start", diff);
             start.generateMap(start);
             Player.resetStats();
             initRoom(start);
         });
+        exitButton.setOnAction(e -> {
+            getPrimaryStage().close();
+                });
         this.primaryStage.setScene(winScreen.getScene());
         this.primaryStage.show();
     }
