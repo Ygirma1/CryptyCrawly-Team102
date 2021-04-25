@@ -907,7 +907,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
         verifyThat("OK", NodeMatchers.isVisible());
         verifyThat("Nope", NodeMatchers.isVisible());
         clickOn("OK");
-        assertTrue(ChallengeRoom1.getMonsterArrayList().size() != 0);
+        assertTrue(ChallengeRoom1.getMonsterArrayList().size() >= 2);
         assertTrue(!ChallengeRoom1.isChallengeCompleted());
         assertTrue(!ChallengeRoom1.allMonstersAreDead());
         assertTrue(ChallengeRoom1.getChallengeExitButton().isDisabled());
