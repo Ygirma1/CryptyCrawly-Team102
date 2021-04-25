@@ -11,6 +11,7 @@ import dungeoncrawler.entity.potion.Potion;
 import dungeoncrawler.entity.potion.ZoomPotion;
 //import dungeoncrawler.screen.InventoryScreen;
 //import javafx.scene.control.Control;
+import dungeoncrawler.screen.ChallengeRoom1;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 //import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 //import javafx.scene.Scene;
 import org.junit.Test;
-
+import javafx.scene.shape.Rectangle;
 //import org.testfx.assertions.api.ButtonAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -31,6 +32,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 //import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -895,5 +897,60 @@ public class DungeonCrawlerTest extends ApplicationTest {
         press(KeyCode.B);
         clickOn("Purchase");
         assertTrue(Player.getItemsPurchased() == 1);
+    }
+
+    @Test
+    public void testChallengeRoomNotificationOk() {
+        getToStartRoom();
+        // to skip to challenge room 1, press "p"
+        type(KeyCode.P, 1);
+        verifyThat("OK", NodeMatchers.isVisible());
+        verifyThat("Nope", NodeMatchers.isVisible());
+        clickOn("OK");
+        assertTrue(ChallengeRoom1.getMonsterArrayList().size() != 0);
+        assertTrue(!ChallengeRoom1.isChallengeCompleted());
+        assertTrue(!ChallengeRoom1.allMonstersAreDead());
+        assertTrue(ChallengeRoom1.getChallengeExitButton().isDisabled());
+    }
+
+    @Test
+    public void testChallengeRoomNotificationNope() {
+        getToStartRoom();
+        // to skip to challenge room 1, press "p"
+        type(KeyCode.P, 1);
+        verifyThat("OK", NodeMatchers.isVisible());
+        verifyThat("Nope", NodeMatchers.isVisible());
+        clickOn("Nope");
+        assertTrue(ChallengeRoom1.getMonsterArrayList().size() == 0);
+        assertTrue(ChallengeRoom1.isChallengeCompleted());
+        assertTrue(ChallengeRoom1.allMonstersAreDead());
+        assertTrue(!ChallengeRoom1.getChallengeExitButton().isDisabled());
+    }
+
+    @Test
+    public void testChallengeRoomFinished() {
+        int potion1Original = player.getInventoryQuantity()[3];
+        int potion2Original = player.getInventoryQuantity()[4];
+        int potion3Original = player.getInventoryQuantity()[5];
+        getToStartRoom();
+        // to skip to challenge room 1, press "p"
+        type(KeyCode.P, 1);
+        clickOn("OK");
+
+        assertTrue(ChallengeRoom1.isItemDropsAvailable());
+        for (Monster monster : ChallengeRoom1.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.setAlive(false);
+            }
+        }
+
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+
+        assertTrue(ChallengeRoom1.isChallengeCompleted());
+        
+        clickOn("OK");
+        assertEquals(potion1Original + 2, player.getInventoryQuantity()[3]);
+        assertEquals(potion2Original + 2, player.getInventoryQuantity()[4]);
+        assertEquals(potion3Original + 2, player.getInventoryQuantity()[5]);
     }
 }

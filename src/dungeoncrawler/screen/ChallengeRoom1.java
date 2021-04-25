@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
-import javafx.scene.shape.Rectangle;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,15 +28,14 @@ import java.util.Random;
 
 public class ChallengeRoom1 extends Room {
 
-    private final Button challengeExitButton;
-    private ArrayList<Monster> monsterArrayList;
-    private ArrayList<Rectangle> monsterHealthRectList;
+    private final static Button challengeExitButton = new Button("Exit");
+    private static ArrayList<Monster> monsterArrayList;
+    private static ArrayList<Rectangle> monsterHealthRectList;
     private static boolean itemDropsAvailable = true;
     private static boolean challengeCompleted = false;
 
     public ChallengeRoom1(int width, int height, String id, Difficulty diff) {
         super(width, height, id, diff);
-        this.challengeExitButton = new Button("Exit");
         this.challengeExitButton.setLayoutX(450);
         this.challengeExitButton.setLayoutY(200);
         this.challengeExitButton.setPrefSize(50, 50);
@@ -145,13 +143,13 @@ public class ChallengeRoom1 extends Room {
         }
     }
 
-    public boolean allMonstersAreDead() {
-        for (Monster monster : this.monsterArrayList) {
+    public static boolean allMonstersAreDead() {
+        for (Monster monster : monsterArrayList) {
             if (monster.isAlive()) {
                 return false;
             }
         }
-         return true;
+        return true;
     }
 
     @Override
@@ -162,23 +160,23 @@ public class ChallengeRoom1 extends Room {
     }
 
 
-    public ArrayList<Monster> getMonsterArrayList() {
+    public static ArrayList<Monster> getMonsterArrayList() {
         return monsterArrayList;
     }
 
-    public void setMonsterArrayList(ArrayList<Monster> monsterArrayList) {
-        this.monsterArrayList = monsterArrayList;
+    public static void setMonsterArrayList(ArrayList<Monster> monsterArrayList) {
+        ChallengeRoom1.monsterArrayList = monsterArrayList;
     }
 
-    public ArrayList<Rectangle> getMonsterHealthRectList() {
+    public static ArrayList<Rectangle> getMonsterHealthRectList() {
         return monsterHealthRectList;
     }
 
-    public void setMonsterHealthRectList(ArrayList<Rectangle> monsterHealthRectList) {
-        this.monsterHealthRectList = monsterHealthRectList;
+    public static void setMonsterHealthRectList(ArrayList<Rectangle> monsterHealthRectList) {
+        ChallengeRoom1.monsterHealthRectList = monsterHealthRectList;
     }
 
-    public Button getChallengeExitButton() {
+    public static Button getChallengeExitButton() {
         return challengeExitButton;
     }
 

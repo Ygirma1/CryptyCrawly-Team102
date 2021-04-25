@@ -247,4 +247,6 @@ public class Player extends Rectangle {
     public static int getItemsPurchased() {
         return ITEMS_PURCHASED;
     }
+
+
 }

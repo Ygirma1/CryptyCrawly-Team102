@@ -92,7 +92,7 @@ public class Controller extends Application {
 
     private void initRoom(Room room) {
         if (room instanceof ChallengeRoom1) {
-            Button exitButton = ((ChallengeRoom1) room).getChallengeExitButton();
+            Button exitButton = ChallengeRoom1.getChallengeExitButton();
             exitButton.setOnAction(e -> {
                 Room dogeRoom = new DogeRoom(500, 500, "Doge", Controller.diff);
                 dogeRoom.setPlayer(currPlayer);
@@ -130,8 +130,8 @@ public class Controller extends Application {
 
             if (ChallengeRoom1.isChallengeCompleted()) {
                 // this is so that when we go back from the inventory, the challenge does not start again
-                ((ChallengeRoom1) room).setMonsterArrayList(new ArrayList<>());
-                ((ChallengeRoom1) room).setMonsterHealthRectList(new ArrayList<>());
+                ChallengeRoom1.setMonsterArrayList(new ArrayList<>());
+                ChallengeRoom1.setMonsterHealthRectList(new ArrayList<>());
                 ((ChallengeRoom1) room).updateMonsterHealthBar();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -146,11 +146,11 @@ public class Controller extends Application {
                 Optional<ButtonType> result = alert.showAndWait();
 
                 if (result.get() == buttonTypeNope) {
-                    ((ChallengeRoom1) room).setMonsterArrayList(new ArrayList<>());
-                    ((ChallengeRoom1) room).setMonsterHealthRectList(new ArrayList<>());
+                    ChallengeRoom1.setMonsterArrayList(new ArrayList<>());
+                    ChallengeRoom1.setMonsterHealthRectList(new ArrayList<>());
                     ChallengeRoom1.setChallengeCompleted(true);
                     ChallengeRoom1.setItemDropsAvailable(false);
-                    ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                    ChallengeRoom1.getChallengeExitButton().setDisable(false);
                 } else {
                     ((ChallengeRoom1) room).updateMonsterHealthBar();
                 }
@@ -205,11 +205,11 @@ public class Controller extends Application {
         class Helper extends TimerTask {
             public void run() {
                 if (room instanceof ChallengeRoom1) {
-                    for (Monster monster : ((ChallengeRoom1) room).getMonsterArrayList()) {
+                    for (Monster monster : ChallengeRoom1.getMonsterArrayList()) {
                         monster.attackPlayer(player);
                         ((ChallengeRoom1) room).updateMonsterHealthBar();
 
-                        if (((ChallengeRoom1) room).allMonstersAreDead()) {
+                        if (ChallengeRoom1.allMonstersAreDead()) {
                             cancel();
                         }
                     }
@@ -248,7 +248,7 @@ public class Controller extends Application {
 
         Timer timer = new Timer();
         if (room instanceof ChallengeRoom1) {
-            for (Monster tempMonster : ((ChallengeRoom1) room).getMonsterArrayList()) {
+            for (Monster tempMonster : ChallengeRoom1.getMonsterArrayList()) {
                 tempMonster.move((Pane) this.primaryStage.getScene().getRoot());
                 TimerTask task = new Helper();
                 timer.schedule(task, 0, 500);
@@ -299,6 +299,11 @@ public class Controller extends Application {
                 });
                 primaryStage.setScene(inventoryScreen.getScene());
                 break;
+            case "p":
+                Room challengeRoom1 = new ChallengeRoom1(500, 500, "challenge1", diff);
+                challengeRoom1.generateMap(challengeRoom1);
+                initRoom(challengeRoom1);
+                break;
             default:
                 break;
             }
@@ -318,12 +323,17 @@ public class Controller extends Application {
             case "d":
                 player.setGoEast(false);
                 break;
+            case "p":
+                Room challengeRoom1 = new ChallengeRoom1(500, 500, "challenge1", diff);
+                challengeRoom1.generateMap(challengeRoom1);
+                initRoom(challengeRoom1);
+                break;
             default:
                 break;
             }
 
             if (room instanceof ChallengeRoom1) {
-                if (((ChallengeRoom1) room).allMonstersAreDead() && ChallengeRoom1.isItemDropsAvailable()) {
+                if (ChallengeRoom1.allMonstersAreDead() && ChallengeRoom1.isItemDropsAvailable()) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Challenge Complete");
                     alert.setContentText("You received 2 potions of each type");
@@ -333,7 +343,7 @@ public class Controller extends Application {
                     player.getInventoryQuantity()[5] += 2;
                     alert.show();
                     ((ChallengeRoom1) room).setItemDropsAvailable(false);
-                    ((ChallengeRoom1) room).getChallengeExitButton().setDisable(false);
+                    ChallengeRoom1.getChallengeExitButton().setDisable(false);
                     ((ChallengeRoom1) room).setChallengeCompleted(true);
                 }
             }
@@ -397,7 +407,7 @@ public class Controller extends Application {
         });
 
         if (room instanceof ChallengeRoom1) {
-            for (Monster tempMonster : ((ChallengeRoom1) room).getMonsterArrayList()) {
+            for (Monster tempMonster : ChallengeRoom1.getMonsterArrayList()) {
                 tempMonster.setOnMouseClicked(e -> {
                     tempMonster.takeDamage(player.getDamage());
                     room.updateMonsterHealthBar();
