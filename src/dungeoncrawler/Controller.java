@@ -216,13 +216,16 @@ public class Controller extends Application {
                 } else if (room instanceof DogeRoom) {
                     DogeMonster doge = ((DogeRoom) room).getDogeMonster();
                     doge.attackPlayer(player);
+                    ((DogeRoom) room).updateDogeHealthBar();
                     if (!doge.isAlive() || !Player.isAlive()) {
                         cancel();
+                    }
+                    if (!doge.isAlive()) {
+                        ((DogeRoom) room).getExitButton().setDisable(false);
                     }
                 } else {
                     monster.attackPlayer(player);
                     room.updateMonsterHealthBar();
-
                     if (!monster.isAlive() || !Player.isAlive()) {
                         cancel();
                     }

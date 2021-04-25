@@ -11,8 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,9 +26,14 @@ public class DogeRoom extends Room {
     //private final Button dogeButton;
     private int dogeCounter;
     private final Button exitButton;
+    private final Font smallFont = new Font("High Tower Text", 19);
+    private final Text healthText;
+    private static Rectangle healthRect;
+    private final Text bossHealthText;
+    private static Rectangle bossHealthRect;
 
     private DogeMonster dogeMonster;
-    private static int dogeHealth = 10;
+    private static int dogeHealth = 100;
     private Player player;
 
 
@@ -33,11 +41,23 @@ public class DogeRoom extends Room {
         super(width, height, id, diff);
 
         this.exitButton = new Button("Exit");
-        this.exitButton.setLayoutX(450);
+        this.exitButton.setLayoutX(420);
         this.exitButton.setLayoutY(200);
-        this.exitButton.setPrefSize(50, 50);
         this.exitButton.setDisable(true);
         this.exitButton.setId("exitButton");
+        this.exitButton.setPrefSize(80, 30);
+        this.exitButton.setFont(smallFont);
+        this.exitButton.setStyle("-fx-background-color: #62686F;");
+
+        this.healthText = new Text("HP");
+        this.healthText.setFill(Color.RED);
+        this.healthText.setFont(smallFont);
+        healthRect = new Rectangle(100, 15, Color.RED);
+        healthRect.setWidth(Player.getHealth() * 5);
+
+        this.bossHealthText = new Text("Doge HP");
+        this.bossHealthText.setFont(smallFont);
+        bossHealthRect = new Rectangle(100, 15, Color.DARKRED);
 
         addDoge(this);
 
@@ -97,11 +117,25 @@ public class DogeRoom extends Room {
         Pane pane = new Pane();
         //pane.getChildren().addAll(this.instructionLabel, this.dogeButton,
         //        this.instructionLabel2, this.exitButton);
+        pane.getChildren().add(this.exitButton);
         pane.getChildren().add(dogeMonster);
         if (player == null || player.getWeaponSprite() == null) {
             System.out.println("fail");
         }
         pane.getChildren().addAll(player, player.getWeaponSprite());
+
+        Group healthGroup = new Group();
+        healthGroup.getChildren().addAll(healthText, healthRect);
+        this.healthText.relocate(5, 5);
+        healthRect.relocate(35, 6);
+
+        Group bossHealthGroup = new Group();
+        bossHealthGroup.getChildren().addAll(bossHealthText, bossHealthRect);
+        this.bossHealthText.relocate(100, 450);
+        bossHealthRect.relocate(175, 450);
+
+        pane.getChildren().addAll(healthGroup, bossHealthGroup);
+
         return new Scene(pane, this.getWidth(), this.getHeight());
     }
 
@@ -126,5 +160,13 @@ public class DogeRoom extends Room {
 
     public DogeMonster getDogeMonster() {
         return dogeMonster;
+    }
+
+    public void updateHealthBar() {
+        healthRect.setWidth(Player.getHealth() * 5);
+    }
+
+    public void updateDogeHealthBar() {
+        bossHealthRect.setWidth(dogeMonster.getHealth() * 2);
     }
 }
