@@ -1112,7 +1112,7 @@ public class DungeonCrawlerTest extends ApplicationTest {
             ImagePattern img = (ImagePattern) dogeMonster.getFill();
             assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
                     (new FileInputStream(System.getProperty("user.dir")
-                    + "\\res\\doge.png")).getPixelReader().getColor(x, y));
+                            + "\\res\\doge.png")).getPixelReader().getColor(x, y));
             dogeMonster.takeDamage(1);
             img = (ImagePattern) dogeMonster.getFill();
             x = (int) (Math.random() * 512);
@@ -1130,5 +1130,39 @@ public class DungeonCrawlerTest extends ApplicationTest {
         } catch (FileNotFoundException e) {
             System.out.println("The Doge monster image file wasn't found" + e);
         }
+    }
+
+    @Test
+    public void testChallengeRoom2Reward() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("OK");
+        int gold = Controller.getGold();
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.setHealth(0);
+                monster.setAlive(false);
+            }
+        }
+        type(KeyCode.W,1);
+        clickOn("OK");
+        type(KeyCode.B,1);
+        assertEquals(gold + 75, Controller.getGold());
+    }
+
+    @Test
+    public void testChallengeRoom2DenialOption() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("Nope");
+        int gold = Controller.getGold();
+        type(KeyCode.B,1);
+        assertNotEquals(gold + 75, Controller.getGold());
+        clickOn("Back");
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            assertNull(monster);
+        }
+        clickOn("Exit");
+        assertNotNull("#Doge");
     }
 }
