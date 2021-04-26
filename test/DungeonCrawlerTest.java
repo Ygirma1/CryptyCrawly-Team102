@@ -1098,4 +1098,37 @@ public class DungeonCrawlerTest extends ApplicationTest {
         clickOn(DogeRoom.getDogeMonster());
         assertEquals(96, DogeRoom.getDogeMonster().getHealth());
     }
+
+    @Test
+    public void testDogeDamageAnimation() {
+        DogeMonster dogeMonster;
+        try {
+            dogeMonster = new DogeMonster(150, 150, 100,
+                    new ImagePattern(new Image(new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge.png"))));
+            int x = (int) (Math.random() * 512);
+            int y = (int) (Math.random() * 512);
+            // x and y are random pixels chosed from the image
+            ImagePattern img = (ImagePattern) dogeMonster.getFill();
+            assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
+                    (new FileInputStream(System.getProperty("user.dir")
+                    + "\\res\\doge.png")).getPixelReader().getColor(x, y));
+            dogeMonster.takeDamage(1);
+            img = (ImagePattern) dogeMonster.getFill();
+            x = (int) (Math.random() * 512);
+            y = (int) (Math.random() * 512);
+            assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
+                    (new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge2.png")).getPixelReader().getColor(x, y));
+            sleep(50);
+            img = (ImagePattern) dogeMonster.getFill();
+            x = (int) (Math.random() * 512);
+            y = (int) (Math.random() * 512);
+            assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
+                    (new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge.png")).getPixelReader().getColor(x, y));
+        } catch (FileNotFoundException e) {
+            System.out.println("The Doge monster image file wasn't found" + e);
+        }
+    }
 }
