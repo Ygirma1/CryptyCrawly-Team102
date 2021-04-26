@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 //import javafx.scene.Scene;
+import javafx.stage.Window;
 import org.junit.Test;
 import javafx.scene.shape.Rectangle;
 //import org.testfx.assertions.api.ButtonAssert;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import javafx.scene.input.KeyCode;
+import org.testfx.toolkit.PrimaryStageApplication;
 
 public class DungeonCrawlerTest extends ApplicationTest {
     private Controller controller = new Controller();
@@ -1007,5 +1009,48 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(Player.getDamageModifier(), 0);
         assertEquals(Player.getSpeed(), 7);
 
+    }
+
+    @Test
+    public void testQuitButton() {
+        getToStartRoom();
+        // to skip to challenge room 2, press ";"
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.setAlive(false);
+            }
+        }
+
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        clickOn("OK");
+
+
+        ChallengeRoom2.setChallengeCompleted(true);
+        clickOn("Exit");
+        Player.setDamage(9999);
+        sleep(1000);
+        clickOn("#Doge");
+
+        clickOn("Exit");
+
+
+        clickOn("#goldButton");
+        clickOn("#goldButton2");
+        clickOn("#goldButton3");
+        clickOn("#exitButton");
+
+        clickOn("#Correct1");
+
+        clickOn("#Correct2");
+
+        clickOn("Yes!!");
+
+        clickOn("#dungeonExit");
+        clickOn("Quit game");
+
+        assertTrue(Window.getWindows().isEmpty());
     }
 }
