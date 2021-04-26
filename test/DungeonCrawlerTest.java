@@ -1008,4 +1008,41 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(Player.getSpeed(), 7);
 
     }
+
+    @Test
+    public void testChallengeRoom2Reward() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("OK");
+        int gold = Controller.getGold();
+
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.setHealth(0);
+                monster.setAlive(false);
+            }
+        }
+
+        type(KeyCode.W,1);
+        clickOn("OK");
+        sleep(2000);
+        type(KeyCode.B,1);
+        assertEquals(gold + 75, Controller.getGold());
+    }
+
+    @Test
+    public void testChallengeRoom2DenialOption() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("Nope");
+        int gold = Controller.getGold();
+        type(KeyCode.B,1);
+        assertNotEquals(gold + 75, Controller.getGold());
+        clickOn("Back");
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            assertNull(monster);
+        }
+        clickOn("Exit");
+        assertNotNull("#Doge");
+    }
 }

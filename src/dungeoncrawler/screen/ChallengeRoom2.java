@@ -144,8 +144,8 @@ public class ChallengeRoom2 extends Room {
         }
     }
 
-    public boolean allMonstersAreDead() {
-        for (Monster monster : this.monsterArrayList) {
+    public static boolean allMonstersAreDead() {
+        for (Monster monster : monsterArrayList) {
             if (monster.isAlive()) {
                 return false;
             }

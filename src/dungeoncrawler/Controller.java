@@ -416,7 +416,6 @@ public class Controller extends Application {
                     alert.setTitle("Challenge Complete");
                     alert.setContentText("You received 75 gold for completing the room!");
                     ((ChallengeRoom2) room).getChallengeExitButton().setDisable(false);
-
                     Controller.setGold(Controller.getGold() + 75);
                     alert.show();
                     ((ChallengeRoom2) room).setItemDropsAvailable(false);
