@@ -31,7 +31,7 @@ public class DogeRoom extends Room {
     private final Text bossHealthText;
     private static Rectangle bossHealthRect;
 
-    private DogeMonster dogeMonster;
+    private static DogeMonster dogeMonster;
     private static int dogeHealth = 100;
     private Player player;
 
@@ -105,7 +105,7 @@ public class DogeRoom extends Room {
         this.player = player;
     }
 
-    public DogeMonster getDogeMonster() {
+    public static DogeMonster getDogeMonster() {
         return dogeMonster;
     }
 

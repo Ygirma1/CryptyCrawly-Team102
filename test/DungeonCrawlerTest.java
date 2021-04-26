@@ -1053,4 +1053,161 @@ public class DungeonCrawlerTest extends ApplicationTest {
 
         assertTrue(Window.getWindows().isEmpty());
     }
+
+    public void testDogeKill() {
+        getToStartRoom();
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        String correctPath = correctExitLabel.getText().substring(8);
+        clickOn(correctPath);
+        boolean condition = true;
+
+        while (condition) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            while (controller.getRoomMonster() != null && controller.getRoomMonster().isAlive()) {
+                clickOn(controller.getRoomMonster());
+            }
+            correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+            correctPath = correctExitLabel.getText().substring(8);
+            clickOn(correctPath);
+
+            if (!lookup("OK").tryQuery().isEmpty()) {
+                condition = false;
+            }
+        }
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom1.getMonsterArrayList()) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            while (monster.isAlive()) {
+                clickOn(monster);
+            }
+        }
+        sleep (2000);
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        if (!lookup("OK").tryQuery().isEmpty()) {
+            clickOn("OK");
+        }
+        clickOn("Exit");
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            while (monster.isAlive()) {
+                clickOn(monster);
+            }
+        }
+        sleep (2000);
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        if (!lookup("OK").tryQuery().isEmpty()) {
+            clickOn("OK");
+        }
+        clickOn("Exit");
+        clickOn("Exit");
+
+        assertEquals(true, DogeRoom.getDogeMonster().isAlive());
+        while (DogeRoom.getDogeMonster().getHealth() > 0) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            clickOn("#Doge");
+        }
+        assertEquals(false, DogeRoom.getDogeMonster().isAlive());
+        assertTrue(lookup("Exit").tryQuery().get().isVisible());
+    }
+
+    @Test
+    public void testDogeHealth() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.takeDamage(5);
+            }
+        }
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        clickOn("OK");
+
+        ChallengeRoom2.setChallengeCompleted(true);
+        clickOn("Exit");
+        if (player.getIsAggressive()) {
+            sleep(2000);
+        }
+        assertEquals(98, DogeRoom.getDogeMonster().getHealth());
+        // the initial health is 100, but since the player and the monster spawn on top of each other,
+        // the monster takes damage immediately
+        clickOn(DogeRoom.getDogeMonster());
+        assertEquals(96, DogeRoom.getDogeMonster().getHealth());
+    }
+
+    @Test
+    public void testDogeDamageAnimation() {
+        DogeMonster dogeMonster;
+        try {
+            dogeMonster = new DogeMonster(150, 150, 100,
+                    new ImagePattern(new Image(new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge.png"))));
+            int x = (int) (Math.random() * 512);
+            int y = (int) (Math.random() * 512);
+            // x and y are random pixels chosed from the image
+            ImagePattern img = (ImagePattern) dogeMonster.getFill();
+            assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
+                    (new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge.png")).getPixelReader().getColor(x, y));
+            dogeMonster.takeDamage(1);
+            img = (ImagePattern) dogeMonster.getFill();
+            x = (int) (Math.random() * 512);
+            y = (int) (Math.random() * 512);
+            assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
+                    (new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge2.png")).getPixelReader().getColor(x, y));
+            sleep(50);
+            img = (ImagePattern) dogeMonster.getFill();
+            x = (int) (Math.random() * 512);
+            y = (int) (Math.random() * 512);
+            assertEquals(img.getImage().getPixelReader().getColor(x, y), new Image
+                    (new FileInputStream(System.getProperty("user.dir")
+                            + "\\res\\doge.png")).getPixelReader().getColor(x, y));
+        } catch (FileNotFoundException e) {
+            System.out.println("The Doge monster image file wasn't found" + e);
+        }
+    }
+
+    @Test
+    public void testChallengeRoom2Reward() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("OK");
+        int gold = Controller.getGold();
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.setHealth(0);
+                monster.setAlive(false);
+            }
+        }
+        type(KeyCode.W,1);
+        clickOn("OK");
+        type(KeyCode.B,1);
+        assertEquals(gold + 75, Controller.getGold());
+    }
+
+    @Test
+    public void testChallengeRoom2DenialOption() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("Nope");
+        int gold = Controller.getGold();
+        type(KeyCode.B,1);
+        assertNotEquals(gold + 75, Controller.getGold());
+        clickOn("Back");
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            assertNull(monster);
+        }
+        clickOn("Exit");
+        assertNotNull("#Doge");
+
+    }
 }

@@ -98,6 +98,15 @@ public class Monster extends Rectangle {
                 } catch (FileNotFoundException exception) {
                     System.out.println("Yellow monster image not found " + exception);
                 }
+            } else if (this instanceof DogeMonster) {
+                try {
+                    this.setFill(new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\doge2.png"))));
+                    this.damageAnimation(this, new ImagePattern(new Image(new FileInputStream(
+                            System.getProperty("user.dir") + "\\res\\doge.png"))));
+                } catch (FileNotFoundException exception) {
+                    System.out.println("Doge monster image not found " + exception);
+                }
             }
         }
     }
