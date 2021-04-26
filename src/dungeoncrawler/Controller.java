@@ -387,7 +387,7 @@ public class Controller extends Application {
                 initRoom(challengeRoom1);
                 break;
                 case ";":
-                    Room challengeRoom2 = new ChallengeRoom2(500, 500, "challenge1", diff);
+                    Room challengeRoom2 = new ChallengeRoom2(500, 500, "challenge2", diff);
                     challengeRoom2.generateMap(challengeRoom2);
                     initRoom(challengeRoom2);
                     break;
@@ -411,11 +411,12 @@ public class Controller extends Application {
                 }
             }
             if (room instanceof ChallengeRoom2) {
-                if (((ChallengeRoom2) room).allMonstersAreDead() && ChallengeRoom2.isItemDropsAvailable()) {
+                if (ChallengeRoom2.allMonstersAreDead() && ChallengeRoom2.isItemDropsAvailable()) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Challenge Complete");
                     alert.setContentText("You received 75 gold for completing the room!");
                     ((ChallengeRoom2) room).getChallengeExitButton().setDisable(false);
+
                     Controller.setGold(Controller.getGold() + 75);
                     alert.show();
                     ((ChallengeRoom2) room).setItemDropsAvailable(false);
