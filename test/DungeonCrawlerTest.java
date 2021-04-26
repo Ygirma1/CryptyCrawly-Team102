@@ -1008,4 +1008,94 @@ public class DungeonCrawlerTest extends ApplicationTest {
         assertEquals(Player.getSpeed(), 7);
 
     }
+
+    @Test
+    public void testDogeKill() {
+        getToStartRoom();
+        Label correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+        String correctPath = correctExitLabel.getText().substring(8);
+        clickOn(correctPath);
+        boolean condition = true;
+
+        while (condition) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            while (controller.getRoomMonster() != null && controller.getRoomMonster().isAlive()) {
+                clickOn(controller.getRoomMonster());
+            }
+            correctExitLabel = (Label) lookup("#correctExit").queryLabeled();
+            correctPath = correctExitLabel.getText().substring(8);
+            clickOn(correctPath);
+
+            if (!lookup("OK").tryQuery().isEmpty()) {
+                condition = false;
+            }
+        }
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom1.getMonsterArrayList()) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            while (monster.isAlive()) {
+                clickOn(monster);
+            }
+        }
+        sleep (2000);
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        if (!lookup("OK").tryQuery().isEmpty()) {
+            clickOn("OK");
+        }
+        clickOn("Exit");
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            while (monster.isAlive()) {
+                clickOn(monster);
+            }
+        }
+        sleep (2000);
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        if (!lookup("OK").tryQuery().isEmpty()) {
+            clickOn("OK");
+        }
+        clickOn("Exit");
+        clickOn("Exit");
+
+        assertEquals(true, DogeRoom.getDogeMonster().isAlive());
+        while (DogeRoom.getDogeMonster().getHealth() > 0) {
+            Player.setHealth(20);
+            Player.setDamage(20);
+            clickOn("#Doge");
+        }
+        assertEquals(false, DogeRoom.getDogeMonster().isAlive());
+        assertTrue(lookup("Exit").tryQuery().get().isVisible());
+    }
+
+    @Test
+    public void testDogeHealth() {
+        getToStartRoom();
+        type(KeyCode.SEMICOLON, 1);
+        clickOn("OK");
+
+        for (Monster monster : ChallengeRoom2.getMonsterArrayList()) {
+            if (monster.isAlive()) {
+                monster.takeDamage(5);
+            }
+        }
+        type(KeyCode.S, 2); // trigger notification to receive potions!
+        clickOn("OK");
+
+        ChallengeRoom2.setChallengeCompleted(true);
+        clickOn("Exit");
+        if (player.getIsAggressive()) {
+            sleep(2000);
+        }
+        assertEquals(98, DogeRoom.getDogeMonster().getHealth());
+        // the initial health is 100, but since the player and the monster spawn on top of each other,
+        // the monster takes damage immediately
+        clickOn(DogeRoom.getDogeMonster());
+        assertEquals(96, DogeRoom.getDogeMonster().getHealth());
+    }
 }
